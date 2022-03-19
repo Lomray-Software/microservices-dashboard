@@ -1,0 +1,16 @@
+logs
+*.log
+npm-debug.log*
+.DS_Store
+.idea
+
+coverage
+node_modules
+build
+cache
+public/index.html
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.idea/vcs.xml

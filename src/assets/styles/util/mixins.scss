@@ -1,0 +1,17 @@
+@mixin font-size($font-size, $line-height, $font-weight, $color){
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  color: $color;
+}
+
+@mixin round-hover {
+  transition: box-shadow 0.4s ease;
+  box-shadow: 0 0 0 0 $c-primary;
+
+  &:hover {
+    @media (hover: hover) {
+      box-shadow: 0 0 0 2rem $c-primary;
+    }
+  }
+}
