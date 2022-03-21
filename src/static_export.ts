@@ -6,6 +6,7 @@ import { SITE_DOMAIN } from '@constants/index';
 import ROUTES from '@constants/routes';
 import { getRenderProps } from '@server/config';
 import { applySSGTranslation } from '@server/translation';
+import Manager from '@store/manager';
 
 type TRender = (req: Request, res: Response) => Promise<void>;
 
@@ -37,9 +38,12 @@ export const render: TRender = async (req, res) => {
   cookiesMiddleware()(req, res, () => null);
   await applySSGTranslation(req, res);
 
+  const storeManager = new Manager();
+
   const { html, data } = await renderStatic({
     req,
     res,
+    storeManager,
     ...getRenderProps(),
   });
 

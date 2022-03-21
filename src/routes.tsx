@@ -28,7 +28,7 @@ const routes = [
     path: ROUTES.HOME,
     exact: true,
     component: asyncComponent({
-      loader: () => import('@pages/home'),
+      loader: () => import('@pages/home/index.store'),
       ...asyncRouteProps,
     }),
   },

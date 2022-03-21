@@ -13,15 +13,16 @@ import {
 } from '@jaredpalmer/after';
 import React, { Component, ReactElement } from 'react';
 import { I18nextProvider } from 'react-i18next';
+import { StoreManagerProvider } from '@common/context/store-manager';
 import Layout from '@components/layout';
 import { APP_NAME, BACKGROUND_COLOR, IS_PWA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import { iosIcons, manifestPath } from '@server/config';
 
 function StoreData() {
-  // const { store } = React.useContext(__AfterContext);
+  const { storeManager } = React.useContext(__AfterContext);
 
-  return <SerializeData name="preloadedState" data={{}} />;
+  return <SerializeData name="preloadedState" data={storeManager.toJSON()} />;
 }
 
 function TranslationData() {
@@ -44,7 +45,7 @@ class Document extends Component<DocumentProps> {
    * - return html to client
    */
   static async getInitialProps(ctx: DocumentgetInitialProps): Promise<RenderPageResult> {
-    const { renderPage, req, data, helmet } = ctx;
+    const { renderPage, req, data, helmet, storeManager } = ctx;
     const componentData = data.initialData;
     const initialLanguage = req.i18n.language;
 
@@ -77,11 +78,13 @@ class Document extends Component<DocumentProps> {
     // @ts-ignore
     const page = await renderPage((After: typeof AfterComponent) => (props: AfterpartyProps) => (
       <I18nextProvider i18n={req.i18n}>
-        <AppProvider initValue={serverContext}>
-          <Layout initialLanguage={initialLanguage}>
-            <After {...props} />
-          </Layout>
-        </AppProvider>
+        <StoreManagerProvider storeManager={storeManager}>
+          <AppProvider initValue={serverContext}>
+            <Layout initialLanguage={initialLanguage}>
+              <After {...props} storeManager={storeManager} />
+            </Layout>
+          </AppProvider>
+        </StoreManagerProvider>
       </I18nextProvider>
     ));
 

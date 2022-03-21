@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export,@typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-interface */
-import { CtxBase } from '@jaredpalmer/after';
+import { CtxBase } from '@lomray/after';
 import { IAppContext } from '@context/app';
+import Manager from '@store/manager';
 
 declare module '@jaredpalmer/after' {
   export interface InitialData {
@@ -10,19 +11,19 @@ declare module '@jaredpalmer/after' {
   }
 
   export interface AfterpartyProps {
-    // store: Store;
+    storeManager: Manager;
   }
 
   export interface DocumentgetInitialProps {
-    // store: Store;
+    storeManager: Manager;
   }
 
   export interface AfterRenderAppOptions<T> {
-    // store: Store;
+    storeManager: Manager;
   }
 
   export interface Ctx<P> extends CtxBase {
-    // store: Store;
+    storeManager: Manager;
   }
 
   export interface RenderPageResult {

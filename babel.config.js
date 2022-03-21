@@ -5,6 +5,7 @@ module.exports = {
   plugins: [
     'after',
     'inline-react-svg',
+    '@babel/plugin-proposal-class-properties',
     [
       'module-resolver',
       {
@@ -38,4 +39,7 @@ module.exports = {
       },
     ],
   ],
+  assumptions: {
+    setPublicClassFields: false,
+  },
 }

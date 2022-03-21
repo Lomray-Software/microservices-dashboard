@@ -28,6 +28,7 @@
     "strict": false,
     "pretty": true,
     "suppressImplicitAnyIndexErrors": true,
+    "useDefineForClassFields": true,
     "target": "esnext",
     "baseUrl": "./src",
     "paths": {

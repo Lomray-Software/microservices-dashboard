@@ -13,3 +13,15 @@ export type ReplacePropertiesReturnType<TP, TNewType = Promise<void> | void> = {
   // @ts-ignore
   [key in keyof TP]: ReplaceReturnType<TP[key], TNewType>;
 };
+
+/**
+ * Convert class type to class constructor
+ */
+export type ReturnType<T> = T extends new () => infer R ? R : never;
+
+/**
+ * Stores map to type
+ */
+export type StoresType<TStores> = {
+  [keys in keyof TStores]: ReturnType<TStores[keyof TStores]>;
+};

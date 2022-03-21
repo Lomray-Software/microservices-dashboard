@@ -30,15 +30,11 @@ const asyncRouteComponentWrapper = (
   AsyncRouteComponent.contextType = AppContext;
 
   /** only ssg mode **/
-  const defaultStaticInitialProps = AsyncRouteComponent.getStaticInitialProps;
-
-  AsyncRouteComponent.getStaticInitialProps = (ctx) => {
-    if (ctx.data?.store) {
-      delete ctx.data.store;
-    }
-
-    return defaultStaticInitialProps(ctx) as Promise<any>;
-  };
+  // const defaultStaticInitialProps = AsyncRouteComponent.getStaticInitialProps;
+  //
+  // AsyncRouteComponent.getStaticInitialProps = (ctx) => {
+  //   return defaultStaticInitialProps(ctx) as Promise<any>;
+  // };
   /** only ssg mode **/
 
   AsyncRouteComponent.prototype.componentDidMount = function () {
