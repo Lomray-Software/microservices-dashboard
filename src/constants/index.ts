@@ -31,9 +31,6 @@ export const API_DOMAIN = process.env.RAZZLE_API_DOMAIN || '';
 
 export const SITE_DOMAIN = process.env.RAZZLE_SITE_DOMAIN || '';
 
-// ssr have axios cache service, and we need token for auth request to reset cache
-export const RESET_CACHE_TOKEN = process.env.RAZZLE_RESET_CACHE_TOKEN;
-
 export const APP_NAME = process.env.RAZZLE_APP_NAME;
 
 export const BACKGROUND_COLOR = process.env.RAZZLE_APP_BACKGROUND_COLOR;

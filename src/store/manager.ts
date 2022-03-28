@@ -1,16 +1,19 @@
 import { toJS, isObservableProp } from 'mobx';
 import type { TSerializedStore } from '@helpers/serialized-store';
 import type { TStore } from '@interfaces/store-type';
+import Endpoints from '@store/endpoints';
 
-interface IConstructorParams {
+export interface IConstructorParams {
   storeManager: Manager;
+  endpoints: Endpoints;
 }
 
-export interface IConstructableStore {
-  new (props: IConstructorParams): TSerializedStore<TStore>;
-}
+export type IConstructableStore<TSto = TStore> = new (props: IConstructorParams) =>
+  | TSerializedStore<TSto>
+  | TSto;
 
 interface IManagerParams {
+  endpoints: Endpoints;
   initState?: Record<string, any>;
   initServerState?: Record<string, any>;
 }
@@ -27,7 +30,10 @@ class Manager {
   /**
    * Only used stores
    */
-  private readonly initiatedStores = new Map<IConstructableStore, TSerializedStore<TStore>>();
+  private readonly initiatedStores = new Map<
+    IConstructableStore,
+    TSerializedStore<TStore> | TStore
+  >();
 
   /**
    * Initial stores state (local storage, custom etc.)
@@ -42,22 +48,29 @@ class Manager {
   private readonly initServerState: Record<string, any>;
 
   /**
+   * API endpoints
+   * @private
+   */
+  private readonly endpoints: IManagerParams['endpoints'];
+
+  /**
    * @constructor
    */
-  constructor({ initState, initServerState }: IManagerParams = {}) {
+  constructor({ endpoints, initState, initServerState }: IManagerParams) {
     this.initState = initState || {};
     this.initServerState = initServerState || {};
+    this.endpoints = endpoints;
   }
 
   /**
    * Get initiated store or create new
    */
-  public getStore(store: IConstructableStore): TStore {
+  public getStore<T>(store: IConstructableStore<T>): T {
     if (this.initiatedStores.has(store)) {
-      return this.initiatedStores.get(store) as TStore;
+      return this.initiatedStores.get(store) as T;
     }
 
-    const newStore = new store({ storeManager: this });
+    const newStore = new store({ storeManager: this, endpoints: this.endpoints });
 
     // restore state for store
     if ('wakeup' in newStore && 'serializedKey' in store) {
@@ -66,11 +79,12 @@ class Manager {
       const initState = this.initState[key];
 
       newStore.wakeup?.(newStore, { initState, initServerState });
+      newStore.addOnChangeListener?.(newStore, key);
     }
 
     this.initiatedStores.set(store, newStore);
 
-    return newStore;
+    return newStore as T;
   }
 
   /**
@@ -95,7 +109,7 @@ class Manager {
     for (const [storeClass, instance] of this.initiatedStores.entries()) {
       if ('serializedKey' in storeClass) {
         result[storeClass['serializedKey']] =
-          instance.toJSON?.() ?? this.getObservableProps(instance);
+          instance['toJSON']?.() ?? this.getObservableProps(instance);
       }
     }
 

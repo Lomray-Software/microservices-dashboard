@@ -4,7 +4,7 @@ import Manager from '@store/manager';
 /**
  * Mobx store manager context
  */
-const StoreManagerContext = React.createContext(new Manager());
+const StoreManagerContext = React.createContext<Manager>({} as Manager);
 
 /**
  * Mobx store manager provider

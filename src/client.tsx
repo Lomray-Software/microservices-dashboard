@@ -6,6 +6,8 @@ import Layout from '@components/layout';
 import { IS_PROD, IS_PWA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import { StoreManagerProvider } from '@context/store-manager';
+import ApiClient from '@services/api-client';
+import Endpoints from '@store/endpoints';
 import Manager from '@store/manager';
 import routes from './routes';
 import * as ServiceWorker from './sw-register';
@@ -15,8 +17,9 @@ const initialI18nStore = getSerializedData('initialI18nStore');
 const initialLanguage = getSerializedData('initialLanguage', false);
 const initServerState = getSerializedData('preloadedState', IS_PROD);
 const initState = localStorage.getItem(Manager.localStorageKey) || {};
+const endpoints = new Endpoints(new ApiClient());
 
-const storeManager = new Manager({ initState, initServerState });
+const storeManager = new Manager({ initState, initServerState, endpoints });
 
 void ensureReady(routes).then((data) =>
   hydrate(

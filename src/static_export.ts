@@ -31,7 +31,7 @@ const extendStaticRequest = (req: Request): Request => {
 
 /**
  * NOTE: Please uncomment lines with ssg comment in:
- * @see asyncRouteComponentWrapper
+ * @see asyncRouteComponent
  */
 export const render: TRender = async (req, res) => {
   extendStaticRequest(req);

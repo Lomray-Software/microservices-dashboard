@@ -63,8 +63,8 @@ class Document extends Component<DocumentProps> {
       };
     }
 
-    if (typeof Layout.getInitialProps === 'function') {
-      await Layout.getInitialProps(ctx);
+    if (typeof Layout['getInitialProps'] === 'function') {
+      await Layout['getInitialProps'](ctx);
     }
 
     const serverContext = {

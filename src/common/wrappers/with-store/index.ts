@@ -7,18 +7,17 @@ import { IConstructableStore } from '@store/manager';
 /**
  * Make component observable and pass stores as props
  */
-const withStore = <T, TS extends Record<string, IConstructableStore>>(
+const withStore = <T extends Record<string, any>, TS extends Record<string, IConstructableStore>>(
   Component: FC<T>,
   stores: TS,
-): FC<Omit<T, keyof TS | 'context'>> => {
-  const ObserverComponent = observer(Component);
+): FC<Omit<T, keyof TS>> => {
   const storesMap = Object.entries(stores);
 
   const Element: FC = ({ children, ...props }) => {
     const storeManager = useStoreManagerContext();
 
-    return React.createElement(
-      ObserverComponent,
+    return React.createElement<Record<string, any>>(
+      observer(Component),
       {
         ...storeManager.getMapStores(storesMap),
         ...props,
@@ -27,7 +26,7 @@ const withStore = <T, TS extends Record<string, IConstructableStore>>(
     );
   };
 
-  hoistNonReactStatics(Element, ObserverComponent);
+  hoistNonReactStatics(Element, Component);
   Element.displayName = `${Component.displayName || Component.name}Store`;
 
   return Element;

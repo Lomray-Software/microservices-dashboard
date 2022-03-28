@@ -4,9 +4,10 @@ import { enableStaticRendering } from 'mobx-react-lite';
 import cookiesMiddleware from 'universal-cookie-express';
 import { IS_PROD } from '@constants/index';
 import { getRenderProps } from '@server/config';
-import enableAxiosCache from '@server/enable-axios-cache';
 import resolveAppPath from '@server/tools/resolve-app-path';
 import { initServerTranslation } from '@server/translation';
+import ApiClient from '@services/api-client';
+import Endpoints from '@store/endpoints';
 import Manager from '@store/manager';
 
 const publicPath =
@@ -16,8 +17,6 @@ const publicPath =
     : resolveAppPath('build/public');
 
 const server = express();
-
-enableAxiosCache(server);
 
 void (async () => {
   // initialize and load translation
@@ -35,7 +34,9 @@ void (async () => {
     .get('/*', (req, res) => {
       void (async () => {
         try {
-          const storeManager = new Manager();
+          const apiClient = new ApiClient({ headers: req.headers });
+          const endpoints = new Endpoints(apiClient);
+          const storeManager = new Manager({ endpoints });
 
           const html = await render({
             req,

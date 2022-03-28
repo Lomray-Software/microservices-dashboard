@@ -3,7 +3,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 import type { TFunction, Namespace, TFuncKey } from 'react-i18next';
-import { APP_LANGUAGES, APP_OTHER_LANGUAGES } from '@constants/index';
+import { APP_LANGUAGES, APP_OTHER_LANGUAGES, DEFAULT_APP_LANGUAGE } from '@constants/index';
 import CustomPathDetector from '@helpers/client-path-custom-detector';
 
 export type TranslationDictionary = TFuncKey<Namespace>;
@@ -22,12 +22,13 @@ if (process && !process.release) {
 
 if (!i18n.isInitialized) {
   void i18n.init({
+    lng: DEFAULT_APP_LANGUAGE,
     debug: false,
     // fallbackLng: DEFAULT_APP_LANGUAGE, // this load en locale (see network) if current ru, this implemented in detectors
     keySeparator: false,
     load: 'languageOnly',
     defaultNS: 'translation',
-    whitelist: APP_LANGUAGES,
+    supportedLngs: APP_LANGUAGES,
     react: {
       useSuspense: false,
     },
@@ -42,5 +43,7 @@ if (!i18n.isInitialized) {
 
 export const getLngCode = (i18nInstance?: ICustomI18n): string =>
   (i18nInstance || i18n).language?.split('-')[0];
+
+export const Namespaces = <T extends Namespace>(ns: Namespace<T>): Namespace<T> => ns;
 
 export default i18n as ICustomI18n;

@@ -17,11 +17,11 @@ export type ReplacePropertiesReturnType<TP, TNewType = Promise<void> | void> = {
 /**
  * Convert class type to class constructor
  */
-export type ReturnType<T> = T extends new () => infer R ? R : never;
+export type ClassReturnType<T> = T extends new (...args: any) => infer R ? R : never;
 
 /**
  * Stores map to type
  */
 export type StoresType<TStores> = {
-  [keys in keyof TStores]: ReturnType<TStores[keyof TStores]>;
+  [keys in keyof TStores]: ClassReturnType<TStores[keys]>;
 };

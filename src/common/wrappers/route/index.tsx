@@ -20,7 +20,7 @@ type AsyncRouteComponentType = ReturnType<typeof asyncComponent>;
  * - Add restore server app context
  * - Pass react-router 'match' to sagas
  */
-const asyncRouteComponentWrapper = (
+const asyncRouteComponent = (
   AsyncRouteComponent: AsyncRouteComponentType,
 ): AsyncRouteComponentType => {
   // Copy original functions
@@ -93,7 +93,7 @@ const asyncRouteComponentWrapper = (
  * - Add restore server app context
  * - Pass react-router 'match' to sagas
  */
-const routeComponentWrapper =
+const routeComponent =
   (Component: ComponentType) =>
   ({
     match,
@@ -126,4 +126,4 @@ const routeComponentWrapper =
     return <Component />;
   };
 
-export { asyncRouteComponentWrapper, routeComponentWrapper };
+export { asyncRouteComponent, routeComponent };

@@ -1,8 +1,8 @@
 import type { StoresType } from '@interfaces/helpers';
-import HomePageStore from '@store/modules/pages/home';
+import UserStore from '@store/modules/user';
 
 const stores = {
-  page: HomePageStore,
+  userStore: UserStore,
 };
 
 export type StoreProps = StoresType<typeof stores>;

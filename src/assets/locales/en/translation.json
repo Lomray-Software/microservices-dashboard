@@ -1,4 +1,6 @@
 {
   "ok": "Ok",
-  "notFound404": "Sorry, page not found"
+  "notFound404": "Sorry, page not found.",
+  "userNotFound": "User not found.",
+  "logoutButton": "Logout"
 }
