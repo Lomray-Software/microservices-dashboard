@@ -1,6 +1,7 @@
 import { reaction, toJS } from 'mobx';
 import { IS_SERVER, IS_SPA } from '@constants/index';
 import type { TStore } from '@interfaces/store-type';
+import Manager from '@store/manager';
 
 type TWakeup = (
   store: TStore,
@@ -34,8 +35,8 @@ const onChangeListener: TSerialized['addOnChangeListener'] = (store, key) => {
 
   reaction(
     () => (store['toJSON']?.() as Record<string, any>) ?? toJS(store),
-    (changedStore) => {
-      localStorage.setItem(key, JSON.stringify(changedStore));
+    () => {
+      localStorage.setItem(key, JSON.stringify(Manager.getObservableProps(store)));
     },
   );
 };

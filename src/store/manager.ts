@@ -101,7 +101,7 @@ class Manager {
   }
 
   /**
-   * Get state from used serialized stores
+   * Get state from used serialized stores (used in SSR)
    */
   public toJSON(): Record<string, any> {
     const result = {};
@@ -109,7 +109,7 @@ class Manager {
     for (const [storeClass, instance] of this.initiatedStores.entries()) {
       if ('serializedKey' in storeClass) {
         result[storeClass['serializedKey']] =
-          instance['toJSON']?.() ?? this.getObservableProps(instance);
+          instance['toJSON']?.() ?? Manager.getObservableProps(instance);
       }
     }
 
@@ -120,7 +120,7 @@ class Manager {
    * Get observable store props (fields)
    * @private
    */
-  private getObservableProps(store: TStore): Record<string, any> {
+  public static getObservableProps(store: TStore): Record<string, any> {
     const props = toJS(store);
 
     return Object.entries(props).reduce(
