@@ -11,6 +11,7 @@ interface IAppContext {
   hasHeader: boolean;
   hasFooter: boolean;
   hasLoadingBar: boolean;
+  hasSideMenu: boolean;
 }
 
 const initState = {
@@ -26,6 +27,7 @@ const initState = {
   hasLoadingBar: true,
   hasHeader: true,
   hasFooter: true,
+  hasSideMenu: true,
 };
 
 /**

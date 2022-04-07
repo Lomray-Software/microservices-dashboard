@@ -33,19 +33,27 @@ class Auth implements IDomain {
     makeObservable(this, {
       error: observable,
       signIn: action.bound,
-      logout: action.bound,
+      signOut: action.bound,
+      setError: action.bound,
     });
+  }
+
+  /**
+   * Set error message
+   */
+  public setError(message: string | null): void {
+    this.error = message;
   }
 
   /**
    * Authenticate user
    */
-  async signIn(login: string, password: string): Promise<void> {
-    this.error = null;
+  public async signIn(login: string, password: string): Promise<void> {
+    this.setError(null);
     const { result, error } = await this.api.users.signIn({ login, password });
 
     if (error) {
-      this.error = error.message;
+      this.setError(error.message);
 
       return;
     }
@@ -53,7 +61,7 @@ class Auth implements IDomain {
     const { user, tokens } = result || {};
 
     if (!user) {
-      this.error = i18n.t('userNotFound');
+      this.setError(i18n.t('userNotFound'));
 
       return;
     }
@@ -71,14 +79,19 @@ class Auth implements IDomain {
   /**
    * Logout user
    */
-  public async logout(): Promise<void> {
+  public async signOut(): Promise<void> {
     const userStore = this.storeManager.getStore(UserStore);
 
     if (!userStore.user?.id) {
       return;
     }
 
-    await this.api.users.signOut({ userId: userStore.user?.id });
+    const { result } = await this.api.users.signOut({ userId: userStore.user?.id });
+
+    // something went wrong
+    if (!result?.loggedOut) {
+      await this.api.authentication.cookiesRemove();
+    }
 
     this.api.apiClient.setRefreshToken(null);
     userStore.setUser(null);

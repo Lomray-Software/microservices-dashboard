@@ -11,6 +11,7 @@ import Endpoints from '@store/endpoints';
 import Manager from '@store/manager';
 import routes from './routes';
 import * as ServiceWorker from './sw-register';
+import 'react-notifications-component/dist/theme.css';
 import './assets/styles/global.scss';
 
 const initialI18nStore = getSerializedData('initialI18nStore');

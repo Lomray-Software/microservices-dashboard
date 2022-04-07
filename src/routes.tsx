@@ -29,6 +29,14 @@ const routes = [
     }),
   },
   {
+    path: ROUTES.USERS,
+    exact: true,
+    component: asyncComponent({
+      loader: () => import('@pages/users/index.wrapper'),
+      ...asyncRouteProps,
+    }),
+  },
+  {
     path: ROUTES.SIGN_IN,
     exact: true,
     component: asyncComponent({

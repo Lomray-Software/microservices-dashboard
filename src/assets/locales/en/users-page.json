@@ -1,0 +1,10 @@
+{
+  "pageTitle": "Users",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "middleName": "Middle name",
+  "phone": "Phone",
+  "createdAt": "Created At",
+  "updatedAt": "Updated At",
+  "deletedAt": "Deleted At"
+}

@@ -2,5 +2,7 @@
   "ok": "Ok",
   "notFound404": "Sorry, page not found.",
   "userNotFound": "User not found.",
-  "logoutButton": "Logout"
+  "logoutButton": "Logout",
+  "unknownError": "Unknown error",
+  "errorTitle": "Error"
 }

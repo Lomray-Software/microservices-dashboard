@@ -1,4 +1,5 @@
 import { toJS, isObservableProp } from 'mobx';
+import { IS_SPA } from '@constants/index';
 import type { TSerializedStore } from '@helpers/serialized-store';
 import type { TStore } from '@interfaces/store-type';
 import Endpoints from '@store/endpoints';
@@ -60,6 +61,8 @@ class Manager {
     this.initState = initState || {};
     this.initServerState = initServerState || {};
     this.endpoints = endpoints;
+
+    this.endpoints.apiClient.setStoreManager(this);
   }
 
   /**
@@ -80,6 +83,18 @@ class Manager {
 
       newStore.wakeup?.(newStore, { initState, initServerState });
       newStore.addOnChangeListener?.(newStore, key);
+      newStore.init?.();
+    } else if (!IS_SPA) {
+      // SSR case. Automatically assign store name and restore state from server
+      const key = store.name;
+      const initState = this.initServerState[key];
+
+      // this need for @see this.toJSON
+      store['serializedKey'] = store.name;
+
+      if (initState) {
+        Object.assign(newStore, initState);
+      }
     }
 
     this.initiatedStores.set(store, newStore);
@@ -102,6 +117,7 @@ class Manager {
 
   /**
    * Get state from used serialized stores (used in SSR)
+   * @see StoreData
    */
   public toJSON(): Record<string, any> {
     const result = {};

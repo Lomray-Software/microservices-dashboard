@@ -6,6 +6,7 @@ import ROUTES from '@constants/routes';
  */
 const MENU = {
   [ROUTES.HOME]: { titleKey: 'home' },
+  [ROUTES.USERS]: { titleKey: 'users' },
 } as const;
 
 export type TMenuLinks = keyof typeof MENU;

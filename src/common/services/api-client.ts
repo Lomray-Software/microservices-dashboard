@@ -1,7 +1,13 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT } from '@constants/index';
-import { IMicroserviceResponse } from '@interfaces/microservice';
+import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_SERVER } from '@constants/index';
+import waitFor from '@helpers/wait-for';
+import type { IBaseException, IMicroserviceResponse } from '@interfaces/microservice';
 import i18n from '@services/localization';
+import type Endpoints from '@store/endpoints';
+import { TokenCreateReturnType } from '@store/endpoints/interfaces/authentication/methods/token/renew';
+import type Manager from '@store/manager';
+import UserStore from '@store/modules/user';
+import AuthStore from '@store/modules/user/auth';
 
 export const REFRESH_TOKEN_KEY = 'refresh-token';
 
@@ -20,6 +26,18 @@ interface IApiClientParams {
 
 class ApiClient {
   /**
+   * API Endpoints
+   * @private
+   */
+  private endpoints: Endpoints;
+
+  /**
+   * Mobx store manager
+   * @private
+   */
+  private storeManager: Manager;
+
+  /**
    * Client language
    * @private
    */
@@ -32,6 +50,12 @@ class ApiClient {
   private readonly headers?: Record<string, any>;
 
   /**
+   * Currently going request for refresh auth tokens
+   * @private
+   */
+  private hasAuthRefresh = false;
+
+  /**
    * @constructor
    */
   constructor({ headers }: IApiClientParams = {}) {
@@ -40,6 +64,20 @@ class ApiClient {
     i18n.on('languageChanged', (lng) => {
       this.lang = lng;
     });
+  }
+
+  /**
+   * Set API endpoints
+   */
+  public setEndpoints(endpoints: Endpoints): void {
+    this.endpoints = endpoints;
+  }
+
+  /**
+   * Set store manager
+   */
+  public setStoreManager(manager: Manager): void {
+    this.storeManager = manager;
   }
 
   /**
@@ -56,13 +94,100 @@ class ApiClient {
   }
 
   /**
+   * Make beautiful error message
+   * @private
+   */
+  private static makeBeautifulError(error: IBaseException): void {
+    const { message } = error;
+    const parts = /Endpoint\sexception\s.+\):(.+)/.exec(message);
+
+    error.message = parts?.[1] ?? parts?.[0] ?? message;
+    error.rawMessage = message;
+  }
+
+  /**
+   * Run request with blocking refresh auth tokens
+   * @private
+   */
+  private async disableRenewAuthTokens<TCallback>(
+    callback: () => Promise<TCallback> | TCallback,
+  ): Promise<TCallback> {
+    this.hasAuthRefresh = true;
+    const result = await callback();
+
+    this.hasAuthRefresh = false;
+
+    return result;
+  }
+
+  /**
+   * Renew auth tokens
+   */
+  public renewAuthTokens(): Promise<boolean> {
+    return this.disableRenewAuthTokens(async () => {
+      const refresh = localStorage.getItem(REFRESH_TOKEN_KEY);
+
+      if (refresh) {
+        const { result } = await this.endpoints.authentication.renewToken({
+          refresh,
+          returnType: TokenCreateReturnType.cookies,
+        });
+
+        if (result?.refresh) {
+          this.setRefreshToken(result.refresh);
+
+          return true;
+        }
+      }
+
+      return false;
+    });
+  }
+
+  /**
+   * Detect auth token expiration and try to renew
+   * @private
+   */
+  private async updateAuthTokens(error: IBaseException): Promise<boolean> {
+    if (error.status !== 401) {
+      return false;
+    }
+
+    if (IS_SERVER) {
+      // Pass flag to client side for update auth tokens & user
+      this.storeManager.getStore(UserStore).setShouldRefresh(true);
+
+      return false;
+    }
+
+    // hold this request (this is parallel request) and wait until previous request refresh auth tokens
+    if (this.hasAuthRefresh) {
+      return waitFor(
+        () => !this.hasAuthRefresh,
+        () => true,
+      );
+    }
+
+    // Access token expired and we need renew it
+    if (await this.renewAuthTokens()) {
+      return true;
+    }
+
+    // Failed to renew tokens - clear user store
+    await this.disableRenewAuthTokens(() => this.storeManager.getStore(AuthStore).signOut());
+
+    return false;
+  }
+
+  /**
    * Send request to API
    */
   public async sendRequest<TResponse, TRequest>(
     method: string,
     params?: TRequest,
-    { req }: IApiClientReqOptions = {},
+    options: IApiClientReqOptions = {},
   ): Promise<IMicroserviceResponse<TResponse>> {
+    const { req } = options;
     const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
       baseURL: API_DOMAIN,
       method: 'POST',
@@ -75,13 +200,14 @@ class ApiClient {
       },
     });
 
-    // Make error message beautiful (readable for user)
+    // Common error handlers
     if (data?.error) {
-      const { message } = data.error;
-      const parts = /Endpoint\sexception\s.+\):(.+)/.exec(message);
+      ApiClient.makeBeautifulError(data.error);
 
-      data.error.message = parts?.[1] ?? parts?.[0] ?? message;
-      data.error.rawMessage = message;
+      if (await this.updateAuthTokens(data.error)) {
+        // repeat previous request
+        return this.sendRequest(method, params, options);
+      }
     }
 
     return data;

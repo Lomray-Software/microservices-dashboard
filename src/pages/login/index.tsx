@@ -1,11 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import type { SSRComponent } from '@interfaces/ssr-component';
 import validationSchema from './index.form';
 import type { StoreProps } from './index.stores';
 
-export type Props = StoreProps;
+type Props = StoreProps;
 
 /**
  * Login page
@@ -27,22 +28,27 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
   );
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-      {({ isSubmitting }) => (
-        <Form>
-          <label htmlFor="login">{t('login-page:fieldLogin')}</label>
-          <Field name="login" placeholder={t('login-page:fieldLogin')} />
-          <ErrorMessage name="login" />
-          <label htmlFor="password">{t('login-page:fieldPassword')}</label>
-          <Field type="password" name="password" placeholder={t('login-page:fieldPassword')} />
-          <ErrorMessage name="password" />
-          {error && <span>{error}</span>}
-          <button type="submit" disabled={isSubmitting}>
-            {t('login-page:buttonText')}
-          </button>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <Helmet>
+        <title>{t('login-page:pageTitle')}</title>
+      </Helmet>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        {({ isSubmitting }) => (
+          <Form>
+            <label htmlFor="login">{t('login-page:fieldLogin')}</label>
+            <Field name="login" placeholder={t('login-page:fieldLogin')} />
+            <ErrorMessage name="login" />
+            <label htmlFor="password">{t('login-page:fieldPassword')}</label>
+            <Field type="password" name="password" placeholder={t('login-page:fieldPassword')} />
+            <ErrorMessage name="password" />
+            {error && <span>{error}</span>}
+            <button type="submit" disabled={isSubmitting}>
+              {t('login-page:buttonText')}
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 
@@ -51,6 +57,7 @@ Login.getInitialProps = () => ({
     app: {
       hasHeader: false,
       hasFooter: false,
+      hasSideMenu: false,
     },
   },
 });

@@ -1,5 +1,6 @@
 {
   "fieldLogin": "Login",
   "fieldPassword": "Password",
-  "buttonText": "Login"
+  "buttonText": "Login",
+  "pageTitle": "Login"
 }

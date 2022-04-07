@@ -1,5 +1,5 @@
 import { reaction, toJS } from 'mobx';
-import { IS_SERVER, IS_SPA } from '@constants/index';
+import { IS_PROD, IS_SERVER, IS_SPA } from '@constants/index';
 import type { TStore } from '@interfaces/store-type';
 import Manager from '@store/manager';
 
@@ -15,6 +15,7 @@ type TSerialized = {
   serializedKey: string;
   toJSON?: () => Record<string, any>;
   wakeup?: TWakeup;
+  init?: () => void;
   addOnChangeListener: (store: TStore, key: string) => void;
 };
 
@@ -29,7 +30,7 @@ const wakeup: TSerialized['wakeup'] = (store, { initState, initServerState }) =>
   }
 };
 const onChangeListener: TSerialized['addOnChangeListener'] = (store, key) => {
-  if (IS_SERVER || !IS_SPA) {
+  if (IS_SERVER || (!IS_SPA && IS_PROD)) {
     return;
   }
 
