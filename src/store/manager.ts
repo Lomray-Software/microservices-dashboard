@@ -11,7 +11,7 @@ export interface IConstructorParams {
 
 export type IConstructableStore<TSto = TStore> = new (props: IConstructorParams) =>
   | TSerializedStore<TSto>
-  | TSto;
+  | (TSto & { init?: () => void });
 
 interface IManagerParams {
   endpoints: Endpoints;
@@ -95,6 +95,8 @@ class Manager {
       if (initState) {
         Object.assign(newStore, initState);
       }
+
+      newStore.init?.();
     }
 
     this.initiatedStores.set(store, newStore);

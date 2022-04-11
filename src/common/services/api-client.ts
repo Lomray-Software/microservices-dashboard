@@ -6,7 +6,6 @@ import i18n from '@services/localization';
 import type Endpoints from '@store/endpoints';
 import { TokenCreateReturnType } from '@store/endpoints/interfaces/authentication/methods/token/renew';
 import type Manager from '@store/manager';
-import UserStore from '@store/modules/user';
 import AuthStore from '@store/modules/user/auth';
 
 export const REFRESH_TOKEN_KEY = 'refresh-token';
@@ -154,8 +153,11 @@ class ApiClient {
     }
 
     if (IS_SERVER) {
+      const authStore = this.storeManager.getStore(AuthStore);
+
       // Pass flag to client side for update auth tokens & user
-      this.storeManager.getStore(UserStore).setShouldRefresh(true);
+      authStore.setShouldRefresh(true);
+      authStore.setIsLoading(true);
 
       return false;
     }
