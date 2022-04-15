@@ -127,7 +127,7 @@ class ApiClient {
       const refresh = localStorage.getItem(REFRESH_TOKEN_KEY);
 
       if (refresh) {
-        const { result } = await this.endpoints.authentication.renewToken({
+        const { result } = await this.endpoints.authentication.token.renew({
           refresh,
           returnType: TokenCreateReturnType.cookies,
         });

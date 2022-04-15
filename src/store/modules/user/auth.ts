@@ -93,7 +93,19 @@ class Auth implements IDomain {
    */
   public async signIn(login: string, password: string): Promise<void> {
     this.setError(null);
-    const { result, error } = await this.api.users.signIn({ login, password });
+    const { result, error } = await this.api.users.user.signIn(
+      { login, password },
+      {
+        headers: {
+          'user-info': JSON.stringify({
+            userAgent: navigator.userAgent,
+            hasCookies: navigator.cookieEnabled,
+            language: navigator.language,
+            userAgentData: navigator?.['userAgentData'],
+          }),
+        },
+      },
+    );
 
     if (error || !result) {
       this.setError(error?.message ?? i18n.t('userNotFound'));
@@ -121,11 +133,11 @@ class Auth implements IDomain {
 
     this.setIsLoading(true);
 
-    const { result } = await this.api.users.signOut({ userId: this.userStore.user?.id });
+    const { result } = await this.api.users.user.signOut({ userId: this.userStore.user?.id });
 
     // something went wrong
     if (!result?.loggedOut) {
-      await this.api.authentication.cookiesRemove();
+      await this.api.authentication.cookies.remove();
     }
 
     this.api.apiClient.setRefreshToken(null);

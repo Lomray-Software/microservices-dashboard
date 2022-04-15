@@ -1,6 +1,9 @@
+import IProfile from './profile';
+
 /**
  * User entity
  */
+
 interface IUser {
   id: string;
   firstName: string;
@@ -11,6 +14,7 @@ interface IUser {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
+  profile?: IProfile;
 }
 
 export default IUser;

@@ -6,7 +6,7 @@ import type {
   ITokenRenewOutput,
 } from '@store/endpoints/interfaces/authentication/methods/token/renew';
 import type IList from '@store/endpoints/interfaces/common/list';
-import type IQuery from '@store/endpoints/interfaces/common/query';
+import type { IQuery } from '@store/endpoints/interfaces/common/query';
 import type IView from '@store/endpoints/interfaces/common/view';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type {
@@ -50,21 +50,25 @@ class Endpoints {
    * Authentication microservice
    */
   authentication = {
-    renewToken: this.createHandler<ITokenRenewInput, ITokenRenewOutput>(
-      'authentication.token.renew',
-    ),
-    cookiesRemove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove'),
+    token: {
+      renew: this.createHandler<ITokenRenewInput, ITokenRenewOutput>('authentication.token.renew'),
+    },
+    cookies: {
+      remove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove'),
+    },
   };
 
   /**
    * Users microservice
    */
   users = {
-    signIn: this.createHandler<ISignInInput, ISignInOutput>('users.user.sign-in'),
-    signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out'),
-    view: this.createHandler<IQuery, IView<IUser>>('users.user.view'),
-    me: this.createHandler<never, IView<IUser>>('users.user.me'),
-    list: this.createHandler<IQuery, IList<IUser>>('users.user.list'),
+    user: {
+      list: this.createHandler<IQuery<IUser>, IList<IUser>>('users.user.list'),
+      me: this.createHandler<never, IView<IUser>>('users.user.me'),
+      view: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.view'),
+      signIn: this.createHandler<ISignInInput, ISignInOutput>('users.user.sign-in'),
+      signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out'),
+    },
   };
 }
 
