@@ -27,7 +27,6 @@ module.exports = {
     project: ['./tsconfig.json'],
     tsconfigRootDir: './',
   },
-  settings: {},
   rules: {
     'unicorn/import-index': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
