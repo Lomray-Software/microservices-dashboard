@@ -6,8 +6,8 @@ interface IBaseException {
   status: number;
   service: string;
   message: string;
-  rawMessage: string;
-  payload: Record<string, any>;
+  rawMessage?: string;
+  payload?: Record<string, any> | IValidationErrorFields[];
 }
 
 /**
@@ -19,4 +19,10 @@ interface IMicroserviceResponse<TResult = Record<string, any>> {
   error?: IBaseException;
 }
 
-export type { IBaseException, IMicroserviceResponse };
+interface IValidationErrorFields {
+  value: string | number | boolean | null;
+  property: string;
+  constraints: Record<string, string>;
+}
+
+export type { IBaseException, IMicroserviceResponse, IValidationErrorFields };
