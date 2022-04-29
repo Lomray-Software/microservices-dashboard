@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_SERVER } from '@constants/index';
 import waitFor from '@helpers/wait-for';
 import type { IBaseException, IMicroserviceResponse } from '@interfaces/microservice';
@@ -182,6 +182,29 @@ class ApiClient {
   }
 
   /**
+   * Handle network and other internal errors
+   * @private
+   */
+  private static handleInternalError(e: AxiosError): IBaseException {
+    const { message, response, code } = e || {};
+    let errMessage = message;
+
+    // api timeout
+    if (code === 'ECONNABORTED' && message.includes('timeout')) {
+      errMessage = i18n.t('translation:timeoutError');
+    } else if (!response && message === 'Network Error') {
+      errMessage = i18n.t('translation:noInternetError');
+    }
+
+    return {
+      status: response?.status ?? 0,
+      code: 0,
+      service: 'unknown',
+      message: errMessage,
+    };
+  }
+
+  /**
    * Send request to API
    */
   public async sendRequest<TResponse, TRequest>(
@@ -190,29 +213,36 @@ class ApiClient {
     options: IApiClientReqOptions = {},
   ): Promise<IMicroserviceResponse<TResponse>> {
     const { req } = options;
-    const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
-      baseURL: API_DOMAIN,
-      method: 'POST',
-      withCredentials: IS_CLIENT, // pass cookies
-      headers: this.headers,
-      ...(req || {}),
-      data: {
-        method,
-        params,
-      },
-    });
 
-    // Common error handlers
-    if (data?.error) {
-      ApiClient.makeBeautifulError(data.error);
+    try {
+      const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
+        baseURL: API_DOMAIN,
+        method: 'POST',
+        withCredentials: IS_CLIENT, // pass cookies
+        headers: this.headers,
+        ...(req || {}),
+        data: {
+          method,
+          params,
+        },
+      });
 
-      if (await this.updateAuthTokens(data.error)) {
-        // repeat previous request
-        return this.sendRequest(method, params, options);
+      // Common error handlers
+      if (data?.error) {
+        ApiClient.makeBeautifulError(data.error);
+
+        if (await this.updateAuthTokens(data.error)) {
+          // repeat previous request
+          return this.sendRequest(method, params, options);
+        }
       }
-    }
 
-    return data;
+      return data;
+    } catch (e) {
+      return {
+        error: ApiClient.handleInternalError(e),
+      };
+    }
   }
 }
 

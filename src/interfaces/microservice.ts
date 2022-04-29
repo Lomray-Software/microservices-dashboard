@@ -6,8 +6,8 @@ interface IBaseException {
   status: number;
   service: string;
   message: string;
-  rawMessage: string;
-  payload: Record<string, any>;
+  rawMessage?: string;
+  payload?: Record<string, any>;
 }
 
 /**

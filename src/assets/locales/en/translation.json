@@ -4,5 +4,7 @@
   "userNotFound": "User not found.",
   "logoutButton": "Logout",
   "unknownError": "Unknown error",
-  "errorTitle": "Error"
+  "errorTitle": "Error",
+  "timeoutError": "Oops, something went wrong, please try again later.",
+  "noInternetError": "It looks like the internet connection has been lost."
 }

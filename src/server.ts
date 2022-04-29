@@ -45,6 +45,11 @@ void (async () => {
             ...getRenderProps(),
           });
 
+          // detect redirect
+          if (res.statusCode === 302 || res.statusCode === 301) {
+            return;
+          }
+
           res.send(html);
         } catch (error) {
           console.error(error);
