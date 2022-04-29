@@ -99,7 +99,10 @@ class Manager {
       newStore.init?.();
     }
 
-    this.initiatedStores.set(store, newStore);
+    // make store like a singleton
+    if (store?.['isSingletone'] ?? true) {
+      this.initiatedStores.set(store, newStore);
+    }
 
     return newStore as T;
   }
