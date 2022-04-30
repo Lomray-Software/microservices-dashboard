@@ -18,7 +18,8 @@ import type {
   ISignOutOutput,
 } from '@store/endpoints/interfaces/users/methods/user/sign-out';
 
-interface IEndpointsCreateHandlerConfig extends Pick<IApiClientReqOptions, 'isCached'> {}
+interface IEndpointsCreateHandlerConfig
+  extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
 
 /**
  * Backend API endpoints
@@ -42,19 +43,30 @@ class Endpoints {
    * Create endpoint handler
    */
   private createHandler =
-    <TInput, TOutput>(method: string, { isCached }: IEndpointsCreateHandlerConfig = {}) =>
+    <TInput, TOutput>(
+      method: string,
+      { isCached, isSkipRenew }: IEndpointsCreateHandlerConfig = {},
+    ) =>
     (params?: TInput, config?: IApiClientReqOptions['req']) =>
-      this.apiClient.sendRequest<TOutput, TInput>(method, params, { isCached, req: config });
+      this.apiClient.sendRequest<TOutput, TInput>(method, params, {
+        isCached,
+        isSkipRenew,
+        req: config,
+      });
 
   /**
    * Authentication microservice
    */
   authentication = {
     token: {
-      renew: this.createHandler<ITokenRenewInput, ITokenRenewOutput>('authentication.token.renew'),
+      renew: this.createHandler<ITokenRenewInput, ITokenRenewOutput>('authentication.token.renew', {
+        isSkipRenew: true,
+      }),
     },
     cookies: {
-      remove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove'),
+      remove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove', {
+        isSkipRenew: true,
+      }),
     },
   };
 
@@ -67,7 +79,9 @@ class Endpoints {
       me: this.createHandler<never, IView<IUser>>('users.user.me'),
       view: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.view'),
       signIn: this.createHandler<ISignInInput, ISignInOutput>('users.user.sign-in'),
-      signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out'),
+      signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out', {
+        isSkipRenew: true,
+      }),
     },
   };
 }

@@ -12,6 +12,7 @@ export const REFRESH_TOKEN_KEY = 'refresh-token';
 
 export interface IApiClientReqOptions {
   isCached?: boolean;
+  isSkipRenew?: boolean;
   req?: AxiosRequestConfig;
 }
 
@@ -212,7 +213,7 @@ class ApiClient {
     params?: TRequest,
     options: IApiClientReqOptions = {},
   ): Promise<IMicroserviceResponse<TResponse>> {
-    const { req } = options;
+    const { req = {}, isSkipRenew = false } = options;
 
     try {
       const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
@@ -220,7 +221,7 @@ class ApiClient {
         method: 'POST',
         withCredentials: IS_CLIENT, // pass cookies
         headers: this.headers,
-        ...(req || {}),
+        ...req,
         data: {
           method,
           params,
@@ -231,7 +232,7 @@ class ApiClient {
       if (data?.error) {
         ApiClient.makeBeautifulError(data.error);
 
-        if (await this.updateAuthTokens(data.error)) {
+        if (!isSkipRenew && (await this.updateAuthTokens(data.error))) {
           // repeat previous request
           return this.sendRequest(method, params, options);
         }
