@@ -98,6 +98,7 @@ class Auth implements IDomain {
       {
         headers: {
           'user-info': JSON.stringify({
+            device: 'web',
             userAgent: navigator.userAgent,
             hasCookies: navigator.cookieEnabled,
             language: navigator.language,
