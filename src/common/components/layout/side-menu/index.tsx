@@ -19,17 +19,19 @@ const SideMenu: FC = () => {
   const activeMenuItem = getActiveMenu(pathname);
 
   return (
-    <ul>
-      {Object.entries(MENU).map(([link, { titleKey }]) => (
-        <li key={link}>
-          <Link
-            to={link}
-            className={combineCss(activeMenuItem.titleKey === titleKey ? styles.active : '')}>
-            {t(`menu:${titleKey}`)}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div className={styles.navigation}>
+      <ul>
+        {Object.entries(MENU).map(([link, { titleKey }]) => (
+          <li key={link}>
+            <Link
+              to={link}
+              className={combineCss(activeMenuItem.titleKey === titleKey ? styles.active : '')}>
+              {t(`menu:${titleKey}`)}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

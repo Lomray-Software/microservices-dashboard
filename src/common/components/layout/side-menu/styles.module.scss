@@ -1,3 +1,11 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import 'src/assets/styles/util/media-query';
+
 .active {
   color: green;
+}
+
+.navigation {
+  width: 255px;
 }
