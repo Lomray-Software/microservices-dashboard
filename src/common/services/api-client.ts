@@ -158,7 +158,7 @@ class ApiClient {
 
       // Pass flag to client side for update auth tokens & user
       authStore.setShouldRefresh(true);
-      authStore.setIsFetching(true);
+      authStore.setFetching(true);
 
       return false;
     }

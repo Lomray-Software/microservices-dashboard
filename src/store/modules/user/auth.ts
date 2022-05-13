@@ -1,5 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 import { IS_CLIENT } from '@constants/index';
+import { withFetching } from '@helpers/with-fetching';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
@@ -44,15 +45,19 @@ class Auth implements IDomain {
     this.api = endpoints;
     this.userStore = storeManager.getStore(UserStore);
 
+    this.signIn = withFetching(this.signIn, this);
+    this.signOut = withFetching(this.signOut, this);
+    this.updateAuthToken = withFetching(this.updateAuthToken, this);
+
     makeObservable(this, {
       error: observable,
       isFetching: observable,
       shouldRefresh: observable,
-      signIn: action.bound,
-      signOut: action.bound,
+      signIn: action,
+      signOut: action,
       setError: action.bound,
       setShouldRefresh: action.bound,
-      setIsFetching: action.bound,
+      setFetching: action.bound,
     });
   }
 
@@ -84,7 +89,7 @@ class Auth implements IDomain {
   /**
    * Set is loading
    */
-  public setIsFetching(isLoading: boolean): void {
+  public setFetching(isLoading: boolean): void {
     this.isFetching = isLoading;
   }
 
@@ -93,7 +98,6 @@ class Auth implements IDomain {
    */
   public signIn = async (login: string, password: string): Promise<void> => {
     this.setError(null);
-    this.setIsFetching(true);
     const { result, error } = await this.api.users.user.signIn(
       { login, password },
       {
@@ -111,7 +115,6 @@ class Auth implements IDomain {
 
     if (error || !result) {
       this.setError(error?.message ?? i18n.t('userNotFound'));
-      this.setIsFetching(false);
 
       return;
     }
@@ -124,18 +127,15 @@ class Auth implements IDomain {
 
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);
-    this.setIsFetching(false);
   };
 
   /**
    * Logout user
    */
-  public async signOut(): Promise<void> {
+  public signOut = async (): Promise<void> => {
     if (!this.userStore.user?.id) {
       return;
     }
-
-    this.setIsFetching(true);
 
     const { result } = await this.api.users.user.signOut({ userId: this.userStore.user?.id });
 
@@ -147,21 +147,16 @@ class Auth implements IDomain {
     this.api.apiClient.setRefreshToken(null);
     this.userStore.setUser(null);
     this.userStore.setIsAuth(false);
-    this.setIsFetching(false);
-  }
+  };
 
   /**
    * Update auth tokens & refresh user
    */
-  public async updateAuthToken(): Promise<void> {
-    this.setIsFetching(true);
-
+  public updateAuthToken = async (): Promise<void> => {
     if (await this.api.apiClient.renewAuthTokens()) {
       await this.userStore.refresh();
     }
-
-    this.setIsFetching(false);
-  }
+  };
 }
 
 export default Auth;
