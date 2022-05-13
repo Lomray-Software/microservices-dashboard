@@ -7,6 +7,6 @@
   "errorTitle": "Ошибка",
   "timeoutError": "Ой, что-то пошло не так, попробуйте чуть позже.",
   "noInternetError": "Похоже, что интернет соединение пропало.",
-  "welcomeMessage": "Hello! let's get started",
-  "warningText": "Sign in to continue."
+  "welcomeMessage": "Привет! Давайте начнем",
+  "warningText": "Войдите, чтобы продолжить."
 }

@@ -2,9 +2,9 @@ import { Form, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '@components/error-message';
 import Input from '@components/forms/input/index.formik';
 import SubmitButton from '@components/forms/submit-button';
-import ButtonLoader from '@components/loaders/button-loader';
 import { APP_SHORT_NAME } from '@constants/index';
 import combineCss from '@helpers/combine-css';
 import type { SSRComponent } from '@interfaces/ssr-component';
@@ -22,7 +22,7 @@ export interface ILoginForm {
 /**
  * Login page
  */
-const Login: SSRComponent<Props> = ({ authStore: { error, signIn, isLoading } }) => {
+const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
   const { t } = useTranslation(['login-page', 'forms', 'translation']);
   const [initialValues] = useState<ILoginForm>({ login: '', password: '' });
 
@@ -59,9 +59,9 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn, isLoading } })
             <Form className={styles.form}>
               <Input name="login" type="text" placeholder={t('login-page:fieldLogin')} />
               <Input name="password" type="password" placeholder={t('login-page:fieldPassword')} />
-              <span className={combineCss(styles.errorMessage, styles.mainError)}>{error}</span>
-              <SubmitButton className={styles.button}>
-                {isLoading ? <ButtonLoader /> : t('login-page:buttonText')}
+              <ErrorMessage error={error} />
+              <SubmitButton className={styles.button} hasLoader>
+                {t('login-page:buttonText')}
               </SubmitButton>
             </Form>
           </Formik>

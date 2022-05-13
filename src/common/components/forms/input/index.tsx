@@ -13,10 +13,7 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
  */
 const Input: FC<IInput> = ({ additionalStyles, name, children, ...props }) => (
   <label htmlFor={name} className={styles.label}>
-    <input
-      className={combineCss(styles.input, additionalStyles ? additionalStyles : '')}
-      {...props}
-    />
+    <input className={combineCss(styles.input, additionalStyles || '')} {...props} />
     {children}
   </label>
 );

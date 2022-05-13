@@ -19,7 +19,7 @@ class Auth implements IDomain {
    * If auth store has some pending request
    * NOTE: except signIn, because Formik control this
    */
-  public isLoading = false;
+  public isFetching = false;
 
   /**
    * Only for SSR
@@ -46,13 +46,13 @@ class Auth implements IDomain {
 
     makeObservable(this, {
       error: observable,
-      isLoading: observable,
+      isFetching: observable,
       shouldRefresh: observable,
       signIn: action.bound,
       signOut: action.bound,
       setError: action.bound,
       setShouldRefresh: action.bound,
-      setIsLoading: action.bound,
+      setIsFetching: action.bound,
     });
   }
 
@@ -84,16 +84,16 @@ class Auth implements IDomain {
   /**
    * Set is loading
    */
-  public setIsLoading(isLoading: boolean): void {
-    this.isLoading = isLoading;
+  public setIsFetching(isLoading: boolean): void {
+    this.isFetching = isLoading;
   }
 
   /**
    * Authenticate user
    */
-  public async signIn(login: string, password: string): Promise<void> {
+  public signIn = async (login: string, password: string): Promise<void> => {
     this.setError(null);
-    this.setIsLoading(true);
+    this.setIsFetching(true);
     const { result, error } = await this.api.users.user.signIn(
       { login, password },
       {
@@ -111,7 +111,7 @@ class Auth implements IDomain {
 
     if (error || !result) {
       this.setError(error?.message ?? i18n.t('userNotFound'));
-      this.setIsLoading(false);
+      this.setIsFetching(false);
 
       return;
     }
@@ -124,8 +124,8 @@ class Auth implements IDomain {
 
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);
-    this.setIsLoading(false);
-  }
+    this.setIsFetching(false);
+  };
 
   /**
    * Logout user
@@ -135,7 +135,7 @@ class Auth implements IDomain {
       return;
     }
 
-    this.setIsLoading(true);
+    this.setIsFetching(true);
 
     const { result } = await this.api.users.user.signOut({ userId: this.userStore.user?.id });
 
@@ -147,20 +147,20 @@ class Auth implements IDomain {
     this.api.apiClient.setRefreshToken(null);
     this.userStore.setUser(null);
     this.userStore.setIsAuth(false);
-    this.setIsLoading(false);
+    this.setIsFetching(false);
   }
 
   /**
    * Update auth tokens & refresh user
    */
   public async updateAuthToken(): Promise<void> {
-    this.setIsLoading(true);
+    this.setIsFetching(true);
 
     if (await this.api.apiClient.renewAuthTokens()) {
       await this.userStore.refresh();
     }
 
-    this.setIsLoading(false);
+    this.setIsFetching(false);
   }
 }
 
