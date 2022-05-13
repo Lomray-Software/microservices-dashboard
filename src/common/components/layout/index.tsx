@@ -11,6 +11,7 @@ import type { SSRLayoutComponent } from '@interfaces/ssr-component';
 import '@services/localization';
 import stores from './index.stores';
 import SideMenu from './side-menu';
+import styles from './styles.module.scss';
 
 const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguage }) => {
   useSSR(initialI18nStore, initialLanguage);
@@ -18,7 +19,7 @@ const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguag
   const { hasLoadingBar, hasHeader, hasFooter, hasSideMenu } = useAppContext();
 
   return (
-    <div className="Wrapper-layout">
+    <div className={styles.wrapper}>
       {hasLoadingBar && <LoadingBar />}
       <ReactNotifications />
       <ScrollRestoration />
