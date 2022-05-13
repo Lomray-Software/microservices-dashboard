@@ -59,7 +59,7 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
             <Form className={styles.form}>
               <Input name="login" type="text" placeholder={t('login-page:fieldLogin')} />
               <Input name="password" type="password" placeholder={t('login-page:fieldPassword')} />
-              <ErrorMessage error={error} />
+              <ErrorMessage>{error}</ErrorMessage>
               <SubmitButton className={styles.button} hasLoader>
                 {t('login-page:buttonText')}
               </SubmitButton>
