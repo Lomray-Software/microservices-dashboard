@@ -1,5 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 import { IS_CLIENT } from '@constants/index';
+import { withFetching } from '@helpers/with-fetching';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
@@ -19,7 +20,7 @@ class Auth implements IDomain {
    * If auth store has some pending request
    * NOTE: except signIn, because Formik control this
    */
-  public isLoading = false;
+  public isFetching = false;
 
   /**
    * Only for SSR
@@ -44,15 +45,17 @@ class Auth implements IDomain {
     this.api = endpoints;
     this.userStore = storeManager.getStore(UserStore);
 
+    this.signIn = withFetching(this.signIn, this);
+    this.signOut = withFetching(this.signOut, this);
+    this.updateAuthToken = withFetching(this.updateAuthToken, this);
+
     makeObservable(this, {
       error: observable,
-      isLoading: observable,
+      isFetching: observable,
       shouldRefresh: observable,
-      signIn: action.bound,
-      signOut: action.bound,
       setError: action.bound,
       setShouldRefresh: action.bound,
-      setIsLoading: action.bound,
+      setFetching: action.bound,
     });
   }
 
@@ -84,14 +87,14 @@ class Auth implements IDomain {
   /**
    * Set is loading
    */
-  public setIsLoading(isLoading: boolean): void {
-    this.isLoading = isLoading;
+  public setFetching(isLoading: boolean): void {
+    this.isFetching = isLoading;
   }
 
   /**
    * Authenticate user
    */
-  public async signIn(login: string, password: string): Promise<void> {
+  public signIn = async (login: string, password: string): Promise<void> => {
     this.setError(null);
     const { result, error } = await this.api.users.user.signIn(
       { login, password },
@@ -122,17 +125,15 @@ class Auth implements IDomain {
 
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);
-  }
+  };
 
   /**
    * Logout user
    */
-  public async signOut(): Promise<void> {
+  public signOut = async (): Promise<void> => {
     if (!this.userStore.user?.id) {
       return;
     }
-
-    this.setIsLoading(true);
 
     const { result } = await this.api.users.user.signOut({ userId: this.userStore.user?.id });
 
@@ -144,21 +145,16 @@ class Auth implements IDomain {
     this.api.apiClient.setRefreshToken(null);
     this.userStore.setUser(null);
     this.userStore.setIsAuth(false);
-    this.setIsLoading(false);
-  }
+  };
 
   /**
    * Update auth tokens & refresh user
    */
-  public async updateAuthToken(): Promise<void> {
-    this.setIsLoading(true);
-
+  public updateAuthToken = async (): Promise<void> => {
     if (await this.api.apiClient.renewAuthTokens()) {
       await this.userStore.refresh();
     }
-
-    this.setIsLoading(false);
-  }
+  };
 }
 
 export default Auth;

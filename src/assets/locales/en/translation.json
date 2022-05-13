@@ -6,5 +6,7 @@
   "unknownError": "Unknown error",
   "errorTitle": "Error",
   "timeoutError": "Oops, something went wrong, please try again later.",
-  "noInternetError": "It looks like the internet connection has been lost."
+  "noInternetError": "It looks like the internet connection has been lost.",
+  "welcomeMessage": "Hello! let's get started",
+  "warningText": "Sign in to continue."
 }

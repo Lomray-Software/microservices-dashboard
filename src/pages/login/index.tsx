@@ -1,11 +1,16 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '@components/error-message';
+import Input from '@components/forms/input/index.formik';
 import SubmitButton from '@components/forms/submit-button';
+import { APP_SHORT_NAME } from '@constants/index';
+import combineCss from '@helpers/combine-css';
 import type { SSRComponent } from '@interfaces/ssr-component';
 import type { StoreProps } from './index.stores';
 import validationSchema from './validation-schema';
+import styles from './styles.module.scss';
 
 type Props = StoreProps;
 
@@ -17,9 +22,9 @@ export interface ILoginForm {
 /**
  * Login page
  */
-const Login: SSRComponent<Props> = ({ authStore: { error, signIn, isLoading } }) => {
-  const { t } = useTranslation(['login-page', 'forms']);
-  const [initialValues] = useState<ILoginForm>({ login: 'test@test.com', password: '123456789' });
+const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
+  const { t } = useTranslation(['login-page', 'forms', 'translation']);
+  const [initialValues] = useState<ILoginForm>({ login: '', password: '' });
 
   /**
    * Login user
@@ -38,23 +43,30 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn, isLoading } })
       <Helmet>
         <title>{t('login-page:pageTitle')}</title>
       </Helmet>
-      {(isLoading && <div>Loading...</div>) || (
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}>
-          <Form>
-            <label htmlFor="login">{t('login-page:fieldLogin')}</label>
-            <Field name="login" placeholder={t('login-page:fieldLogin')} />
-            <ErrorMessage name="login" />
-            <label htmlFor="password">{t('login-page:fieldPassword')}</label>
-            <Field type="password" name="password" placeholder={t('login-page:fieldPassword')} />
-            <ErrorMessage name="password" />
-            {error && <span>{error}</span>}
-            <SubmitButton>{t('login-page:buttonText')}</SubmitButton>
-          </Form>
-        </Formik>
-      )}
+      <div className={combineCss('container', styles.container)}>
+        <div className={styles.wrapper}>
+          <div className={styles.head}>
+            <h1 className={styles.title}>{APP_SHORT_NAME}</h1>
+            <p className={styles.description}>
+              <span className={styles.welcomeMessage}>{t('translation:welcomeMessage')}</span>
+              <span className={styles.text}>{t('translation:warningText')}</span>
+            </p>
+          </div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}>
+            <Form className={styles.form}>
+              <Input name="login" type="text" placeholder={t('login-page:fieldLogin')} />
+              <Input name="password" type="password" placeholder={t('login-page:fieldPassword')} />
+              <ErrorMessage>{error}</ErrorMessage>
+              <SubmitButton className={styles.button} hasLoader>
+                {t('login-page:buttonText')}
+              </SubmitButton>
+            </Form>
+          </Formik>
+        </div>
+      </div>
     </>
   );
 };
