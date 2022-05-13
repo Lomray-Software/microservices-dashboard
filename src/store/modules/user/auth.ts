@@ -53,8 +53,6 @@ class Auth implements IDomain {
       error: observable,
       isFetching: observable,
       shouldRefresh: observable,
-      signIn: action,
-      signOut: action,
       setError: action.bound,
       setShouldRefresh: action.bound,
       setFetching: action.bound,
