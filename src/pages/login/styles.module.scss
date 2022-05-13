@@ -1,0 +1,116 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import 'src/assets/styles/util/media-query';
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.wrapper {
+  padding: 50px;
+  background-color: $background-primary;
+
+  .head {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, min-content);
+    grid-row-gap: 32px;
+
+    .title {
+      @include font-size(32px, $font-weight-bold, $white);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+
+    .description {
+      display: grid;
+      grid-template-rows: repeat(2, min-content);
+      grid-row-gap: 8px;
+
+      .welcomeMessage {
+        @include font-size(18px, $font-weight-medium, $white);
+      }
+
+      .text {
+        @include font-size(15px, 100, $white);
+      }
+    }
+  }
+
+  .form {
+    position: relative;
+    display: grid;
+    grid-template-columns: 405px;
+    grid-template-rows: repeat(3, min-content);
+    grid-row-gap: 30px;
+    padding-top: 24px;
+
+    .label {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 100%;
+
+      .input {
+        width: 100%;
+        padding: 15px 12px;
+        background-color: transparent;
+        border: 1px solid $darkslategray;
+        transition: all .2s;
+        @include font-size(14px, $font-weight-light, $text-primary);
+
+        &::placeholder {
+          color: $input-placeholder-color;
+        }
+
+        &:focus {
+          background-color: transparent;
+          border: 1px solid $input-border-active;
+          outline: none;
+          @include font-size(14px, $font-weight-medium, $input-placeholder-color);
+        }
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:focus {
+          -webkit-box-shadow: 0 0 0 50px #191c24 inset;
+          -webkit-text-fill-color: $input-placeholder-color;
+        }
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+          background-color: transparent !important;
+        }
+      }
+    }
+
+    .button {
+      padding: 16px 32px;
+      text-transform: uppercase;
+      background-color: $button-login;
+      outline: none;
+      border: none;
+      @include font-size(14px, $font-weight-light, $white);
+    }
+
+    .errorMessage {
+      position: absolute;
+      bottom: -22px;
+      left: 15px;
+      @include font-size(14px, $font-weight-light, $pink);
+
+      &.mainError {
+        width: 100%;
+        align-items: center;
+        bottom: 55px;
+        left: 50%;
+        transform: translateX(-47%);
+      }
+    }
+  }
+}
