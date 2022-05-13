@@ -33,4 +33,6 @@ export const SITE_DOMAIN = process.env.RAZZLE_SITE_DOMAIN || '';
 
 export const APP_NAME = process.env.RAZZLE_APP_NAME;
 
+export const APP_SHORT_NAME = process.env.RAZZLE_APP_SHORT_NAME || '';
+
 export const BACKGROUND_COLOR = process.env.RAZZLE_APP_BACKGROUND_COLOR;

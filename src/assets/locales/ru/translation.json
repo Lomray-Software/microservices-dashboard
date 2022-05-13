@@ -7,7 +7,6 @@
   "errorTitle": "Ошибка",
   "timeoutError": "Ой, что-то пошло не так, попробуйте чуть позже.",
   "noInternetError": "Похоже, что интернет соединение пропало.",
-  "coronaTitle": "corona",
   "welcomeMessage": "Hello! let's get started",
   "warningText": "Sign in to continue."
 }

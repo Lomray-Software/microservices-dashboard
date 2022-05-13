@@ -57,46 +57,6 @@
       grid-template-columns: 100%;
     }
 
-    .label {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      width: 100%;
-
-      .input {
-        width: 100%;
-        padding: 15px 12px;
-        background-color: transparent;
-        border: 1px solid $darkslategray;
-        transition: all .2s;
-        @include font-size(14px, $font-weight-light, $text-primary);
-
-        &::placeholder {
-          color: $input-placeholder-color;
-        }
-
-        &:focus {
-          background-color: transparent;
-          border: 1px solid $input-border-active;
-          outline: none;
-          @include font-size(14px, $font-weight-medium, $input-placeholder-color);
-        }
-
-        &:-webkit-autofill,
-        &:-webkit-autofill:focus {
-          -webkit-box-shadow: 0 0 0 50px #191c24 inset;
-          -webkit-text-fill-color: $input-placeholder-color;
-        }
-
-        &:-webkit-autofill,
-        &:-webkit-autofill:hover,
-        &:-webkit-autofill:focus,
-        &:-webkit-autofill:active {
-          background-color: transparent !important;
-        }
-      }
-    }
-
     .button {
       padding: 16px 32px;
       text-transform: uppercase;
@@ -112,7 +72,7 @@
       left: 15px;
       @include font-size(14px, $font-weight-light, $pink);
 
-      &.mainError {
+      .mainError {
         width: 100%;
         align-items: center;
         bottom: 55px;

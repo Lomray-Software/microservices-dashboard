@@ -93,6 +93,7 @@ class Auth implements IDomain {
    */
   public async signIn(login: string, password: string): Promise<void> {
     this.setError(null);
+    this.setIsLoading(true);
     const { result, error } = await this.api.users.user.signIn(
       { login, password },
       {
@@ -110,6 +111,7 @@ class Auth implements IDomain {
 
     if (error || !result) {
       this.setError(error?.message ?? i18n.t('userNotFound'));
+      this.setIsLoading(false);
 
       return;
     }
@@ -122,6 +124,7 @@ class Auth implements IDomain {
 
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);
+    this.setIsLoading(false);
   }
 
   /**
