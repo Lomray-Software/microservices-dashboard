@@ -19,7 +19,7 @@ const SideMenu: FC = () => {
   const activeMenuItem = getActiveMenu(pathname);
 
   return (
-    <div className={styles.navigation}>
+    <nav className={styles.navigation}>
       <ul>
         {Object.entries(MENU).map(([link, { titleKey }]) => (
           <li key={link}>
@@ -31,7 +31,7 @@ const SideMenu: FC = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
   );
 };
 

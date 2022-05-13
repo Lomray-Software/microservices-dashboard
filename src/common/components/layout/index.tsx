@@ -19,13 +19,14 @@ const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguag
   const { hasLoadingBar, hasHeader, hasFooter, hasSideMenu } = useAppContext();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={hasHeader && hasSideMenu ? styles.wrapper : ''}>
       {hasLoadingBar && <LoadingBar />}
       <ReactNotifications />
       <ScrollRestoration />
-      {hasHeader && <Header />}
       {hasSideMenu && <SideMenu />}
-      {children}
+      {hasHeader && <Header />}
+      {/*{hasHeader && hasSideMenu ? <main className={styles.content}>{children}</main> : children}*/}
+      <main>{children}</main>
       {hasFooter && <Footer />}
     </div>
   );

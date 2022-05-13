@@ -23,6 +23,18 @@ body {
   color: #FFFFFF;
 }
 
+header {
+  grid-area: header;
+}
+
+nav {
+  grid-area: nav;
+}
+
+main {
+  grid-area: main;
+}
+
 .container {
   width: 100%;
   max-width: 1820px;
