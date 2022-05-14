@@ -2,10 +2,75 @@
 @import 'src/assets/styles/util/mixins';
 @import 'src/assets/styles/util/media-query';
 
-.active {
-  color: green;
-}
-
 .navigation {
+  width: 255px;
+  height: 100vh;
+  background-color: $background-primary;
+  transition: width .1s ease-in;
 
+  &.close {
+    overflow-x: hidden;
+    width: 70px;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-left: 20px;
+    @include font-size(24px, $font-weight-bold, $white);
+  }
+
+  .item {
+    transition: all 0.3s ease-in;
+
+    .link {
+      display: flex;
+      align-items: center;
+      padding: 13px 0 13px 20px;
+      max-width: 225px;
+      border-top-right-radius: 100px;
+      border-bottom-right-radius: 100px;
+      text-decoration: none;
+      @include font-size(15px, $font-weight-medium, $text-secondary);
+
+      &.active {
+        background-color: $tab-head-bg;
+        color: $white;
+      }
+
+      &:hover {
+        background-color: $tab-head-bg;
+      }
+
+      .round {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        background-color: rgba(108, 114, 147, .2);
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+    }
+
+    &:first-child {
+      margin-top: 20px;
+    }
+  }
+
+  .list {
+    padding: 30px 0;
+    list-style: none;
+
+    &:before {
+      content: attr(aria-label);
+      @include font-size(14px, $font-weight-medium, $text-secondary);
+      margin-left: 20px;
+    }
+  }
 }

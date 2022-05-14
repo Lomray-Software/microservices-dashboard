@@ -7,6 +7,7 @@ import LoadingBar from '@components/loading-bar';
 import ScrollRestoration from '@components/scroll-restoration';
 import { useAppContext } from '@context/app';
 import InitialProps from '@helpers/initial-props';
+import useToggle from '@helpers/use-toggle';
 import type { SSRLayoutComponent } from '@interfaces/ssr-component';
 import '@services/localization';
 import stores from './index.stores';
@@ -14,6 +15,8 @@ import SideMenu from './side-menu';
 import styles from './styles.module.scss';
 
 const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguage }) => {
+  const [isToggle, setIsToggle] = useToggle(false);
+
   useSSR(initialI18nStore, initialLanguage);
 
   const { hasLoadingBar, hasHeader, hasFooter, hasSideMenu } = useAppContext();
@@ -23,11 +26,12 @@ const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguag
       {hasLoadingBar && <LoadingBar />}
       <ReactNotifications />
       <ScrollRestoration />
-      {hasSideMenu && <SideMenu />}
-      {hasHeader && <Header />}
-      {/*{hasHeader && hasSideMenu ? <main className={styles.content}>{children}</main> : children}*/}
-      <main>{children}</main>
-      {hasFooter && <Footer />}
+      {hasSideMenu && <SideMenu isToggle={isToggle} />}
+      <main>
+        {hasHeader && <Header toggleNavigation={setIsToggle} />}
+        {children}
+        {hasFooter && <Footer />}
+      </main>
     </div>
   );
 };

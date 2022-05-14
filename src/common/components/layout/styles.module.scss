@@ -1,11 +1,5 @@
 .wrapper {
   display: grid;
-  grid-template-columns: 255px 1fr;
-  grid-template-areas: "nav header"
-                       "nav main"
-                       "nav main";
+  grid-template-columns: min-content auto;
 }
 
-.content {
-
-}
