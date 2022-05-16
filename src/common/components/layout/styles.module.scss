@@ -1,5 +1,11 @@
+@import "src/assets/styles/util/media-query";
+
 .wrapper {
   display: grid;
   grid-template-columns: min-content auto;
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+  }
 }
 

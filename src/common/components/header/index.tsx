@@ -1,58 +1,66 @@
+import { mdiBackburger } from '@mdi/js';
+import Icon from '@mdi/react';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Notification } from '@assets/images/icons/notification-white.svg';
-import ButtonPrimary from '@components/button-primary';
 import Link from '@components/link';
 import combineCss from '@helpers/combine-css';
+import useToggle from '@helpers/use-toggle';
+import SideMenu from '../side-menu/index';
 import type { StoreProps } from './index.stores';
+import User from './user';
 import styles from './styles.module.scss';
 
 interface IHeader {
   toggleNavigation: () => void;
 }
 
-const Header: FC<StoreProps & IHeader> = ({ userStore: { user }, toggleNavigation }) => {
+const Header: FC<StoreProps & IHeader> = ({
+  userStore: { user },
+  toggleNavigation,
+  authStore: { signOut },
+}) => {
   const { t } = useTranslation('translation');
+
+  const [isOpenPopup, setIsOpenPopup] = useToggle(false);
+  const [isOpenNavigation, setIsOpenNavigation] = useToggle(false);
 
   return (
     <header className={styles.header}>
+      {isOpenPopup && (
+        <div role="presentation" className={styles.closeItem} onClick={setIsOpenPopup} />
+      )}
       <button type="button" className={styles.button} onClick={toggleNavigation}>
         {[...Array(3)].map((_, i) => (
           // eslint-disable-next-line react/no-array-index-key
           <span className={styles.line} key={i} />
         ))}
       </button>
-      <label>
+      <Link to="/" className={styles.logo}>
+        D
+      </Link>
+      <label className={styles.wrapperSearch}>
         <input className={styles.input} type="text" placeholder={t('search')} />
       </label>
       <div className={styles.notification}>
         <Notification />
       </div>
-      <div className={styles.wrapperUser}>
-        <div className={styles.wrapperImage}>
-          <img className={styles.img} src={user?.profile?.photo} alt="user-avatar" />
-        </div>
-        <p className={styles.name}>
-          {user?.firstName}
-          <i className={styles.chevron} />
-        </p>
-        <div className={styles.modalUser}>
-          <ul aria-label={t('profileTitle')} className={styles.list}>
-            <li>
-              <div className={styles.round} />
-              <Link to="/settings" className={combineCss(styles.item, styles.link)}>
-                {t('settings')}
-              </Link>
-              <span className={styles.bottomElement} />
-            </li>
-            <li>
-              <ButtonPrimary className={combineCss(styles.item, styles.logout)} type="button">
-                {t('logOut')}
-              </ButtonPrimary>
-              <span className={styles.bottomElement} />
-            </li>
-          </ul>
-        </div>
+      <User
+        isOpen={isOpenPopup}
+        photo={user?.profile?.photo}
+        name={user?.firstName}
+        signOut={signOut}
+        setIsOpenPopup={setIsOpenPopup}
+      />
+      <button className={styles.navigationButton} type="button" onClick={setIsOpenNavigation}>
+        <Icon path={mdiBackburger} size={1.5} color="#6c7293" />
+      </button>
+      <div
+        className={combineCss(
+          styles.wrapperNavigation,
+          isOpenNavigation ? styles.wrapperNavigationOpen : '',
+        )}>
+        <SideMenu isToggle={isOpenNavigation} isMobile />
       </div>
     </header>
   );

@@ -10,8 +10,8 @@ import InitialProps from '@helpers/initial-props';
 import useToggle from '@helpers/use-toggle';
 import type { SSRLayoutComponent } from '@interfaces/ssr-component';
 import '@services/localization';
+import SideMenu from '../side-menu/index';
 import stores from './index.stores';
-import SideMenu from './side-menu';
 import styles from './styles.module.scss';
 
 const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguage }) => {

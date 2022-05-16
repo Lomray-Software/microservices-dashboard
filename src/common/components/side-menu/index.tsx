@@ -16,9 +16,10 @@ import styles from './styles.module.scss';
 
 interface ISideMenu {
   isToggle: boolean;
+  isMobile?: boolean;
 }
 
-const SideMenu: FC<ISideMenu> = ({ isToggle }) => {
+const SideMenu: FC<ISideMenu> = ({ isToggle, isMobile }) => {
   const { t } = useTranslation(['menu']);
   const { pathname } = useLocation();
 
@@ -48,7 +49,7 @@ const SideMenu: FC<ISideMenu> = ({ isToggle }) => {
                 <span className={styles.round}>
                   <Icon path={src} size={1} color={color} />
                 </span>
-                {!isToggle && t(`menu:${titleKey}`)}
+                {isMobile ? t(`menu:${titleKey}`) : !isToggle && t(`menu:${titleKey}`)}
               </Link>
             </li>
           ),

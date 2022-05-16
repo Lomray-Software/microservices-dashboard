@@ -8,9 +8,19 @@
   background-color: $background-primary;
   transition: width .1s ease-in;
 
+  @include media-breakpoint-down(md) {
+    display: none;
+    background-color: $nav-second-bg;
+  }
+
   &.close {
     overflow-x: hidden;
     width: 70px;
+
+    @include media-breakpoint-down(md) {
+      display: block;
+      width: 255px;
+    }
   }
 
   .title {
@@ -22,6 +32,10 @@
     text-decoration: none;
     padding-left: 20px;
     @include font-size(24px, $font-weight-bold, $white);
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
   }
 
   .item {
@@ -66,6 +80,10 @@
   .list {
     padding: 30px 0;
     list-style: none;
+
+    @include media-breakpoint-down(md) {
+      padding: 0;
+    }
 
     &:before {
       content: attr(aria-label);

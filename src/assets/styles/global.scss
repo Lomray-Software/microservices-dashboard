@@ -1,5 +1,6 @@
 @import 'util/fonts';
 @import 'util/vars';
+@import 'util/media-query';
 
 *,
 *::before,
@@ -24,7 +25,7 @@ body {
 main {
   width: 100%;
   display: grid;
-  grid-template-rows: 70px 1fr min-content;
+  grid-template-rows: min-content 1fr min-content;
 }
 
 input {
