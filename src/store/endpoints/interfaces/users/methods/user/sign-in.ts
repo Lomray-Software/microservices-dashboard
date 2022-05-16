@@ -1,4 +1,4 @@
-import IUser from '@store/endpoints/interfaces/users/entities/user';
+import type IUser from '@store/endpoints/interfaces/users/entities/user';
 
 interface ISignInInput {
   login: string;

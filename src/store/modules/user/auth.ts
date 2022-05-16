@@ -4,7 +4,7 @@ import { withFetching } from '@helpers/with-fetching';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
-import { IConstructorParams } from '@store/manager';
+import type { IConstructorParams } from '@store/manager';
 import UserStore from '@store/modules/user';
 
 /**

@@ -1,4 +1,5 @@
-import React, { FC, useCallback, useContext, useMemo, useState } from 'react';
+import type { FC } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { IS_CLIENT } from '@constants/index';
 import canUseWebP from '@helpers/can-use-webp';

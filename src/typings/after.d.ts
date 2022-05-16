@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export,@typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-interface */
-import { CtxBase } from '@lomray/after';
-import { IAppContext } from '@context/app';
-import Manager from '@store/manager';
+import type { CtxBase } from '@lomray/after';
+import type { IAppContext } from '@context/app';
+import type Manager from '@store/manager';
 
 declare module '@jaredpalmer/after' {
   export interface InitialData {

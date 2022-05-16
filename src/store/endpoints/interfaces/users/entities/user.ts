@@ -1,4 +1,4 @@
-import IProfile from './profile';
+import type IProfile from './profile';
 
 /**
  * User entity

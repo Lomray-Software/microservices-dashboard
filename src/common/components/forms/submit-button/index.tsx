@@ -1,5 +1,6 @@
 import { useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import type { IButtonPrimary } from '@components/button-primary';
 import ButtonPrimary from '@components/button-primary';
 import Spinner from '@components/loaders/spinner';

@@ -1,6 +1,7 @@
-import { asyncComponent, AsyncRouteableComponent } from '@jaredpalmer/after';
+import type { AsyncRouteableComponent } from '@jaredpalmer/after';
+import { asyncComponent } from '@jaredpalmer/after';
 import React from 'react';
-import { RouteProps } from 'react-router';
+import type { RouteProps } from 'react-router';
 import Loader from '@components/loaders/main-loader';
 import ROUTES from '@constants/routes';
 import NotFound from '@pages/not-found';

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import ApiClient, { IApiClientReqOptions } from '@services/api-client';
+import type { IApiClientReqOptions } from '@services/api-client';
+import type ApiClient from '@services/api-client';
 import type ICookiesRemoveOutput from '@store/endpoints/interfaces/authentication/methods/cookies/remove';
 import type {
   ITokenRenewInput,

@@ -1,8 +1,9 @@
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { observer } from 'mobx-react-lite';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import { useStoreManagerContext } from '@context/store-manager';
-import { IConstructableStore } from '@store/manager';
+import type { IConstructableStore } from '@store/manager';
 
 /**
  * Make component observable and pass stores as props

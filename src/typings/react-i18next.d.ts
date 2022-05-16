@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import namespaces from '../assets/locales/namespaces';
+import type namespaces from '../assets/locales/namespaces';
 
 declare module 'react-i18next' {
   type DefaultResourcesCustom = typeof namespaces;

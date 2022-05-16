@@ -1,5 +1,7 @@
-import React, { FC, ReactElement } from 'react';
-import { RouteComponentProps, Redirect } from 'react-router-dom';
+import type { FC, ReactElement } from 'react';
+import React from 'react';
+import type { RouteComponentProps } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import ROUTES from '@constants/routes';
 import type { StoreProps } from './index.stores';
 

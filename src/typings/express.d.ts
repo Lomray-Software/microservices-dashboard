@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import Cookies from 'universal-cookie';
-import i18n from '@services/localization';
+import type Cookies from 'universal-cookie';
+import type i18n from '@services/localization';
 
 declare module 'express' {
   export interface Request {

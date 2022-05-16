@@ -1,4 +1,5 @@
-import express, { Express, Handler, Request, Response } from 'express';
+import type { Express, Handler, Request, Response } from 'express';
+import express from 'express';
 import Backend from 'i18next-fs-backend';
 import i18nextMiddleware from 'i18next-http-middleware';
 import LanguageNamespaces from '@assets/locales/namespaces';

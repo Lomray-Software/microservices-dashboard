@@ -1,5 +1,5 @@
-import { Ctx, CtxStatic, DocumentgetInitialProps, InitialData } from '@jaredpalmer/after';
-import { FC, ReactNode } from 'react';
+import type { Ctx, CtxStatic, DocumentgetInitialProps, InitialData } from '@jaredpalmer/after';
+import type { FC, ReactNode } from 'react';
 
 /**
  * Type for functional SSR component

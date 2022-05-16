@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef, Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 /**
  * This hook need for reduce call state change

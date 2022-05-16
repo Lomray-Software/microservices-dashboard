@@ -1,5 +1,6 @@
 import { APP_LANGUAGES } from '@constants/index';
-import MENU, { TMenuValues } from '@constants/menu';
+import type { TMenuValues } from '@constants/menu';
+import MENU from '@constants/menu';
 
 /**
  * Get current active menu item by url

@@ -1,6 +1,8 @@
-import React, { FC, useMemo } from 'react';
+import type { FC } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkProps, Link as DefaultLink } from 'react-router-dom';
+import type { LinkProps } from 'react-router-dom';
+import { Link as DefaultLink } from 'react-router-dom';
 import { DEFAULT_APP_LANGUAGE } from '@constants/index';
 import { getLngCode } from '@services/localization';
 

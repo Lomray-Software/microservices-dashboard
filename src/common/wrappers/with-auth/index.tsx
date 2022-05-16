@@ -1,5 +1,6 @@
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import React, { ComponentType } from 'react';
+import type { ComponentType } from 'react';
+import React from 'react';
 import type { RouteComponentProps } from 'react-router-dom';
 import AuthGateway from '@components/auth-gateway/index.wrapper';
 

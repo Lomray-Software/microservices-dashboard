@@ -1,17 +1,20 @@
-import {
+import type {
   After as AfterComponent,
-  AfterData,
   AfterpartyProps,
-  AfterRoot,
-  AfterScripts,
-  AfterStyles,
   DocumentgetInitialProps,
   DocumentProps,
   RenderPageResult,
+} from '@jaredpalmer/after';
+import {
+  AfterData,
+  AfterRoot,
+  AfterScripts,
+  AfterStyles,
   SerializeData,
   __AfterContext,
 } from '@jaredpalmer/after';
-import React, { Component, ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import React, { Component } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { StoreManagerProvider } from '@common/context/store-manager';
 import Layout from '@components/layout';

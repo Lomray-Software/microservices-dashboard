@@ -1,4 +1,5 @@
-import { ErrorMessage, Field, FieldProps } from 'formik';
+import type { FieldProps } from 'formik';
+import { ErrorMessage, Field } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
 import type { IInput } from './index';
