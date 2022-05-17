@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import UserPopup from '@modals/user';
+import Popup from './popup';
 import styles from './styles.module.scss';
 
 interface IUser {
@@ -19,7 +19,7 @@ const User: FC<IUser> = ({ isOpen, setIsOpenPopup, signOut, photo, name }) => (
       {name}
       <i className={styles.chevron} />
     </p>
-    <UserPopup isOpen={isOpen} signOut={signOut} />
+    <Popup isOpen={isOpen} signOut={signOut} />
   </div>
 );
 

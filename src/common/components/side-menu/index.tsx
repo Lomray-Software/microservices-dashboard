@@ -9,16 +9,14 @@ import combineCss from '@helpers/combine-css';
 import getActiveMenu from '@helpers/get-active-menu';
 import styles from './styles.module.scss';
 
-/**
- * Side menu
- * @constructor
- */
-
 interface ISideMenu {
   isToggle: boolean;
   isMobile?: boolean;
 }
 
+/**
+ * Side menu
+ */
 const SideMenu: FC<ISideMenu> = ({ isToggle, isMobile }) => {
   const { t } = useTranslation(['menu']);
   const { pathname } = useLocation();
@@ -28,7 +26,7 @@ const SideMenu: FC<ISideMenu> = ({ isToggle, isMobile }) => {
   return (
     <nav className={combineCss(styles.navigation, isToggle ? styles.close : '')}>
       <Link to="/" className={styles.title}>
-        {!isToggle ? APP_SHORT_NAME : 'D'}
+        {!isToggle ? APP_SHORT_NAME : APP_SHORT_NAME[0]}
       </Link>
       <ul className={styles.list} aria-label={!isToggle ? t('menu:navTitle') : ''}>
         {Object.entries(MENU).map(

@@ -5,12 +5,12 @@ import Footer from '@components/footer';
 import Header from '@components/header/index.wrapper';
 import LoadingBar from '@components/loading-bar';
 import ScrollRestoration from '@components/scroll-restoration';
+import SideMenu from '@components/side-menu/index';
 import { useAppContext } from '@context/app';
 import InitialProps from '@helpers/initial-props';
 import useToggle from '@helpers/use-toggle';
 import type { SSRLayoutComponent } from '@interfaces/ssr-component';
 import '@services/localization';
-import SideMenu from '../side-menu/index';
 import stores from './index.stores';
 import styles from './styles.module.scss';
 
@@ -30,8 +30,8 @@ const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguag
       <main>
         {hasHeader && <Header toggleNavigation={setIsToggle} />}
         {children}
-        {hasFooter && <Footer />}
       </main>
+      {hasFooter && <Footer />}
     </div>
   );
 };

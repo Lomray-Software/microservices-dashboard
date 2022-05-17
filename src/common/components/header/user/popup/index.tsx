@@ -7,12 +7,12 @@ import Link from '@components/link';
 import combineCss from '@helpers/combine-css';
 import styles from './styles.module.scss';
 
-interface IUser {
+interface IPopup {
   isOpen: boolean;
   signOut: () => void;
 }
 
-const User: FC<IUser> = ({ isOpen, signOut }) => {
+const Popup: FC<IPopup> = ({ isOpen, signOut }) => {
   const { t } = useTranslation();
 
   return (
@@ -47,4 +47,4 @@ const User: FC<IUser> = ({ isOpen, signOut }) => {
   );
 };
 
-export default User;
+export default Popup;

@@ -20,8 +20,6 @@ export default MENU as Record<
   TMenuLinks,
   {
     titleKey: TMenuTitleKeys;
-    hasFlashingPoint?: boolean;
-    disableInFooter?: boolean;
     icon: { src: string; color: string };
   }
 >;

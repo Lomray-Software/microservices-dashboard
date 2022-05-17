@@ -25,7 +25,12 @@
       padding: 16px;
 
       &.title {
-       justify-content: left;
+        cursor: auto;
+        justify-content: left;
+
+        &:hover {
+          background-color: $darkViolet;
+        }
       }
 
       .round {
@@ -59,12 +64,14 @@
 
       &.link {
         text-decoration: none;
+        cursor: pointer;
       }
 
       &.logout {
         background: transparent;
         outline: none;
         border: none;
+        cursor: pointer;
       }
     }
   }

@@ -4,9 +4,10 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Notification } from '@assets/images/icons/notification-white.svg';
 import Link from '@components/link';
+import SideMenu from '@components/side-menu/index';
+import { APP_SHORT_NAME } from '@constants/index';
 import combineCss from '@helpers/combine-css';
 import useToggle from '@helpers/use-toggle';
-import SideMenu from '../side-menu/index';
 import type { StoreProps } from './index.stores';
 import User from './user';
 import styles from './styles.module.scss';
@@ -37,7 +38,7 @@ const Header: FC<StoreProps & IHeader> = ({
         ))}
       </button>
       <Link to="/" className={styles.logo}>
-        D
+        {APP_SHORT_NAME[0]}
       </Link>
       <label className={styles.wrapperSearch}>
         <input className={styles.input} type="text" placeholder={t('search')} />
