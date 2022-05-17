@@ -22,11 +22,22 @@ body {
   color: #FFFFFF;
 }
 
-main {
-  width: 100%;
-  display: grid;
-  grid-template-rows: min-content 1fr min-content;
+header {
+  grid-area: header;
 }
+
+main {
+  grid-area: main;
+}
+
+nav {
+  grid-area: nav;
+}
+
+footer {
+  grid-area: footer;
+}
+
 
 input {
   outline: none;

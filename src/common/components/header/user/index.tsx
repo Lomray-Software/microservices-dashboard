@@ -1,26 +1,25 @@
 import React, { FC } from 'react';
+import { StoreProps } from '@components/header/user/index.stores';
 import Popup from './popup';
 import styles from './styles.module.scss';
 
-interface IUser {
-  isOpen: boolean;
-  setIsOpenPopup: () => void;
-  signOut: () => void;
-  photo?: string;
-  name?: string;
-}
-
-const User: FC<IUser> = ({ isOpen, setIsOpenPopup, signOut, photo, name }) => (
-  <div role="presentation" onClick={setIsOpenPopup} className={styles.wrapperUser}>
-    <div className={styles.wrapperImage}>
-      <img className={styles.img} src={photo} alt="user-avatar" />
+const User: FC<StoreProps> = ({
+  userStore: { user, isOpenPopup, togglePopup },
+  authStore: { signOut },
+}) => (
+  <>
+    {isOpenPopup && <div role="presentation" className={styles.closeItem} onClick={togglePopup} />}
+    <div role="presentation" onClick={togglePopup} className={styles.wrapperUser}>
+      <div className={styles.wrapperImage}>
+        <img className={styles.img} src={user?.profile?.photo} alt="user-avatar" />
+      </div>
+      <p className={styles.name}>
+        {user?.firstName}
+        <i className={styles.chevron} />
+      </p>
+      <Popup isOpen={isOpenPopup} signOut={signOut} />
     </div>
-    <p className={styles.name}>
-      {name}
-      <i className={styles.chevron} />
-    </p>
-    <Popup isOpen={isOpen} signOut={signOut} />
-  </div>
+  </>
 );
 
 export default User;

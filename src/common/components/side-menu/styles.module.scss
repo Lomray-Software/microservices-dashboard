@@ -17,9 +17,11 @@
     overflow-x: hidden;
     width: 70px;
 
-    @include media-breakpoint-down(md) {
-      display: block;
-      width: 255px;
+    &.mobile {
+      @include media-breakpoint-down(md) {
+        display: block;
+        width: 255px;
+      }
     }
   }
 

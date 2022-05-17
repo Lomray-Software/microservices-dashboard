@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import ButtonPrimary from '@components/button-primary';
 import Link from '@components/link';
+import ROUTES from '@constants/routes';
 import combineCss from '@helpers/combine-css';
 import styles from './styles.module.scss';
 
@@ -26,7 +27,7 @@ const Popup: FC<IPopup> = ({ isOpen, signOut }) => {
           <div className={styles.round}>
             <Icon path={mdiCogSync} size={1} color="yellow" />
           </div>
-          <Link to="/settings" className={combineCss(styles.item, styles.link)}>
+          <Link to={ROUTES.SETTINGS} className={combineCss(styles.item, styles.link)}>
             {t('settings')}
           </Link>
           <span className={styles.bottomElement} />
