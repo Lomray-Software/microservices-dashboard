@@ -1,3 +1,4 @@
+import { mdiAccountCowboyHatOutline, mdiChessRook } from '@mdi/js';
 import ROUTES from '@constants/routes';
 
 /**
@@ -5,8 +6,8 @@ import ROUTES from '@constants/routes';
  * Automatically works with:
  */
 const MENU = {
-  [ROUTES.HOME]: { titleKey: 'home' },
-  [ROUTES.USERS]: { titleKey: 'users' },
+  [ROUTES.HOME]: { titleKey: 'home', icon: { src: mdiChessRook, color: 'orange' } },
+  [ROUTES.USERS]: { titleKey: 'users', icon: { src: mdiAccountCowboyHatOutline, color: 'green' } },
 } as const;
 
 export type TMenuLinks = keyof typeof MENU;
@@ -17,5 +18,8 @@ export type TMenuTitleKeys = typeof MENU[TMenuLinks]['titleKey'];
 
 export default MENU as Record<
   TMenuLinks,
-  { titleKey: TMenuTitleKeys; hasFlashingPoint?: boolean; disableInFooter?: boolean }
+  {
+    titleKey: TMenuTitleKeys;
+    icon: { src: string; color: string };
+  }
 >;

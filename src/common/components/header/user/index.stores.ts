@@ -1,8 +1,10 @@
 import type { StoresType } from '@interfaces/helpers';
-import AppStore from '@store/modules/app-store';
+import UserStore from '@store/modules/user';
+import AuthStore from '@store/modules/user/auth';
 
 const stores = {
-  appStore: AppStore,
+  authStore: AuthStore,
+  userStore: UserStore,
 };
 
 export type StoreProps = StoresType<typeof stores>;

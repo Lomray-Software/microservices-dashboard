@@ -48,6 +48,8 @@
     "@jaredpalmer/after": "file:./node_modules/@lomray/after",
     "@loadable/component": "^5.15.2",
     "@lomray/after": "3.2.0",
+    "@mdi/js": "^6.6.96",
+    "@mdi/react": "^1.6.0",
     "axios": "^0.21.4",
     "axios-cache-adapter": "^2.7.3",
     "express": "^4.17.3",

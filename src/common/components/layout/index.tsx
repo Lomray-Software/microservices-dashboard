@@ -5,12 +5,13 @@ import Footer from '@components/footer';
 import Header from '@components/header/index.wrapper';
 import LoadingBar from '@components/loading-bar';
 import ScrollRestoration from '@components/scroll-restoration';
+import SideMenu from '@components/side-menu/index.wrapper';
 import { useAppContext } from '@context/app';
 import InitialProps from '@helpers/initial-props';
 import type { SSRLayoutComponent } from '@interfaces/ssr-component';
 import '@services/localization';
 import stores from './index.stores';
-import SideMenu from './side-menu';
+import styles from './styles.module.scss';
 
 const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguage }) => {
   useSSR(initialI18nStore, initialLanguage);
@@ -18,13 +19,13 @@ const Layout: SSRLayoutComponent = ({ children, initialI18nStore, initialLanguag
   const { hasLoadingBar, hasHeader, hasFooter, hasSideMenu } = useAppContext();
 
   return (
-    <div className="Wrapper-layout">
+    <div className={hasHeader && hasSideMenu ? styles.wrapper : ''}>
       {hasLoadingBar && <LoadingBar />}
       <ReactNotifications />
       <ScrollRestoration />
-      {hasHeader && <Header />}
       {hasSideMenu && <SideMenu />}
-      {children}
+      {hasHeader && <Header />}
+      <main>{children}</main>
       {hasFooter && <Footer />}
     </div>
   );

@@ -8,5 +8,9 @@
   "timeoutError": "Oops, something went wrong, please try again later.",
   "noInternetError": "It looks like the internet connection has been lost.",
   "welcomeMessage": "Hello! let's get started",
-  "warningText": "Sign in to continue."
+  "warningText": "Sign in to continue.",
+  "search": "Search",
+  "profileTitle": "Profile",
+  "settings": "Settings",
+  "logOut": "Log Out"
 }

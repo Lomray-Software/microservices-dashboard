@@ -1,5 +1,6 @@
 @import 'util/fonts';
 @import 'util/vars';
+@import 'util/media-query';
 
 *,
 *::before,
@@ -19,6 +20,33 @@ body {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
+}
+
+header {
+  grid-area: header;
+}
+
+main {
+  grid-area: main;
+}
+
+nav {
+  grid-area: nav;
+}
+
+footer {
+  grid-area: footer;
+}
+
+
+input {
+  outline: none;
+  outline-width: 0;
+  outline-color: transparent;
+}
+
+ul {
+  list-style: none;
 }
 
 .container {
