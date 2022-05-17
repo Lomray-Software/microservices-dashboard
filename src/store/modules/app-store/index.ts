@@ -16,14 +16,14 @@ class AppStore implements IDomain {
   constructor() {
     makeObservable(this, {
       hasSidebar: observable,
-      toggleMenuNavigation: action.bound,
+      toggleSidebar: action.bound,
     });
   }
 
   /**
    * Toggle for visible nav menu
    */
-  public toggleMenuNavigation(): void {
+  public toggleSidebar(): void {
     this.hasSidebar = !this.hasSidebar;
   }
 }

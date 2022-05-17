@@ -13,12 +13,12 @@ import combineCss from '@helpers/combine-css';
 import User from './user/index.wrapper';
 import styles from './styles.module.scss';
 
-const Header: FC<StoreProps> = ({ appStore: { toggleMenuNavigation, hasSidebar } }) => {
+const Header: FC<StoreProps> = ({ appStore: { toggleSidebar, hasSidebar } }) => {
   const { t } = useTranslation('translation');
 
   return (
     <header className={styles.header}>
-      <button type="button" className={styles.button} onClick={toggleMenuNavigation}>
+      <button type="button" className={styles.button} onClick={toggleSidebar}>
         {[...Array(3)].map((_, i) => (
           // eslint-disable-next-line react/no-array-index-key
           <span className={styles.line} key={i} />
@@ -27,7 +27,7 @@ const Header: FC<StoreProps> = ({ appStore: { toggleMenuNavigation, hasSidebar }
       <Link to={ROUTES.HOME} className={styles.logo}>
         {APP_SHORT_NAME[0]}
       </Link>
-      <button className={styles.navigationButton} type="button" onClick={toggleMenuNavigation}>
+      <button className={styles.navigationButton} type="button" onClick={toggleSidebar}>
         <Icon path={mdiBackburger} size={1.5} color="#6c7293" />
       </button>
       <label className={styles.wrapperSearch}>
