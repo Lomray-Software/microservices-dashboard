@@ -27,6 +27,9 @@ const Header: FC<StoreProps> = ({ appStore: { toggleMenuNavigation, hasSidebar }
       <Link to={ROUTES.HOME} className={styles.logo}>
         {APP_SHORT_NAME[0]}
       </Link>
+      <button className={styles.navigationButton} type="button" onClick={toggleMenuNavigation}>
+        <Icon path={mdiBackburger} size={1.5} color="#6c7293" />
+      </button>
       <label className={styles.wrapperSearch}>
         <input className={styles.input} type="text" placeholder={t('search')} />
       </label>
@@ -34,9 +37,6 @@ const Header: FC<StoreProps> = ({ appStore: { toggleMenuNavigation, hasSidebar }
         <Notification />
       </div>
       <User />
-      <button className={styles.navigationButton} type="button" onClick={toggleMenuNavigation}>
-        <Icon path={mdiBackburger} size={1.5} color="#6c7293" />
-      </button>
       <div
         className={combineCss(
           styles.wrapperNavigation,

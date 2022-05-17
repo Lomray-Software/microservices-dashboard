@@ -14,11 +14,11 @@
   padding-right: 15px;
 
   @include media-breakpoint-down(md) {
-    grid-template-columns: 40px 1fr 51px min-content min-content;
+    grid-template-columns: 40px min-content 1fr 51px min-content;
   }
 
   @include media-breakpoint-down(xs) {
-    grid-template-columns: 40px 1fr min-content;
+    grid-template-columns: 40px min-content 1fr;
   }
 
   .button {
@@ -77,6 +77,10 @@
         text-transform: capitalize;
       }
     }
+
+    @include media-breakpoint-down(xs) {
+      grid-column: 3/5;
+    }
   }
 
   .notification {
@@ -87,7 +91,7 @@
 
     @include media-breakpoint-down(xs) {
       grid-row: 2/3;
-      grid-column-end: 3;
+      grid-column-end: 4;
       justify-self: end;
     }
   }
@@ -105,7 +109,7 @@
     }
 
     @include media-breakpoint-down(xs) {
-      grid-column-end: 4;
+      grid-column-end: 3;
       grid-row: 1/2;
     }
   }
@@ -115,9 +119,9 @@
     opacity: 0;
     position: absolute;
     top: 70px;
-    right: 0;
+    left: 0;
     transition: all 0.3s ease-in-out;
-    transform: translateX(200%);
+    transform: translateX(-200%);
 
     @include media-breakpoint-down(md) {
       display: block;

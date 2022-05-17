@@ -21,6 +21,11 @@
   grid-column-gap: 15px;
   cursor: pointer;
 
+  @include media-breakpoint-down(xs) {
+    grid-row: 2/3;
+    grid-column-end: 5;
+  }
+
   .wrapperImage {
     height: 35px;
 
@@ -46,10 +51,5 @@
       border: 5px solid transparent;
       border-top: 5px solid $chevronColor;
     }
-  }
-
-  @include media-breakpoint-down(xs) {
-    grid-row: 2/3;
-    grid-column-end: 4;
   }
 }

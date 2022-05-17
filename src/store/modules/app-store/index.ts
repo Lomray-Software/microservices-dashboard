@@ -8,7 +8,7 @@ class AppStore implements IDomain {
   /**
    * State menu navigation's
    */
-  public hasSidebar = true;
+  public hasSidebar = false;
 
   /**
    * @constructor
