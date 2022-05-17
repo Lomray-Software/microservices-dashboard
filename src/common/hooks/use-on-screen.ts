@@ -1,4 +1,5 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import type { MutableRefObject } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * This hook used when you need track visible state element on viewport

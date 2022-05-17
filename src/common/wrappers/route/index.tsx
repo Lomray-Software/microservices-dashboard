@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { asyncComponent, InitialData } from '@jaredpalmer/after';
+import type { asyncComponent, InitialData } from '@jaredpalmer/after';
 import type { History, Location } from 'history';
 import pick from 'lodash.pick';
-import React, { ComponentType, ReactElement, useContext, useEffect } from 'react';
-import { match as MatchType } from 'react-router-dom';
+import type { ComponentType, ReactElement } from 'react';
+import React, { useContext, useEffect } from 'react';
+import type { match as MatchType } from 'react-router-dom';
 import { IS_SPA } from '@constants/index';
 import { AppContext, initAppContext, initState } from '@context/app';
 import initSPA from '@helpers/init-spa';

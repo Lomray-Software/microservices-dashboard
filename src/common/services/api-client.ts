@@ -1,4 +1,5 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import type { AxiosError, AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_SERVER } from '@constants/index';
 import waitFor from '@helpers/wait-for';
 import type { IBaseException, IMicroserviceResponse } from '@interfaces/microservice';

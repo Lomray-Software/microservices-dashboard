@@ -2,7 +2,7 @@ import { toJS, isObservableProp } from 'mobx';
 import { IS_SPA } from '@constants/index';
 import type { TSerializedStore } from '@helpers/serialized-store';
 import type { TStore } from '@interfaces/store-type';
-import Endpoints from '@store/endpoints';
+import type Endpoints from '@store/endpoints';
 
 export interface IConstructorParams {
   storeManager: Manager;

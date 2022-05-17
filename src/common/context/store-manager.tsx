@@ -1,5 +1,6 @@
-import React, { FC, useContext } from 'react';
-import Manager from '@store/manager';
+import type { FC } from 'react';
+import React, { useContext } from 'react';
+import type Manager from '@store/manager';
 
 /**
  * Mobx store manager context

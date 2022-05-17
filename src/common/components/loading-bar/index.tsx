@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useRef } from 'react';
+import type { FC } from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { LoadingBarRef } from 'react-top-loading-bar';
 import LoadingBarComponent from 'react-top-loading-bar';
 import PageLoading from '@services/page-loading';

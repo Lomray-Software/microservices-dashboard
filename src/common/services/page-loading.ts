@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react';
+import type { MutableRefObject } from 'react';
 import type { LoadingBarRef } from 'react-top-loading-bar';
 
 /**

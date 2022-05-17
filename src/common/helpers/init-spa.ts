@@ -1,4 +1,4 @@
-import { asyncComponent } from '@lomray/after';
+import type { asyncComponent } from '@lomray/after';
 import type { History, Location } from 'history';
 import type { ComponentType } from 'react';
 import type { match as MatchType } from 'react-router-dom';

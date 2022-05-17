@@ -1,6 +1,7 @@
 import { mdiBackburger } from '@mdi/js';
 import Icon from '@mdi/react';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Notification } from '@assets/images/icons/notification-white.svg';
 import Link from '@components/link';

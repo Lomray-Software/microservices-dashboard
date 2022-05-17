@@ -1,4 +1,5 @@
-import { FC, useEffect } from 'react';
+import type { FC } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import ScrollRestorationService from '@services/scroll-restoration';
 
