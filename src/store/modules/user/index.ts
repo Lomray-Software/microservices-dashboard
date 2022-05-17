@@ -14,11 +14,6 @@ class UserStore implements IDomain {
   public isAuth = false;
 
   /**
-   * Is open popup
-   */
-  public isOpenPopup = false;
-
-  /**
    * Current user
    */
   public user: IUser | null = null;
@@ -36,11 +31,9 @@ class UserStore implements IDomain {
 
     makeObservable(this, {
       isAuth: observable,
-      isOpenPopup: observable,
       user: observable,
       setIsAuth: action,
       setUser: action,
-      togglePopup: action.bound,
     });
   }
 
@@ -49,13 +42,6 @@ class UserStore implements IDomain {
    */
   public setIsAuth(isAuth: boolean): void {
     this.isAuth = isAuth;
-  }
-
-  /**
-   * Toggle popup
-   */
-  public togglePopup(): void {
-    this.isOpenPopup = !this.isOpenPopup;
   }
 
   /**

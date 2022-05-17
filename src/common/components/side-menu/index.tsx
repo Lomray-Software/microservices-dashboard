@@ -18,7 +18,7 @@ interface ISideMenu {
 /**
  * Side menu
  */
-const SideMenu: FC<ISideMenu & StoreProps> = ({ appStore: { isNavigation }, isMobile }) => {
+const SideMenu: FC<ISideMenu & StoreProps> = ({ appStore: { hasSidebar }, isMobile }) => {
   const { t } = useTranslation(['menu']);
   const { pathname } = useLocation();
 
@@ -28,13 +28,13 @@ const SideMenu: FC<ISideMenu & StoreProps> = ({ appStore: { isNavigation }, isMo
     <nav
       className={combineCss(
         styles.navigation,
-        isNavigation ? styles.close : '',
+        hasSidebar ? styles.close : '',
         isMobile ? styles.mobile : '',
       )}>
       <Link to={ROUTES.HOME} className={styles.title}>
-        {!isNavigation ? APP_SHORT_NAME : APP_SHORT_NAME[0]}
+        {!hasSidebar ? APP_SHORT_NAME : APP_SHORT_NAME[0]}
       </Link>
-      <ul className={styles.list} aria-label={!isNavigation ? t('menu:navTitle') : ''}>
+      <ul className={styles.list} aria-label={!hasSidebar ? t('menu:navTitle') : ''}>
         {Object.entries(MENU).map(
           ([
             link,
@@ -53,7 +53,7 @@ const SideMenu: FC<ISideMenu & StoreProps> = ({ appStore: { isNavigation }, isMo
                 <span className={styles.round}>
                   <Icon path={src} size={1} color={color} />
                 </span>
-                {isMobile ? t(`menu:${titleKey}`) : !isNavigation && t(`menu:${titleKey}`)}
+                {isMobile ? t(`menu:${titleKey}`) : !hasSidebar && t(`menu:${titleKey}`)}
               </Link>
             </li>
           ),

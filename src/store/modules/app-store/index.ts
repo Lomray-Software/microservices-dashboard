@@ -8,14 +8,14 @@ class AppStore implements IDomain {
   /**
    * State menu navigation's
    */
-  public isNavigation = false;
+  public hasSidebar = true;
 
   /**
    * @constructor
    */
   constructor() {
     makeObservable(this, {
-      isNavigation: observable,
+      hasSidebar: observable,
       toggleMenuNavigation: action.bound,
     });
   }
@@ -24,7 +24,7 @@ class AppStore implements IDomain {
    * Toggle for visible nav menu
    */
   public toggleMenuNavigation(): void {
-    this.isNavigation = !this.isNavigation;
+    this.hasSidebar = !this.hasSidebar;
   }
 }
 

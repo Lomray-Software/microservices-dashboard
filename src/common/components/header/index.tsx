@@ -13,7 +13,7 @@ import combineCss from '@helpers/combine-css';
 import User from './user/index.wrapper';
 import styles from './styles.module.scss';
 
-const Header: FC<StoreProps> = ({ appStore: { toggleMenuNavigation, isNavigation } }) => {
+const Header: FC<StoreProps> = ({ appStore: { toggleMenuNavigation, hasSidebar } }) => {
   const { t } = useTranslation('translation');
 
   return (
@@ -40,7 +40,7 @@ const Header: FC<StoreProps> = ({ appStore: { toggleMenuNavigation, isNavigation
       <div
         className={combineCss(
           styles.wrapperNavigation,
-          isNavigation ? styles.wrapperNavigationOpen : '',
+          hasSidebar ? styles.wrapperNavigationOpen : '',
         )}>
         <SideMenu isMobile />
       </div>
