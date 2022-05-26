@@ -1,5 +1,6 @@
+import intersection from 'lodash.intersection';
 import { action, makeObservable, observable } from 'mobx';
-import { IS_CLIENT } from '@constants/index';
+import { ACCESS_USER_ROLES, IS_CLIENT } from '@constants/index';
 import { withFetching } from '@helpers/with-fetching';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
@@ -96,6 +97,8 @@ class Auth implements IDomain {
    */
   public signIn = async (login: string, password: string): Promise<void> => {
     this.setError(null);
+
+    // Get user
     const { result, error } = await this.api.users.user.signIn(
       { login, password },
       {
@@ -119,10 +122,17 @@ class Auth implements IDomain {
 
     const { user, tokens } = result || {};
 
-    if (tokens?.refresh) {
-      this.api.apiClient.setRefreshToken(tokens.refresh);
+    // Get user roles
+    const { roles } = this.api.apiClient.getRefreshTokenPayload(tokens.refresh);
+
+    if (!roles || intersection(ACCESS_USER_ROLES, roles).length === 0) {
+      this.setError(i18n.t('accessDenied'));
+
+      return;
     }
 
+    // Success user auth
+    this.api.apiClient.setRefreshToken(tokens.refresh);
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);
   };

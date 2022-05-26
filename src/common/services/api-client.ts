@@ -1,5 +1,7 @@
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
+import JwtDecode from 'jwt-decode';
+import type { JwtPayload } from 'jwt-decode';
 import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_SERVER } from '@constants/index';
 import waitFor from '@helpers/wait-for';
 import type { IBaseException, IMicroserviceResponse } from '@interfaces/microservice';
@@ -15,6 +17,11 @@ export interface IApiClientReqOptions {
   isCached?: boolean;
   isSkipRenew?: boolean;
   req?: AxiosRequestConfig;
+}
+
+interface IJwtPayload extends JwtPayload {
+  userId?: string;
+  roles?: string[];
 }
 
 interface IApiClientParams {
@@ -95,6 +102,27 @@ class ApiClient {
   }
 
   /**
+   * Get refresh token
+   * @private
+   */
+  private static getRefreshToken(): string | null {
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
+  }
+
+  /**
+   * Get refresh token payload
+   */
+  public getRefreshTokenPayload(newToken?: string): IJwtPayload {
+    const token = newToken ?? ApiClient.getRefreshToken();
+
+    if (token) {
+      return JwtDecode<IJwtPayload>(token);
+    }
+
+    return {};
+  }
+
+  /**
    * Make beautiful error message
    * @private
    */
@@ -126,7 +154,7 @@ class ApiClient {
    */
   public renewAuthTokens(): Promise<boolean> {
     return this.disableRenewAuthTokens(async () => {
-      const refresh = localStorage.getItem(REFRESH_TOKEN_KEY);
+      const refresh = ApiClient.getRefreshToken();
 
       if (refresh) {
         const { result } = await this.endpoints.authentication.token.renew({

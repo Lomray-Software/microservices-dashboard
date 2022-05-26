@@ -23,6 +23,8 @@ export const IS_TRANSLATE = true;
 
 export const DEFAULT_APP_LANGUAGE = 'en';
 
+export const ACCESS_USER_ROLES = ['admin'];
+
 export const APP_LANGUAGES = IS_TRANSLATE ? ['en', 'ru'] : [DEFAULT_APP_LANGUAGE];
 
 export const APP_OTHER_LANGUAGES = APP_LANGUAGES.filter((lng) => DEFAULT_APP_LANGUAGE !== lng);

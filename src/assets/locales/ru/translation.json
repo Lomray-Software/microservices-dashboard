@@ -12,5 +12,6 @@
   "search": "Поиск",
   "profileTitle": "Профиль",
   "settings": "Настройки",
-  "logOut": "Выйти"
+  "logOut": "Выйти",
+  "accessDenied": "У вас нет доступа к этому функционалу."
 }

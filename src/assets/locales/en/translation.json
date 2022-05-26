@@ -12,5 +12,6 @@
   "search": "Search",
   "profileTitle": "Profile",
   "settings": "Settings",
-  "logOut": "Log Out"
+  "logOut": "Log Out",
+  "accessDenied": "You do not have access to this functionality."
 }

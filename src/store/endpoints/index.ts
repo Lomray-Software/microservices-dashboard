@@ -6,6 +6,7 @@ import type {
   ITokenRenewInput,
   ITokenRenewOutput,
 } from '@store/endpoints/interfaces/authentication/methods/token/renew';
+import type IUserRoleMyOutput from '@store/endpoints/interfaces/authorization/methods/user-role/my';
 import type IList from '@store/endpoints/interfaces/common/list';
 import type { IQuery } from '@store/endpoints/interfaces/common/query';
 import type IView from '@store/endpoints/interfaces/common/view';
@@ -68,6 +69,15 @@ class Endpoints {
       remove: this.createHandler<never, ICookiesRemoveOutput>('authentication.cookies.remove', {
         isSkipRenew: true,
       }),
+    },
+  };
+
+  /**
+   * Authorization microservice
+   */
+  authorization = {
+    userRole: {
+      my: this.createHandler<never, IUserRoleMyOutput>('authorization.user-role.my'),
     },
   };
 
