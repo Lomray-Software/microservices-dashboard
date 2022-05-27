@@ -45,3 +45,7 @@ serve -s build/public
 npm run build
 serve build/public
 ```
+
+## Local development
+Configure environments variables through `.env.local`.   
+Use `NODE_TLS_REJECT_UNAUTHORIZED=0` inside `.env.local` for skip SSL verification (WARNING: use it only for local development).

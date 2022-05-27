@@ -87,7 +87,7 @@ class Endpoints {
   users = {
     user: {
       list: this.createHandler<IQuery<IUser>, IList<IUser>>('users.user.list'),
-      me: this.createHandler<never, IView<IUser>>('users.user.me'),
+      me: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.me'),
       view: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.view'),
       signIn: this.createHandler<ISignInInput, ISignInOutput>('users.user.sign-in'),
       signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out', {

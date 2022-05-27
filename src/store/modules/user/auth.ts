@@ -1,6 +1,6 @@
 import intersection from 'lodash.intersection';
 import { action, makeObservable, observable } from 'mobx';
-import { ACCESS_USER_ROLES, IS_CLIENT } from '@constants/index';
+import { ACCESS_USER_ROLES, IS_CLIENT, IS_PROD } from '@constants/index';
 import { withFetching } from '@helpers/with-fetching';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
@@ -109,6 +109,8 @@ class Auth implements IDomain {
             hasCookies: navigator.cookieEnabled,
             language: navigator.language,
             userAgentData: navigator?.['userAgentData'],
+            // only for development
+            ...(!IS_PROD ? { authType: 'directly' } : {}),
           }),
         },
       },
@@ -132,6 +134,7 @@ class Auth implements IDomain {
     }
 
     // Success user auth
+    this.api.apiClient.setAccessToken(tokens.access);
     this.api.apiClient.setRefreshToken(tokens.refresh);
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);
@@ -152,6 +155,7 @@ class Auth implements IDomain {
       await this.api.authentication.cookies.remove();
     }
 
+    this.api.apiClient.setAccessToken(null);
     this.api.apiClient.setRefreshToken(null);
     this.userStore.setUser(null);
     this.userStore.setIsAuth(false);

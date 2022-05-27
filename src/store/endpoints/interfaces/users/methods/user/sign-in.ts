@@ -8,6 +8,7 @@ interface ISignInInput {
 interface ISignInOutput {
   user: IUser;
   tokens: {
+    access?: string;
     refresh: string;
   };
 }

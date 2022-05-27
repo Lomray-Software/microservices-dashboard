@@ -2,7 +2,8 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import JwtDecode from 'jwt-decode';
 import type { JwtPayload } from 'jwt-decode';
-import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_SERVER } from '@constants/index';
+import Cookies from 'universal-cookie';
+import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_PROD, IS_SERVER } from '@constants/index';
 import waitFor from '@helpers/wait-for';
 import type { IBaseException, IMicroserviceResponse } from '@interfaces/microservice';
 import i18n from '@services/localization';
@@ -89,6 +90,26 @@ class ApiClient {
   }
 
   /**
+   * Set user access token
+   * NOTE: only for development mode
+   */
+  public setAccessToken(token: string | null | undefined): void {
+    if (IS_PROD || token === undefined) {
+      return;
+    }
+
+    const cookies = new Cookies();
+
+    if (token === null) {
+      cookies.remove('jwt-access');
+
+      return;
+    }
+
+    cookies.set('jwt-access', token);
+  }
+
+  /**
    * Set user refresh token
    */
   public setRefreshToken(token: string | null): void {
@@ -163,6 +184,7 @@ class ApiClient {
         });
 
         if (result?.refresh) {
+          this.setAccessToken(result.access);
           this.setRefreshToken(result.refresh);
 
           return true;

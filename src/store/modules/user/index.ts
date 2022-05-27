@@ -55,7 +55,11 @@ class UserStore implements IDomain {
    * Get current user (based on cookies)
    */
   public async refresh(): Promise<void> {
-    const { result } = await this.api.users.user.me();
+    const { result } = await this.api.users.user.me({
+      query: {
+        relations: ['profile'],
+      },
+    });
 
     if (!result?.entity) {
       return;
