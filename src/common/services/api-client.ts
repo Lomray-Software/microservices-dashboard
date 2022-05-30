@@ -12,6 +12,8 @@ import { TokenCreateReturnType } from '@store/endpoints/interfaces/authenticatio
 import type Manager from '@store/manager';
 import AuthStore from '@store/modules/user/auth';
 
+export const ACCESS_TOKEN_KEY = 'jwt-access';
+
 export const REFRESH_TOKEN_KEY = 'refresh-token';
 
 export interface IApiClientReqOptions {
@@ -76,6 +78,23 @@ class ApiClient {
   }
 
   /**
+   * @private
+   */
+  private getHeaders(): Record<string, any> | undefined {
+    // add authentication token only for development (if cookie not pass with request)
+    if (!IS_PROD && IS_CLIENT) {
+      const token: string | undefined = new Cookies().get(ACCESS_TOKEN_KEY);
+
+      return {
+        ...(this.headers || {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      };
+    }
+
+    return this.headers;
+  }
+
+  /**
    * Set API endpoints
    */
   public setEndpoints(endpoints: Endpoints): void {
@@ -101,12 +120,12 @@ class ApiClient {
     const cookies = new Cookies();
 
     if (token === null) {
-      cookies.remove('jwt-access');
+      cookies.remove(ACCESS_TOKEN_KEY);
 
       return;
     }
 
-    cookies.set('jwt-access', token);
+    cookies.set(ACCESS_TOKEN_KEY, token);
   }
 
   /**
@@ -271,7 +290,7 @@ class ApiClient {
         baseURL: API_DOMAIN,
         method: 'POST',
         withCredentials: IS_CLIENT, // pass cookies
-        headers: this.headers,
+        headers: this.getHeaders(),
         ...req,
         data: {
           method,
