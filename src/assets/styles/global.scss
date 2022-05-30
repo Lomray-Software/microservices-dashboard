@@ -28,6 +28,12 @@ header {
 
 main {
   grid-area: main;
+  padding: 70px 30px;
+  overflow: hidden;
+
+  @include media-breakpoint-down(md) {
+    padding: 70px 0;
+  }
 }
 
 nav {

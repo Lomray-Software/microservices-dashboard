@@ -1,0 +1,136 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import "src/assets/styles/util/media-query";
+
+.container {
+  background-color: $background-primary;
+  border-radius: 8px;
+}
+
+.scroll {
+  overflow-x: scroll;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  @include font-size(14px, $font-weight-medium, $text-secondary);
+
+  @include media-breakpoint-down(md) {
+    width: 900px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    width: 700px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    width: 500px;
+  }
+
+  .head {
+    th {
+      padding: 15px;
+      border-bottom: 1px solid $border-color
+    }
+
+    .wrapperSort {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+
+      .wrapperIconSort {
+        width: 15px;
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .body {
+    td {
+      border-bottom: 1px solid $border-color
+    }
+
+    tr {
+      transition: all 0.3s ease-in;
+
+      &:hover {
+        background-color: $table-hover-bg;
+
+        .link {
+          color: $text-primary;
+        }
+      }
+    }
+
+    .link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      width: 100%;
+      text-decoration: none;
+      @include font-size(14px, $font-weight-bold, $text-secondary);
+    }
+  }
+}
+
+.pagination {
+  height: 250px;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  justify-content: space-between;
+  align-items: start;
+  padding: 15px 15px;
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+
+    .button {
+      cursor: pointer;
+      background-color: transparent;
+      outline: none;
+      border: 1px solid $select-color;
+      padding: 6px 12px;
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .itemPagination {
+    display: flex;
+    cursor: pointer;
+
+    & > li {
+      border: 1px solid $select-color;
+
+      & > a {
+        display: block;
+        padding: 6px 12px;
+        @include font-size(15px, $font-weight-bold, $text-primary);
+      }
+
+      &:first-child {
+        display: none;
+      }
+
+      &:last-child {
+        display: none;
+      }
+
+      &.itemPaginationActive {
+        background: $select-color;
+      }
+    }
+  }
+}

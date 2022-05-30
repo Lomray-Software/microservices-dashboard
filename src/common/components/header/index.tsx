@@ -5,6 +5,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Notification } from '@assets/images/icons/notification-white.svg';
 import type { StoreProps } from '@components/header/index.stores';
+import Breadcrumbs from '@components/layout/breadcrumbs';
 import Link from '@components/link';
 import SideMenu from '@components/side-menu/index.wrapper';
 import { APP_SHORT_NAME } from '@constants/index';
@@ -18,6 +19,7 @@ const Header: FC<StoreProps> = ({ appStore: { toggleSidebar, hasSidebar } }) => 
 
   return (
     <header className={styles.header}>
+      <Breadcrumbs />
       <button type="button" className={styles.button} onClick={toggleSidebar}>
         {[...Array(3)].map((_, i) => (
           // eslint-disable-next-line react/no-array-index-key

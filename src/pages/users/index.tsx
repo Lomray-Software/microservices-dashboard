@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import type { Column } from 'react-table';
 import Table from '@components/table';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
+import type { StoreProps } from '@pages/users/index.stores';
+import stores from '@pages/users/index.stores';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import type { StoreProps } from './index.stores';
-import stores from './index.stores';
 
 type Props = StoreProps;
 
@@ -21,12 +20,9 @@ const Users: SSRComponent<Props> = ({ pageStore: { users } }) => {
   const columns: Column<IUser>[] = useMemo(
     () => [
       {
-        Header: 'id',
-        accessor: 'id',
-      },
-      {
         Header: t('users-page:firstName'),
         accessor: 'firstName',
+        disableSortBy: true,
       },
       {
         Header: t('users-page:lastName'),
@@ -60,14 +56,7 @@ const Users: SSRComponent<Props> = ({ pageStore: { users } }) => {
     [t],
   );
 
-  return (
-    <div>
-      <Helmet>
-        <title>{t('users-page:pageTitle')}</title>
-      </Helmet>
-      <Table columns={columns} data={users} />
-    </div>
-  );
+  return <Table<IUser> columns={columns} data={users} />;
 };
 
 Users.getInitialProps = InitialProps(async ({ pageStore: { getUsers } }) => {

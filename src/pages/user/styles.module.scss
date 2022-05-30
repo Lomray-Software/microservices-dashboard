@@ -1,0 +1,46 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import 'src/assets/styles/util/media-query';
+
+.body {
+  padding: 16px;
+  display: grid;
+  grid-template-rows: min-content auto;
+  background-color: $background-primary;
+  border-radius: 8px;
+
+  .tabs {
+    .tab {
+      cursor: pointer;
+      transition: all 0.3s ease-in;
+      padding: 8px 16px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      @include font-size(16px, $font-weight-medium, $text-secondary);
+
+      &.active {
+        border-bottom: 1px solid $text-primary;
+        color: $text-primary;
+      }
+    }
+  }
+
+  .wrapper {
+    padding: 30px 0;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-column-gap: 20px;
+
+    @include media-breakpoint-down(md) {
+      grid-template-columns:  1fr;
+    }
+  }
+
+  .titleInfo {
+    grid-column: 1/3;
+    grid-row: 1/2;
+    margin-bottom: 20px;
+    @include font-size(18px, $font-weight-bold, $text-primary);
+  }
+}

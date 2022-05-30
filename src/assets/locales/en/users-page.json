@@ -1,10 +1,22 @@
 {
   "pageTitle": "Users",
   "firstName": "First name",
-  "lastName": "Last name",
   "middleName": "Middle name",
+  "lastName": "Last name",
   "phone": "Phone",
+  "gender": "Gender",
+  "birthDay": "Birthday",
   "createdAt": "Created At",
   "updatedAt": "Updated At",
-  "deletedAt": "Deleted At"
+  "deletedAt": "Deleted At",
+  "overview": "Overview",
+  "list": "List",
+  "editProfile": "Edit profile",
+  "changePassword": "Change password",
+  "titleInfo": "Profile Details",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "reEnterNewPassword": "Re-enter New Password",
+  "buttonEditProfile": "Save Change",
+  "buttonChangePassword": "Change Password"
 }

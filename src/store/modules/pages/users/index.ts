@@ -71,7 +71,7 @@ class UsersPageStore implements IDomain {
    */
   public async getUsers(): Promise<void> {
     this.setError(null);
-    const { result, error } = await this.api.users.user.list();
+    const { result, error } = await this.api.users.user.list({ query: { pageSize: 10 } });
 
     if (error || !result) {
       this.setError(error?.message ?? i18n.t('unknownError'));
