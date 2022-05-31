@@ -23,6 +23,9 @@ import type {
 interface IEndpointsCreateHandlerConfig
   extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
 
+interface IEndpointsCreateHandlerOptions
+  extends Omit<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
+
 /**
  * Backend API endpoints
  */
@@ -49,11 +52,11 @@ class Endpoints {
       method: string,
       { isCached, isSkipRenew }: IEndpointsCreateHandlerConfig = {},
     ) =>
-    (params?: TInput, config?: IApiClientReqOptions['req']) =>
+    (params?: TInput, options?: IEndpointsCreateHandlerOptions) =>
       this.apiClient.sendRequest<TOutput, TInput>(method, params, {
         isCached,
         isSkipRenew,
-        req: config,
+        ...options,
       });
 
   /**

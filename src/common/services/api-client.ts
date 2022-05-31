@@ -19,7 +19,8 @@ export const REFRESH_TOKEN_KEY = 'refresh-token';
 export interface IApiClientReqOptions {
   isCached?: boolean;
   isSkipRenew?: boolean;
-  req?: AxiosRequestConfig;
+  shouldShowErrors?: boolean;
+  request?: AxiosRequestConfig;
 }
 
 interface IJwtPayload extends JwtPayload {
@@ -197,10 +198,13 @@ class ApiClient {
       const refresh = ApiClient.getRefreshToken();
 
       if (refresh) {
-        const { result } = await this.endpoints.authentication.token.renew({
-          refresh,
-          returnType: TokenCreateReturnType.cookies,
-        });
+        const { result } = await this.endpoints.authentication.token.renew(
+          {
+            refresh,
+            returnType: TokenCreateReturnType.cookies,
+          },
+          { shouldShowErrors: false },
+        );
 
         if (result?.refresh) {
           this.setAccessToken(result.access);
@@ -283,7 +287,7 @@ class ApiClient {
     params?: TRequest,
     options: IApiClientReqOptions = {},
   ): Promise<IMicroserviceResponse<TResponse>> {
-    const { req = {}, isSkipRenew = false } = options;
+    const { request = {}, isSkipRenew = false, shouldShowErrors = true } = options;
 
     try {
       const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
@@ -291,7 +295,7 @@ class ApiClient {
         method: 'POST',
         withCredentials: IS_CLIENT, // pass cookies
         headers: this.getHeaders(),
-        ...req,
+        ...request,
         data: {
           method,
           params,
@@ -305,6 +309,10 @@ class ApiClient {
         if (!isSkipRenew && (await this.updateAuthTokens(data.error))) {
           // repeat previous request
           return this.sendRequest(method, params, options);
+        }
+
+        if (shouldShowErrors) {
+          // @TODO show flash message
         }
       }
 
