@@ -102,16 +102,19 @@ class Auth implements IDomain {
     const { result, error } = await this.api.users.user.signIn(
       { login, password },
       {
-        headers: {
-          'user-info': JSON.stringify({
-            device: 'web',
-            userAgent: navigator.userAgent,
-            hasCookies: navigator.cookieEnabled,
-            language: navigator.language,
-            userAgentData: navigator?.['userAgentData'],
-            // only for development
-            ...(!IS_PROD ? { authType: 'directly' } : {}),
-          }),
+        shouldShowErrors: false,
+        request: {
+          headers: {
+            'user-info': JSON.stringify({
+              device: 'web',
+              userAgent: navigator.userAgent,
+              hasCookies: navigator.cookieEnabled,
+              language: navigator.language,
+              userAgentData: navigator?.['userAgentData'],
+              // only for development
+              ...(!IS_PROD ? { authType: 'directly' } : {}),
+            }),
+          },
         },
       },
     );
