@@ -14,7 +14,8 @@ interface IUser {
   createdAt: string;
   updatedAt: string;
   deletedAt: string;
-  profile?: IProfile;
+  username: string;
+  profile: IProfile;
 }
 
 export default IUser;

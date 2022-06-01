@@ -100,7 +100,7 @@ class Manager {
     }
 
     // make store like a singleton
-    if (store?.['isSingletone'] ?? true) {
+    if (store?.['isSingleton'] ?? true) {
       this.initiatedStores.set(store, newStore);
     }
 

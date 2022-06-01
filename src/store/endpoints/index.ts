@@ -9,7 +9,9 @@ import type {
 import type IUserRoleMyOutput from '@store/endpoints/interfaces/authorization/methods/user-role/my';
 import type IList from '@store/endpoints/interfaces/common/list';
 import type { IQuery } from '@store/endpoints/interfaces/common/query';
+import type IUpdate from '@store/endpoints/interfaces/common/update';
 import type IView from '@store/endpoints/interfaces/common/view';
+import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type {
   ISignInInput,
@@ -92,10 +94,14 @@ class Endpoints {
       list: this.createHandler<IQuery<IUser>, IList<IUser>>('users.user.list'),
       me: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.me'),
       view: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.view'),
+      update: this.createHandler<IUpdate<IUser>, IView<IUser>>('users.user.update'),
       signIn: this.createHandler<ISignInInput, ISignInOutput>('users.user.sign-in'),
       signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out', {
         isSkipRenew: true,
       }),
+    },
+    profile: {
+      update: this.createHandler<IUpdate<IProfile>, IView<IProfile>>('users.profile.update'),
     },
   };
 }

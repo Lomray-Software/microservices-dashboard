@@ -4,7 +4,7 @@ import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import styles from './styles.module.scss';
 
 interface ICardUser {
-  profile: IUser['profile'];
+  profile?: IUser['profile'];
   firstName?: IUser['firstName'];
   lastName?: IUser['lastName'];
   email?: IUser['email'];

@@ -74,10 +74,12 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
   );
 };
 
-User.getInitialProps = InitialProps(async ({ userPage }, { location }) => {
-  const url = location?.pathname.split('/');
+User.getInitialProps = InitialProps(async ({ userPage: { getUser } }, { match }) => {
+  const {
+    params: { id },
+  } = match;
 
-  await userPage.getUser(String(url?.[url.length - 1]));
-}, stores) as never;
+  await getUser(id);
+}, stores);
 
 export default User;

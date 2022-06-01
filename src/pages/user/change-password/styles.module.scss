@@ -15,28 +15,8 @@
     grid-row-gap: 10px;
   }
 
-  .columnInfo {
-    display: grid;
-    grid-row-gap: 10px;
-    grid-template-columns: minmax(100px, 300px) 1fr;
-
-    @include media-breakpoint-down(lg) {
-      grid-template-columns: minmax(100px, 200px) 1fr;
-    }
-
-    .description {
-      display: flex;
-      align-items: center;
-      @include font-size(15px, $font-weight-bold, $text-secondary);
-    }
-
-    .info {
-      @include font-size(15px, $font-weight-bold, $text-primary);
-    }
-  }
-
   .button {
-    max-width: 300px;
+    width: 300px;
     justify-self: center;
     padding: 16px 32px;
     text-transform: uppercase;

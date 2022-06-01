@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import data from './data';
+import { fields } from '../fields';
 import styles from './styles.module.scss';
 
 interface IOverview {
@@ -12,15 +12,17 @@ interface IOverview {
 const Overview: FC<IOverview> = ({ user }) => {
   const { t } = useTranslation('users-page');
 
+  console.log(user?.username);
+
   return (
     <div className={styles.column}>
-      {data.map((elem) => (
-        <div key={elem} className={styles.columnInfo}>
-          <span className={styles.description}>{t(elem)}</span>
-          {elem === 'birthDay' ? (
+      {fields.map((field) => (
+        <div key={field} className={styles.columnInfo}>
+          <span className={styles.description}>{t(field)}</span>
+          {field === 'birthDay' ? (
             <span className={styles.info}>{user?.profile?.birthDay}</span>
           ) : (
-            <span className={styles.info}>{user?.[elem]}</span>
+            <span className={styles.info}>{user?.[field]}</span>
           )}
         </div>
       ))}

@@ -1,55 +1,41 @@
+import type { FormikConfig } from 'formik';
 import { Form, Formik } from 'formik';
 import type { FC } from 'react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import ErrorMessage from '@components/error-message';
-import Input from '@components/forms/input/index.formik';
+import Field from '@components/forms/field/index';
 import SubmitButton from '@components/forms/submit-button';
-import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
-import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import data from '../overview/data';
+import setErrorForm from '@helpers/set-errors-form';
+import type { IEditProfileState } from '@store/modules/pages/user/efit-profile';
+import { fields } from '../fields';
 import type { StoreProps } from './index.stores';
 import validationSchema from './validation-schema';
 import styles from './styles.module.scss';
 
-export interface IEditProfileState {
-  firstName: IUser['firstName'];
-  middleName: IUser['middleName'];
-  lastName: IUser['lastName'];
-  phone: IUser['phone'];
-  birthDay: IProfile['birthDay'];
-}
-
-const EditProfile: FC<StoreProps> = ({ user: { user, error } }) => {
+const EditProfile: FC<StoreProps> = ({ userEditProfile: { save, initialValues, setError } }) => {
   const { t } = useTranslation('users-page');
 
-  const [innitValues] = useState<Partial<IEditProfileState>>({
-    firstName: user?.firstName,
-    middleName: user?.middleName,
-    lastName: user?.lastName,
-    phone: user?.phone,
-    birthDay: user?.profile?.birthDay,
-  });
+  /**
+   * Save user & profile
+   */
+  const onSave: FormikConfig<IEditProfileState>['onSubmit'] = useCallback(
+    async (values, { setErrors }) => {
+      const result = await save(validationSchema().cast(values) as IEditProfileState);
 
-  const onSubmit = useCallback((values: IEditProfileState) => {
-    const { firstName, middleName, lastName, phone, birthDay } = validationSchema().cast(
-      values,
-    ) as IEditProfileState;
-
-    console.log(firstName, middleName, lastName, phone, birthDay);
-  }, []);
+      setErrorForm(result, setErrors, setError);
+    },
+    [save, setError],
+  );
 
   return (
     <div className={styles.column}>
-      <Formik initialValues={innitValues} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={onSave}>
         <Form className={styles.form}>
-          {data.map((item) => (
-            <div key={item} className={styles.columnInfo}>
-              <span className={styles.description}>{t(item)}</span>
-              <Input name={item} placeholder={t(item)} />
-            </div>
+          {fields.map((fieldName) => (
+            <Field key={fieldName} name={fieldName} placeholder={t(fieldName)}>
+              <span className={styles.description}>{t(fieldName)}</span>
+            </Field>
           ))}
-          <ErrorMessage>{error}</ErrorMessage>
           <SubmitButton className={styles.button} hasLoader>
             {t('buttonEditProfile')}
           </SubmitButton>

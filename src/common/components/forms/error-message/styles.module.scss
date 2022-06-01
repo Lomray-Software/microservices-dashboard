@@ -1,0 +1,10 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import 'src/assets/styles/util/media-query';
+
+.errorMessage {
+  position: absolute;
+  top: 55px;
+  right: 10px;
+  @include font-size(14px, $font-weight-light, $pink);
+}

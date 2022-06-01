@@ -2,10 +2,9 @@ import { Form, Formik } from 'formik';
 import type { FC } from 'react';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import ErrorMessage from '@components/error-message';
-import Input from '@components/forms/input/index.formik';
+import Field from '@components/forms/field/index';
 import SubmitButton from '@components/forms/submit-button';
-import data from './data';
+import fields from './fields';
 import type { StoreProps } from './index.stores';
 import styles from './styles.module.scss';
 
@@ -15,7 +14,7 @@ interface IChangePassword {
   reEnterNewPassword: string;
 }
 
-const ChangePassword: FC<StoreProps> = ({ user: { user, error } }) => {
+const ChangePassword: FC<StoreProps> = () => {
   const { t } = useTranslation('users-page');
 
   const [innitValues] = useState<IChangePassword>({
@@ -24,25 +23,15 @@ const ChangePassword: FC<StoreProps> = ({ user: { user, error } }) => {
     reEnterNewPassword: '',
   });
 
-  const onSubmit = useCallback(
-    (value) => {
-      console.log(value);
-      console.log(user);
-    },
-    [user],
-  );
+  const onSubmit = useCallback((value) => console.info(value), []);
 
   return (
     <div className={styles.column}>
       <Formik initialValues={innitValues} onSubmit={onSubmit}>
         <Form className={styles.form}>
-          {data.map((item) => (
-            <div key={item} className={styles.columnInfo}>
-              <span className={styles.description}>{t(item)}</span>
-              <Input type="password" name={item} placeholder={t(item)} />
-            </div>
+          {fields.map((item) => (
+            <Field key={item} name={item} />
           ))}
-          <ErrorMessage>{error}</ErrorMessage>
           <SubmitButton className={styles.button} hasLoader>
             {t('buttonChangePassword')}
           </SubmitButton>

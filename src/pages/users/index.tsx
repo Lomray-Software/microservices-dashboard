@@ -14,7 +14,9 @@ type Props = StoreProps;
  * Users list page
  * @constructor
  */
-const Users: SSRComponent<Props> = ({ pageStore: { users } }) => {
+const Users: SSRComponent<Props> = ({
+  pageStore: { users, setPageSize, pageSize, count, setCurrentPage, page },
+}) => {
   const { t } = useTranslation(['users-page']);
 
   const columns: Column<IUser>[] = useMemo(
@@ -56,7 +58,17 @@ const Users: SSRComponent<Props> = ({ pageStore: { users } }) => {
     [t],
   );
 
-  return <Table<IUser> columns={columns} data={users} />;
+  return (
+    <Table<IUser>
+      columns={columns}
+      data={users}
+      pageSize={pageSize}
+      setPageSize={setPageSize}
+      setCurrentPage={setCurrentPage}
+      page={page}
+      count={count}
+    />
+  );
 };
 
 Users.getInitialProps = InitialProps(async ({ pageStore: { getUsers } }) => {
