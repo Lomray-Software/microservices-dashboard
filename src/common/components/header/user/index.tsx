@@ -21,7 +21,7 @@ const User: FC<StoreProps> = ({ userStore: { user }, authStore: { signOut } }) =
           {user?.firstName}
           <i className={styles.chevron} />
         </p>
-        <Popup isOpen={isOpenPopup} signOut={signOut} id={user?.id} />
+        <Popup isOpen={isOpenPopup} signOut={signOut} userId={user?.id} />
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import combineCss from '@helpers/combine-css';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
-import CardUser from '@pages/user/card-user';
+import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
 import EditProfile from './edit-profile/index.wrapper';
 import stores from './index.stores';
@@ -29,7 +29,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
 
   const [activeTab, setActiveTab] = useState<TABS>(TABS.OVERVIEW);
 
-  const child = useMemo(() => {
+  const activeItem = useMemo(() => {
     switch (activeTab) {
       case TABS.OVERVIEW:
         return <Overview user={user} />;
@@ -67,7 +67,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
             lastName={user?.lastName}
             email={user?.email}
           />
-          {child}
+          {activeItem}
         </div>
       </div>
     </div>

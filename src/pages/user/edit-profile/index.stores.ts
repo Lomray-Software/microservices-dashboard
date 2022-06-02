@@ -1,10 +1,8 @@
 import type { StoresType } from '@interfaces/helpers';
-import UserPageStore from '@store/modules/pages/user';
-import EditProfileStore from '@store/modules/pages/user/efit-profile';
+import UserEditStore from '@store/modules/pages/user/edit-profile';
 
 const stores = {
-  user: UserPageStore,
-  userEditProfile: EditProfileStore,
+  userEdit: UserEditStore,
 };
 
 export type StoreProps = StoresType<typeof stores>;

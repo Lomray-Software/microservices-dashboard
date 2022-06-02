@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import type { FC } from 'react';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Field from '@components/forms/field/index';
+import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
 import fields from './fields';
 import type { StoreProps } from './index.stores';
@@ -29,8 +29,8 @@ const ChangePassword: FC<StoreProps> = () => {
     <div className={styles.column}>
       <Formik initialValues={innitValues} onSubmit={onSubmit}>
         <Form className={styles.form}>
-          {fields.map((item) => (
-            <Field key={item} name={item} />
+          {fields.map((name) => (
+            <Field key={name} name={name} isLine />
           ))}
           <SubmitButton className={styles.button} hasLoader>
             {t('buttonChangePassword')}

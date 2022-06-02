@@ -54,7 +54,7 @@ class UsersPageStore implements IDomain {
       setUsers: action.bound,
       setCount: action.bound,
       setPageSize: action.bound,
-      setCurrentPage: action.bound,
+      setPage: action.bound,
       getUsers: action.bound,
     });
   }
@@ -92,7 +92,7 @@ class UsersPageStore implements IDomain {
   /**
    * Set current page
    */
-  public async setCurrentPage(page: number): Promise<void> {
+  public async setPage(page: number): Promise<void> {
     this.page = page;
 
     await this.getUsers();

@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '@components/error-message';
-import Field from '@components/forms/field/index';
+import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
 import { APP_SHORT_NAME } from '@constants/index';
 import combineCss from '@helpers/combine-css';
@@ -57,13 +57,8 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
             validationSchema={validationSchema}
             onSubmit={onSubmit}>
             <Form className={styles.form}>
-              <Field name="login" type="text" placeholder={t('login-page:fieldLogin')} isColumn />
-              <Field
-                name="password"
-                type="password"
-                placeholder={t('login-page:fieldPassword')}
-                isColumn
-              />
+              <Field name="login" type="text" placeholder={t('login-page:fieldLogin')} />
+              <Field name="password" type="password" placeholder={t('login-page:fieldPassword')} />
               <ErrorMessage>{error}</ErrorMessage>
               <SubmitButton className={styles.button} hasLoader>
                 {t('login-page:buttonText')}

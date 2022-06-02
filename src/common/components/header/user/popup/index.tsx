@@ -13,10 +13,10 @@ import styles from './styles.module.scss';
 interface IPopup {
   isOpen: boolean;
   signOut: () => void;
-  id?: string;
+  userId?: string;
 }
 
-const Popup: FC<IPopup> = ({ isOpen, signOut, id }) => {
+const Popup: FC<IPopup> = ({ isOpen, signOut, userId }) => {
   const { t } = useTranslation();
 
   return (
@@ -31,7 +31,7 @@ const Popup: FC<IPopup> = ({ isOpen, signOut, id }) => {
             <Icon path={mdiCogSync} size={1} color="yellow" />
           </div>
           <Link
-            to={makeUrl([ROUTES.USERS, String(id)])}
+            to={makeUrl([ROUTES.USERS, String(userId)])}
             className={combineCss(styles.item, styles.link)}>
             {t('settings')}
           </Link>

@@ -2,11 +2,12 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Column } from 'react-table';
 import Table from '@components/table';
+import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
-import type { StoreProps } from '@pages/users/index.stores';
-import stores from '@pages/users/index.stores';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
+import type { StoreProps } from './index.stores';
+import stores from './index.stores';
 
 type Props = StoreProps;
 
@@ -15,16 +16,19 @@ type Props = StoreProps;
  * @constructor
  */
 const Users: SSRComponent<Props> = ({
-  pageStore: { users, setPageSize, pageSize, count, setCurrentPage, page },
+  pageStore: { users, setPageSize, pageSize, count, setPage, page },
 }) => {
   const { t } = useTranslation(['users-page']);
 
   const columns: Column<IUser>[] = useMemo(
     () => [
       {
+        Header: 'id',
+        accessor: 'id',
+      },
+      {
         Header: t('users-page:firstName'),
         accessor: 'firstName',
-        disableSortBy: true,
       },
       {
         Header: t('users-page:lastName'),
@@ -64,9 +68,10 @@ const Users: SSRComponent<Props> = ({
       data={users}
       pageSize={pageSize}
       setPageSize={setPageSize}
-      setCurrentPage={setCurrentPage}
+      setPage={setPage}
       page={page}
       count={count}
+      link={ROUTES.USERS}
     />
   );
 };

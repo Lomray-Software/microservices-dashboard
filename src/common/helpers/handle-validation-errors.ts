@@ -41,4 +41,25 @@ const formatValidationError = <TFormValue, TResValues>(
   return { fields, message: fields === undefined ? groupErrors?.[0]?.message : undefined };
 };
 
-export default formatValidationError;
+/**
+ * Set errors for fields and main error
+ */
+const setErrorForm = <TFormValue>(
+  result: IValidationErrors<TFormValue> | boolean,
+  setErrors: (errors: Partial<TFormValue>) => void,
+  setError: (message?: string | null) => void,
+): void => {
+  if (typeof result === 'boolean') {
+    return;
+  }
+
+  const { fields, message } = result;
+
+  if (fields) {
+    setErrors(fields);
+  } else {
+    setError(message);
+  }
+};
+
+export { setErrorForm, formatValidationError };

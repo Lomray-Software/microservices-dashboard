@@ -3,20 +3,20 @@
 @import 'src/assets/styles/util/media-query';
 
 .container {
-  display: grid;
-  grid-template-columns: minmax(100px, 300px) 1fr;
   position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
 
-  @include media-breakpoint-down(lg) {
-    grid-template-columns: minmax(100px, 200px) 1fr;
-  }
+  &.containerLine {
+    grid-template-columns: minmax(100px, 300px) 1fr;
 
-  @include media-breakpoint-down(lg) {
-    grid-template-columns: minmax(100px, 150px) 1fr;
-  }
+    @include media-breakpoint-down(lg) {
+      grid-template-columns: minmax(100px, 200px) 1fr;
+    }
 
-  &.containerColumn {
-    grid-template-columns: 1fr;
+    @include media-breakpoint-down(lg) {
+      grid-template-columns: minmax(100px, 150px) 1fr;
+    }
   }
 }
 

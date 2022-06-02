@@ -7,10 +7,7 @@ import ROUTES from '@constants/routes';
 import combineCss from '@helpers/combine-css';
 import styles from './styles.module.scss';
 
-const Breadcrumbs: FC<RouteComponentProps> = (props) => {
-  const { history, location } = props;
-  const { pathname } = location;
-
+const Breadcrumbs: FC<RouteComponentProps> = ({ history, location: { pathname } }) => {
   const pathNames = pathname.split('/').filter((el) => el);
 
   return (

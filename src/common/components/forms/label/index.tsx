@@ -2,11 +2,12 @@ import type { FC, LabelHTMLAttributes } from 'react';
 import React from 'react';
 import styles from './styles.module.scss';
 
+type TProps = LabelHTMLAttributes<HTMLLabelElement>;
+
 /**
  * Custom label
- * @constructor
  */
-const Label: FC<LabelHTMLAttributes<HTMLLabelElement>> = ({ children, ...props }) => (
+const Label: FC<TProps> = ({ children, ...props }) => (
   <label className={styles.label} {...props}>
     {children}
   </label>

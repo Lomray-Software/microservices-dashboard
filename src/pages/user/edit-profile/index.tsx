@@ -5,14 +5,14 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import Field from '@components/forms/field/index';
 import SubmitButton from '@components/forms/submit-button';
-import setErrorForm from '@helpers/set-errors-form';
-import type { IEditProfileState } from '@store/modules/pages/user/efit-profile';
+import { setErrorForm } from '@helpers/handle-validation-errors';
+import type { IEditProfileState } from '@store/modules/pages/user/edit-profile';
 import { fields } from '../fields';
 import type { StoreProps } from './index.stores';
 import validationSchema from './validation-schema';
 import styles from './styles.module.scss';
 
-const EditProfile: FC<StoreProps> = ({ userEditProfile: { save, initialValues, setError } }) => {
+const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError } }) => {
   const { t } = useTranslation('users-page');
 
   /**
@@ -32,7 +32,7 @@ const EditProfile: FC<StoreProps> = ({ userEditProfile: { save, initialValues, s
       <Formik initialValues={initialValues} onSubmit={onSave}>
         <Form className={styles.form}>
           {fields.map((fieldName) => (
-            <Field key={fieldName} name={fieldName} placeholder={t(fieldName)}>
+            <Field key={fieldName} name={fieldName} placeholder={t(fieldName)} isLine>
               <span className={styles.description}>{t(fieldName)}</span>
             </Field>
           ))}

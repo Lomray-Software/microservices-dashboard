@@ -7,27 +7,26 @@ import {
   mdiChevronRight,
 } from '@mdi/js';
 import Icon from '@mdi/react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import ReactPaginate from 'react-paginate';
 import type { TableOptions } from 'react-table';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import Link from '@components/link';
-import DefaultFilter from '@components/table/default-filter';
-import Select from '@components/table/select';
-import ROUTES from '@constants/routes';
+import type ROUTES from '@constants/routes';
 import combineCss from '@helpers/combine-css';
 import { makeUrl } from '@helpers/make-url';
+import DefaultFilter from './default-filter';
+import Select from './select';
 import styles from './styles.module.scss';
 
 interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEntity, any> {
   page: number;
-  setCurrentPage: (page: number) => void;
+  setPage: (page: number) => void;
   pageSize: number;
   setPageSize: (count: number) => void;
   count: number;
+  link: ROUTES;
 }
-
-const START_PAGE = 1;
 
 const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX.Element => {
   const {
@@ -36,13 +35,14 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     pageSize,
     setPageSize: setStorePageSize,
     page: currentPage,
-    setCurrentPage,
+    setPage,
     count,
+    link,
   } = props;
 
   const pageCount = Math.ceil(count / pageSize);
 
-  const defaultColumn = React.useMemo(
+  const defaultColumn = useMemo(
     () => ({
       Filter: DefaultFilter,
     }),
@@ -77,37 +77,37 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     (countUser: number) => {
       setStorePageSize(countUser);
       setPageSize(countUser);
-      setCurrentPage(START_PAGE);
+      setPage(1);
     },
-    [setCurrentPage, setPageSize, setStorePageSize],
+    [setPage, setPageSize, setStorePageSize],
   );
 
   const onPaginationChange = useCallback(
     (selectedPage: number) => {
-      setCurrentPage(selectedPage + 1);
+      setPage(selectedPage + 1);
       gotoPage(selectedPage);
     },
-    [gotoPage, setCurrentPage],
+    [gotoPage, setPage],
   );
 
   const onStartPage = () => {
-    gotoPage(START_PAGE);
-    setCurrentPage(START_PAGE);
+    gotoPage(1);
+    setPage(1);
   };
 
   const onLastPage = () => {
     gotoPage(pageCount);
-    setCurrentPage(pageCount);
+    setPage(pageCount);
   };
 
   const onPreviousPage = () => {
     previousPage();
-    setCurrentPage(currentPage - 1);
+    setPage(currentPage - 1);
   };
 
   const onNextPage = () => {
     nextPage();
-    setCurrentPage(currentPage + 1);
+    setPage(currentPage + 1);
   };
 
   return (
@@ -160,9 +160,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
 
                     return (
                       <td {...cellProps} key={cellProps.key}>
-                        <Link
-                          className={styles.link}
-                          to={makeUrl([makeUrl([ROUTES.USERS, String(row.original.id)])])}>
+                        <Link className={styles.link} to={makeUrl([link, String(row.original.id)])}>
                           {cell.render('Cell')}
                         </Link>
                       </td>
@@ -177,17 +175,17 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
       <div className={styles.pagination}>
         <div className={styles.buttons}>
           <button
-            className={combineCss(styles.button, START_PAGE === currentPage ? styles.disable : '')}
+            className={combineCss(styles.button, 1 === currentPage ? styles.disable : '')}
             type="button"
             onClick={onStartPage}
-            disabled={START_PAGE === currentPage}>
+            disabled={1 === currentPage}>
             <Icon path={mdiChevronDoubleLeft} size={1} color="#8f5fe8" />
           </button>
           <button
             className={styles.button}
             type="button"
             onClick={onPreviousPage}
-            disabled={START_PAGE === currentPage}>
+            disabled={1 === currentPage}>
             <Icon path={mdiChevronLeft} size={1} color="#8f5fe8" />
           </button>
           <ReactPaginate

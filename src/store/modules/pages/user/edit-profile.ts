@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
-import type { IValidationErrors } from '@helpers/format-validation-errors';
-import formatValidationError from '@helpers/format-validation-errors';
+import type { IValidationErrors } from '@helpers/handle-validation-errors';
+import { formatValidationError } from '@helpers/handle-validation-errors';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IUi } from '@interfaces/store-type';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
@@ -21,7 +21,7 @@ export interface IEditProfileState {
 /**
  * Edit profile store
  */
-class EditProfileStore implements IUi {
+class UserEditStore implements IUi {
   /**
    * This is not a singleton
    */
@@ -110,4 +110,4 @@ class EditProfileStore implements IUi {
   }
 }
 
-export default EditProfileStore;
+export default UserEditStore;
