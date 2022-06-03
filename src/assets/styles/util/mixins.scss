@@ -1,15 +1,15 @@
 @import './vars';
 
+@mixin font-family() {
+  font-family: 'Poppins', sans-serif;
+  font-family: 'Rubik', sans-serif;
+}
+
 @mixin font-size($font-size, $font-weight, $color) {
   font-size: $font-size;
   font-weight: $font-weight;
   color: $color;
   @include font-family()
-}
-
-@mixin font-family() {
-  font-family: 'Poppins', sans-serif;
-  font-family: 'Rubik', sans-serif;
 }
 
 @mixin button($width) {
