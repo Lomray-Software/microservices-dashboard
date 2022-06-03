@@ -9,8 +9,12 @@
 
   .columnInfo {
     display: grid;
-    grid-template-columns: minmax(100px, 300px) 1fr;
+    grid-template-columns: 200px 1fr;
     margin-bottom: 10px;
+
+    @include media-breakpoint-down(md) {
+      grid-template-columns: 150px 1fr;
+    }
 
     .description {
       @include font-size(15px, $font-weight-bold, $text-secondary);
