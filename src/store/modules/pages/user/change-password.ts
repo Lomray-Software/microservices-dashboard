@@ -2,13 +2,12 @@ import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-validation-errors';
 import { formatValidationError } from '@helpers/handle-validation-errors';
 import type { ClassReturnType } from '@interfaces/helpers';
-import type { IUi } from '@interfaces/store-type';
+import type { IDomain } from '@interfaces/store-type';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
 import UserPageStore from '@store/modules/pages/user/index';
 
 export interface IChangePasswordState {
-  oldPassword: string;
   newPassword: string;
   reEnterNewPassword?: string;
   userId?: IUser['id'];
@@ -17,7 +16,7 @@ export interface IChangePasswordState {
 /**
  * Change password store
  */
-class ChangePasswordStore implements IUi {
+class ChangePasswordStore implements IDomain {
   /**
    * This is not a singleton
    */
@@ -52,13 +51,13 @@ class ChangePasswordStore implements IUi {
     this.userStore = storeManager.getStore(UserPageStore);
 
     this.initialValues = {
-      oldPassword: '',
       newPassword: '',
       reEnterNewPassword: '',
     };
 
     makeObservable(this, {
       initialValues: observable,
+      error: observable,
       save: action.bound,
       setError: action.bound,
     });
@@ -77,16 +76,15 @@ class ChangePasswordStore implements IUi {
   public async save(
     values: IChangePasswordState,
   ): Promise<true | IValidationErrors<IChangePasswordState>> {
-    const { oldPassword, newPassword } = values;
+    const { newPassword } = values;
 
     const [changePasswordError] = await Promise.all([
-      this.userStore.updatePassword({ oldPassword, newPassword }),
+      this.userStore.updatePassword({ newPassword }),
     ]);
 
     // handle errors
     if (changePasswordError) {
       return formatValidationError<IChangePasswordState, Record<any, any>>(changePasswordError, {
-        oldPassword: 'oldPassword',
         newPassword: 'newPassword',
         reEnterNewPassword: 'reEnterNewPassword',
       });

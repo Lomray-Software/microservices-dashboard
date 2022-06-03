@@ -18,9 +18,8 @@
       grid-template-columns: minmax(100px, 150px) 1fr;
     }
   }
-}
 
-.errorMessage {
-  bottom: 30px;
-  left: 300px;
+  .wrapperInput {
+    position: relative;
+  }
 }

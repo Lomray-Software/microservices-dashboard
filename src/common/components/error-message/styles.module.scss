@@ -3,10 +3,9 @@
 
 .errorMessage {
   position: absolute;
-  width: 100%;
-  align-items: center;
-  bottom: -22px;
+  top: -20px;
   left: 50%;
-  transform: translateX(-47%);
+  transform: translateX(-50%);
+  align-items: center;
   @include font-size(14px, $font-weight-light, $pink);
 }

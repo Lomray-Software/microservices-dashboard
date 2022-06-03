@@ -36,7 +36,7 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
               key={fieldName}
               name={fieldName}
               placeholder={t(`users-page:${fieldName}`)}
-              isLine>
+              isInline>
               <span className={styles.description}>{t(`users-page:${fieldName}`)}</span>
             </Field>
           ))}

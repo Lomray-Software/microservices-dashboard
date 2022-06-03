@@ -4,7 +4,7 @@
 
 .errorMessage {
   position: absolute;
-  top: 55px;
-  right: 10px;
+  bottom: -20px;
+  left: 12px;
   @include font-size(14px, $font-weight-light, $pink);
 }

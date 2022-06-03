@@ -21,7 +21,7 @@ export interface IEditProfileState {
 /**
  * Edit profile store
  */
-class UserEditStore implements IUi {
+class EditUserStore implements IUi {
   /**
    * This is not a singleton
    */
@@ -55,9 +55,8 @@ class UserEditStore implements IUi {
     this.api = endpoints;
     this.userStore = storeManager.getStore(UserPageStore);
 
-    const { firstName, lastName, middleName, phone, profile, username } = this.userStore
-      .user as IUser;
-    const { birthDay } = profile;
+    const { firstName, lastName, middleName, phone, profile, username } = this.userStore.user || {};
+    const { birthDay } = profile || {};
 
     this.initialValues = {
       firstName: firstName ?? '',
@@ -110,4 +109,4 @@ class UserEditStore implements IUi {
   }
 }
 
-export default UserEditStore;
+export default EditUserStore;

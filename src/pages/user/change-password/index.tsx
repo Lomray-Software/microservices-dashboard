@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import type { FC } from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '@components/error-message';
 import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
 import { setErrorForm } from '@helpers/handle-validation-errors';
@@ -13,7 +14,7 @@ import validationSchema from './validation-schema';
 import styles from './styles.module.scss';
 
 const ChangePassword: FC<StoreProps> = ({
-  userChangePassword: { initialValues, save, setError },
+  userChangePassword: { initialValues, save, setError, error },
 }) => {
   const { t } = useTranslation('user-page');
 
@@ -34,11 +35,12 @@ const ChangePassword: FC<StoreProps> = ({
       <Formik initialValues={initialValues} onSubmit={onSave}>
         <Form className={styles.form}>
           {fields.map((name) => (
-            <Field key={name} type="password" name={name} placeholder={t(name)} isLine>
+            <Field key={name} type="password" name={name} placeholder={t(name)} isInline>
               <span className={styles.description}>{t(name)}</span>
             </Field>
           ))}
           <SubmitButton className={styles.button} hasLoader>
+            <ErrorMessage>{error}</ErrorMessage>
             {t('buttonChangePassword')}
           </SubmitButton>
         </Form>

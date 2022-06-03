@@ -58,6 +58,7 @@
     }
 
     .button {
+      position: relative;
       padding: 16px 32px;
       text-transform: uppercase;
       background-color: $button-login;
