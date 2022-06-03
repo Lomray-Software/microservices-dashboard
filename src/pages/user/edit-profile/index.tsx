@@ -13,7 +13,7 @@ import validationSchema from './validation-schema';
 import styles from './styles.module.scss';
 
 const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError } }) => {
-  const { t } = useTranslation('users-page');
+  const { t } = useTranslation(['user-page', 'users-page']);
 
   /**
    * Save user & profile
@@ -32,12 +32,16 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
       <Formik initialValues={initialValues} onSubmit={onSave}>
         <Form className={styles.form}>
           {fields.map((fieldName) => (
-            <Field key={fieldName} name={fieldName} placeholder={t(fieldName)} isLine>
-              <span className={styles.description}>{t(fieldName)}</span>
+            <Field
+              key={fieldName}
+              name={fieldName}
+              placeholder={t(`users-page:${fieldName}`)}
+              isLine>
+              <span className={styles.description}>{t(`users-page:${fieldName}`)}</span>
             </Field>
           ))}
           <SubmitButton className={styles.button} hasLoader>
-            {t('buttonEditProfile')}
+            {t('user-page:buttonEditProfile')}
           </SubmitButton>
         </Form>
       </Formik>

@@ -1,8 +1,8 @@
 import type { StoresType } from '@interfaces/helpers';
-import UserPageStore from '@store/modules/pages/user';
+import ChangePasswordStore from '@store/modules/pages/user/change-password';
 
 const stores = {
-  user: UserPageStore,
+  userChangePassword: ChangePasswordStore,
 };
 
 export type StoreProps = StoresType<typeof stores>;

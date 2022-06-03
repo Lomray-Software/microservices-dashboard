@@ -1,3 +1,3 @@
-const fields = ['currentPassword', 'newPassword', 'reEnterNewPassword'] as const;
+const fields = ['oldPassword', 'newPassword', 'reEnterNewPassword'] as const;
 
 export default fields;

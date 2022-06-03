@@ -1,5 +1,6 @@
 {
   "vRequired": "This field is required.",
   "vTooLong": "Too many characters.",
-  "vTooShort": "Too few characters"
+  "vTooShort": "Too few characters",
+  "vNotMatch": "Passwords do not match"
 }

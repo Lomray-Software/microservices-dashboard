@@ -3,38 +3,35 @@ import type { IValidationErrors } from '@helpers/handle-validation-errors';
 import { formatValidationError } from '@helpers/handle-validation-errors';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IUi } from '@interfaces/store-type';
-import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
-import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
 import UserPageStore from '@store/modules/pages/user/index';
 
-export interface IEditProfileState {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  phone: string;
-  birthDay: string;
+export interface IChangePasswordState {
+  oldPassword: string;
+  newPassword: string;
+  reEnterNewPassword?: string;
+  userId?: IUser['id'];
 }
 
 /**
- * Edit profile store
+ * Change password store
  */
-class EditProfileStore implements IUi {
+class ChangePasswordStore implements IUi {
   /**
    * This is not a singleton
    */
   static isSingleton = false;
 
   /**
-   * Current user fields
+   * API error
    */
-  public initialValues: IEditProfileState;
+  public error: string | null = null;
 
   /**
-   * User avatar
+   * Password fields
    */
-  public avatar?: string;
+  public initialValues: IChangePasswordState;
 
   /**
    * User store
@@ -54,50 +51,49 @@ class EditProfileStore implements IUi {
     this.api = endpoints;
     this.userStore = storeManager.getStore(UserPageStore);
 
-    const { firstName, lastName, middleName, phone, profile } = this.userStore.user as IUser;
-    const { birthDay } = profile;
-
     this.initialValues = {
-      firstName: firstName ?? '',
-      lastName: lastName ?? '',
-      middleName: middleName ?? '',
-      phone: phone ?? '',
-      birthDay: birthDay ?? '',
+      oldPassword: '',
+      newPassword: '',
+      reEnterNewPassword: '',
     };
 
     makeObservable(this, {
       initialValues: observable,
-      avatar: observable,
       save: action.bound,
+      setError: action.bound,
     });
   }
 
   /**
-   * Save user fields
+   * Set error message
+   */
+  public setError(message: string | null): void {
+    this.error = message;
+  }
+
+  /**
+   * Save password fields
    */
   public async save(
-    values: IEditProfileState,
-  ): Promise<true | IValidationErrors<IEditProfileState>> {
-    const { firstName, lastName, middleName, phone, birthDay } = values;
+    values: IChangePasswordState,
+  ): Promise<true | IValidationErrors<IChangePasswordState>> {
+    const { oldPassword, newPassword } = values;
 
-    const [userError, profileError] = await Promise.all([
-      this.userStore.updateUser({ firstName, lastName, middleName, phone }),
-      this.userStore.updateProfile({ birthDay }),
+    const [changePasswordError] = await Promise.all([
+      this.userStore.updatePassword({ oldPassword, newPassword }),
     ]);
 
     // handle errors
-    if (userError || profileError) {
-      return formatValidationError<IEditProfileState, IUser & IProfile>(
-        [userError as IBaseException, profileError as IBaseException],
-        {
-          firstName: 'firstName',
-          lastName: 'lastName',
-        },
-      );
+    if (changePasswordError) {
+      return formatValidationError<IChangePasswordState, Record<any, any>>(changePasswordError, {
+        oldPassword: 'oldPassword',
+        newPassword: 'newPassword',
+        reEnterNewPassword: 'reEnterNewPassword',
+      });
     }
 
     return true;
   }
 }
 
-export default EditProfileStore;
+export default ChangePasswordStore;

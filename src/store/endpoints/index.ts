@@ -21,6 +21,7 @@ import type {
   ISignOutInput,
   ISignOutOutput,
 } from '@store/endpoints/interfaces/users/methods/user/sign-out';
+import type { IChangePasswordState } from '@store/modules/pages/user/change-password';
 
 interface IEndpointsCreateHandlerConfig
   extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
@@ -95,6 +96,9 @@ class Endpoints {
       me: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.me'),
       view: this.createHandler<IQuery<IUser>, IView<IUser>>('users.user.view'),
       update: this.createHandler<IUpdate<IUser>, IView<IUser>>('users.user.update'),
+      changePassword: this.createHandler<IChangePasswordState, IView<IUser>>(
+        'users.user.change-password',
+      ),
       signIn: this.createHandler<ISignInInput, ISignInOutput>('users.user.sign-in'),
       signOut: this.createHandler<ISignOutInput, ISignOutOutput>('users.user.sign-out', {
         isSkipRenew: true,

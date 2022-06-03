@@ -2,10 +2,10 @@ import type { FieldProps } from 'formik';
 import { Field as DefaultField } from 'formik';
 import type { FC, InputHTMLAttributes } from 'react';
 import React from 'react';
-import ErrorMessage from '@components/forms/error-message';
-import Input from '@components/forms/input';
-import Label from '@components/forms/label';
 import combineCss from '@helpers/combine-css';
+import ErrorMessage from '../error-message';
+import Input from '../input';
+import Label from '../label';
 import styles from './styles.module.scss';
 
 interface IField {

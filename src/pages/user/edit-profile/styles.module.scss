@@ -16,20 +16,7 @@
   }
 
   .button {
-    width: 300px;
-    justify-self: center;
-    padding: 16px 32px;
-    text-transform: uppercase;
-    background-color: $button-login;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    transition: all 0.3s ease-in;
-    @include font-size(14px, $font-weight-light, $white);
-
-    &:hover {
-      background-color: $button-login-hover;
-    }
+    @include button(300px);
   }
 
   .description {

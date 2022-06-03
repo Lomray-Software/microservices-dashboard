@@ -1,36 +1,42 @@
+import type { FormikConfig } from 'formik';
 import { Form, Formik } from 'formik';
 import type { FC } from 'react';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
+import { setErrorForm } from '@helpers/handle-validation-errors';
+import type { IChangePasswordState } from '@store/modules/pages/user/change-password';
 import fields from './fields';
 import type { StoreProps } from './index.stores';
+import validationSchema from './validation-schema';
 import styles from './styles.module.scss';
 
-interface IChangePassword {
-  currentPassword: string;
-  newPassword: string;
-  reEnterNewPassword: string;
-}
+const ChangePassword: FC<StoreProps> = ({
+  userChangePassword: { initialValues, save, setError },
+}) => {
+  const { t } = useTranslation('user-page');
 
-const ChangePassword: FC<StoreProps> = () => {
-  const { t } = useTranslation('users-page');
+  /**
+   * Change password
+   */
+  const onSave: FormikConfig<IChangePasswordState>['onSubmit'] = useCallback(
+    async (values, { setErrors }) => {
+      const result = await save(validationSchema().cast(values) as IChangePasswordState);
 
-  const [innitValues] = useState<IChangePassword>({
-    currentPassword: '',
-    newPassword: '',
-    reEnterNewPassword: '',
-  });
-
-  const onSubmit = useCallback((value) => console.info(value), []);
+      setErrorForm(result, setErrors, setError);
+    },
+    [save, setError],
+  );
 
   return (
     <div className={styles.column}>
-      <Formik initialValues={innitValues} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={onSave}>
         <Form className={styles.form}>
           {fields.map((name) => (
-            <Field key={name} name={name} isLine />
+            <Field key={name} type="password" name={name} placeholder={t(name)} isLine>
+              <span className={styles.description}>{t(name)}</span>
+            </Field>
           ))}
           <SubmitButton className={styles.button} hasLoader>
             {t('buttonChangePassword')}

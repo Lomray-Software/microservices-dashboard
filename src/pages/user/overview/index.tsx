@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Fields from '@components/fields';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import { fields } from '../fields';
@@ -9,8 +10,10 @@ interface IOverview {
 }
 
 const Overview: FC<IOverview> = ({ user }) => {
+  const { t } = useTranslation('users-page');
+
   const data = fields.map((field) => ({
-    label: field,
+    label: t(field),
     value: field === 'birthDay' ? user?.profile?.birthDay : user?.[field],
   }));
 

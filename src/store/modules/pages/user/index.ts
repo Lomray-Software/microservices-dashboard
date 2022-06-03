@@ -4,6 +4,7 @@ import type { IBaseException } from '@store/endpoints/interfaces/common/microser
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
+import type { IChangePasswordState } from '@store/modules/pages/user/change-password';
 
 /**
  * User page store
@@ -113,6 +114,18 @@ class UserPageStore implements IDomain {
     if (result?.entity) {
       this.setProfile(result.entity);
     }
+
+    return error;
+  }
+
+  public async updatePassword(fields: IChangePasswordState): Promise<IBaseException | undefined> {
+    const { error } = await this.api.users.user.changePassword(
+      {
+        ...fields,
+        userId: this.user?.id,
+      },
+      { shouldShowErrors: false },
+    );
 
     return error;
   }

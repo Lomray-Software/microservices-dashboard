@@ -83,19 +83,19 @@ class UsersPageStore implements IDomain {
   /**
    * Set page size
    */
-  public async setPageSize(count: number): Promise<void> {
+  public setPageSize(count: number): Promise<void> {
     this.pageSize = count;
 
-    await this.getUsers();
+    return this.getUsers();
   }
 
   /**
    * Set current page
    */
-  public async setPage(page: number): Promise<void> {
+  public setPage(page: number): Promise<void> {
     this.page = page;
 
-    await this.getUsers();
+    return this.getUsers();
   }
 
   /**

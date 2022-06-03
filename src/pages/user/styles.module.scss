@@ -9,23 +9,6 @@
   background-color: $background-primary;
   border-radius: 8px;
 
-  .tabs {
-    .tab {
-      cursor: pointer;
-      transition: all 0.3s ease-in;
-      padding: 8px 16px;
-      background-color: transparent;
-      border: none;
-      outline: none;
-      @include font-size(16px, $font-weight-medium, $text-secondary);
-
-      &.active {
-        border-bottom: 1px solid $text-primary;
-        color: $text-primary;
-      }
-    }
-  }
-
   .wrapper {
     padding: 30px 0;
     display: grid;

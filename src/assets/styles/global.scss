@@ -47,8 +47,6 @@ footer {
 
 input {
   outline: none;
-  outline-width: 0;
-  outline-color: transparent;
 }
 
 ul {
@@ -60,4 +58,9 @@ ul {
   max-width: $boxed-container-width;
   padding: 0 15px;
   margin: 0 auto;
+}
+
+//this selector need for position breadcrumbs
+.wrapper {
+  position: relative;
 }
