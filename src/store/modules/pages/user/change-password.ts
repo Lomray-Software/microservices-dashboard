@@ -3,11 +3,12 @@ import type { IValidationErrors } from '@helpers/handle-validation-errors';
 import { formatValidationError } from '@helpers/handle-validation-errors';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
+import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
-import UserPageStore from '@store/modules/pages/user/index';
+import UserPageStore from './index';
 
-export interface IChangePasswordState {
+export interface IChangePassword {
   newPassword: string;
   reEnterNewPassword?: string;
   userId?: IUser['id'];
@@ -30,7 +31,7 @@ class ChangePasswordStore implements IDomain {
   /**
    * Password fields
    */
-  public initialValues: IChangePasswordState;
+  public initialValues: IChangePassword;
 
   /**
    * User store
@@ -57,8 +58,9 @@ class ChangePasswordStore implements IDomain {
 
     makeObservable(this, {
       initialValues: observable,
-      error: observable,
       save: action.bound,
+      updatePassword: action.bound,
+      error: observable,
       setError: action.bound,
     });
   }
@@ -71,23 +73,32 @@ class ChangePasswordStore implements IDomain {
   }
 
   /**
+   *
+   * Update password
+   */
+  public async updatePassword(fields: IChangePassword): Promise<IBaseException | undefined> {
+    const { error } = await this.api.users.user.changePassword(
+      {
+        ...fields,
+        userId: this.userStore.user?.id,
+      },
+      { shouldShowErrors: false },
+    );
+
+    return error;
+  }
+
+  /**
    * Save password fields
    */
-  public async save(
-    values: IChangePasswordState,
-  ): Promise<true | IValidationErrors<IChangePasswordState>> {
+  public async save(values: IChangePassword): Promise<true | IValidationErrors<IChangePassword>> {
     const { newPassword } = values;
 
-    const [changePasswordError] = await Promise.all([
-      this.userStore.updatePassword({ newPassword }),
-    ]);
+    const changePasswordError = await this.updatePassword({ newPassword });
 
     // handle errors
     if (changePasswordError) {
-      return formatValidationError<IChangePasswordState, Record<any, any>>(changePasswordError, {
-        newPassword: 'newPassword',
-        reEnterNewPassword: 'reEnterNewPassword',
-      });
+      return formatValidationError<IChangePassword, IChangePassword>(changePasswordError);
     }
 
     return true;

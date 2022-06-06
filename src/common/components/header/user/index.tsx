@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import React from 'react';
-import type { StoreProps } from '@components/header/user/index.stores';
 import useToggle from '@hooks/use-toggle';
+import type { StoreProps } from './index.stores';
 import Popup from './popup';
 import styles from './styles.module.scss';
 

@@ -10,6 +10,7 @@ import styles from './styles.module.scss';
 
 interface IField {
   name: string;
+  title?: string;
   isInline?: boolean;
 }
 
@@ -18,11 +19,11 @@ type TProps = InputHTMLAttributes<HTMLInputElement> & IField;
 /**
  * Formik input
  */
-const Field: FC<TProps> = ({ name, children, isInline = false, ...props }) => (
+const Field: FC<TProps> = ({ name, title, isInline = false, ...props }) => (
   <Label
     htmlFor={name}
     className={combineCss(styles.container, isInline ? styles.containerLine : '')}>
-    {children}
+    {title && <span className={styles.description}>{title}</span>}
     <DefaultField name={name}>
       {({
         field: { value },
@@ -34,6 +35,7 @@ const Field: FC<TProps> = ({ name, children, isInline = false, ...props }) => (
             onChange={handleChange(name)}
             onBlur={handleBlur(String(name))}
             value={value ?? initialValue}
+            name={name}
             {...props}
           />
           <ErrorMessage name={name} />

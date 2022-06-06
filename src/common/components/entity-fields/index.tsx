@@ -6,7 +6,7 @@ interface IFields {
   data: { label: string; value: string }[];
 }
 
-const Fields: FC<IFields> = ({ data }) => (
+const EntityFields: FC<IFields> = ({ data }) => (
   <div className={styles.column}>
     {data.map(({ label, value }) => (
       <div key={String(label)} className={styles.columnInfo}>
@@ -17,4 +17,4 @@ const Fields: FC<IFields> = ({ data }) => (
   </div>
 );
 
-export default Fields;
+export default EntityFields;

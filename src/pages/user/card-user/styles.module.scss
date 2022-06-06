@@ -8,10 +8,6 @@
   grid-row-gap: 10px;
   grid-template-columns: 1fr;
 
-  @include media-breakpoint-down(md) {
-    grid-row: 2/3;
-  }
-
   .wrapperImage {
     display: flex;
     justify-content: center;

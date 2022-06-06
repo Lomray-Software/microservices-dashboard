@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import React from 'react';
-import styles from '@components/breadcrumbs/styles.module.scss';
 import Link from '@components/link';
+import styles from './styles.module.scss';
 
 export interface IBreadcrumbItem {
   to: string;

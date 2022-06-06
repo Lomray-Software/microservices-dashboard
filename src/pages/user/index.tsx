@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Breadcrumbs from '@components/breadcrumbs';
-import Tabs from '@components/tabs';
 import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
@@ -29,21 +29,6 @@ type Props = StoreProps;
 const User: SSRComponent<Props> = ({ userPage: { user } }) => {
   const { t } = useTranslation(['user-page', 'menu']);
 
-  const [activeTab, setActiveTab] = useState<TABS>(TABS.OVERVIEW);
-
-  const activeItem = useMemo(() => {
-    switch (activeTab) {
-      case TABS.OVERVIEW:
-        return <Overview user={user} />;
-
-      case TABS.EDIT_PROFILE:
-        return <EditProfile />;
-
-      case TABS.CHANGE_PASSWORD:
-        return <ChangePassword />;
-    }
-  }, [activeTab, user]);
-
   const tabs = useMemo(
     () => Object.values(TABS).map((item) => ({ title: t(`user-page:${item}`), id: item })),
     [t],
@@ -55,26 +40,34 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
         <title>{t('user-page:pageTitle')}</title>
       </Helmet>
       <Breadcrumbs>
-        <Breadcrumbs.Item to={ROUTES.HOME} title={t('menu:home')} />
         <Breadcrumbs.Item to={ROUTES.USERS} title={t('menu:users')} />
         <Breadcrumbs.Item
           to={ROUTES.USERS}
           title={user?.username ?? `${String(user?.firstName)} ${String(user?.lastName)}`}
         />
       </Breadcrumbs>
-      <div className={styles.body}>
-        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div className={styles.wrapper}>
-          <h3 className={styles.titleInfo}>{t(`user-page:${activeTab}`)}</h3>
-          <CardUser
-            profile={user?.profile}
-            firstName={user?.firstName}
-            lastName={user?.lastName}
-            email={user?.email}
-          />
-          {activeItem}
-        </div>
-      </div>
+      <Tabs className={styles.body}>
+        <TabList className={styles.tabs}>
+          {tabs.map(({ id, title }) => (
+            <Tab key={id}>{title}</Tab>
+          ))}
+        </TabList>
+        <CardUser
+          profile={user?.profile}
+          firstName={user?.firstName}
+          lastName={user?.lastName}
+          email={user?.email}
+        />
+        <TabPanel>
+          <Overview user={user} />
+        </TabPanel>
+        <TabPanel>
+          <EditProfile />
+        </TabPanel>
+        <TabPanel>
+          <ChangePassword />
+        </TabPanel>
+      </Tabs>
     </div>
   );
 };

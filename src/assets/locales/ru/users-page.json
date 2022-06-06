@@ -8,7 +8,7 @@
   "gender": "Пол",
   "birthDay": "Дата рождения",
   "createdAt": "Созданно",
-  "updatedAt": "Обновленно At",
-  "deletedAt": "Удаленно At",
+  "updatedAt": "Обновленно",
+  "deletedAt": "Удаленно",
   "list": "Список пользователей"
 }

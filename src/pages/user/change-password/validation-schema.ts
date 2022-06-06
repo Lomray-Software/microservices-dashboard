@@ -1,17 +1,14 @@
 import { object, string, ref } from 'yup';
 import type { SchemaOf } from 'yup';
 import i18n from '@common/services/localization';
-import type { IChangePasswordState } from '@store/modules/pages/user/change-password';
+import type { IChangePassword } from '@store/modules/pages/user/change-password';
 
-const requiredError = i18n.t('forms:vRequired');
-const notMatch = i18n.t('forms:vNotMatch');
-
-type SchemaType = SchemaOf<Omit<IChangePasswordState, 'userId'>>;
+type SchemaType = SchemaOf<Omit<IChangePassword, 'userId'>>;
 
 const validationSchema = (): SchemaType =>
   object({
-    newPassword: string().trim().required(requiredError),
-    reEnterNewPassword: string().oneOf([ref('newPassword'), null], notMatch),
+    newPassword: string().required(i18n.t('forms:vRequired')).trim(),
+    reEnterNewPassword: string().oneOf([ref('newPassword'), null], i18n.t('forms:vNotMatch')),
   });
 
 export default validationSchema;

@@ -12,6 +12,7 @@
 }
 
 .table {
+  padding: 20px;
   width: 100%;
   margin-bottom: 0;
   @include font-size(14px, $font-weight-medium, $text-secondary);
@@ -29,16 +30,16 @@
   }
 
   .head {
-    th {
-      padding: 15px;
-      border-bottom: 1px solid $border-color
+    display: grid;
+
+    .headerItem {
+      padding: 0 10px;
     }
 
     .wrapperSort {
       display: flex;
       justify-content: center;
       align-items: center;
-      user-select: none;
 
       .wrapperIconSort {
         width: 15px;
@@ -51,18 +52,15 @@
   }
 
   .body {
-    td {
-      border-bottom: 1px solid $border-color
-    }
-
-    tr {
-      transition: all 0.3s ease-in;
+    .row {
+      width: 100%;
+      display: grid;
+      transition: all 0.3s ease;
 
       &:hover {
-        background-color: $table-hover-bg;
-
         .link {
-          color: $text-primary;
+          background-color: $black;
+          color: $text-primary
         }
       }
     }

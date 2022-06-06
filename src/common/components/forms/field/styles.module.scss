@@ -19,6 +19,11 @@
     }
   }
 
+  .description {
+    align-self: center;
+    @include font-size(15px, $font-weight-bold, $text-secondary);
+  }
+
   .wrapperInput {
     position: relative;
   }

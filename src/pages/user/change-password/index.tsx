@@ -3,11 +3,10 @@ import { Form, Formik } from 'formik';
 import type { FC } from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import ErrorMessage from '@components/error-message';
 import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
 import { setErrorForm } from '@helpers/handle-validation-errors';
-import type { IChangePasswordState } from '@store/modules/pages/user/change-password';
+import type { IChangePassword } from '@store/modules/pages/user/change-password';
 import fields from './fields';
 import type { StoreProps } from './index.stores';
 import validationSchema from './validation-schema';
@@ -21,9 +20,9 @@ const ChangePassword: FC<StoreProps> = ({
   /**
    * Change password
    */
-  const onSave: FormikConfig<IChangePasswordState>['onSubmit'] = useCallback(
+  const onSave: FormikConfig<IChangePassword>['onSubmit'] = useCallback(
     async (values, { setErrors }) => {
-      const result = await save(validationSchema().cast(values) as IChangePasswordState);
+      const result = await save(validationSchema().cast(values) as IChangePassword);
 
       setErrorForm(result, setErrors, setError);
     },
@@ -32,15 +31,19 @@ const ChangePassword: FC<StoreProps> = ({
 
   return (
     <div className={styles.column}>
-      <Formik initialValues={initialValues} onSubmit={onSave}>
+      <Formik initialValues={initialValues} onSubmit={onSave} validationSchema={validationSchema}>
         <Form className={styles.form}>
           {fields.map((name) => (
-            <Field key={name} type="password" name={name} placeholder={t(name)} isInline>
-              <span className={styles.description}>{t(name)}</span>
-            </Field>
+            <Field
+              key={name}
+              type="password"
+              name={name}
+              placeholder={t(name)}
+              title={t(name)}
+              isInline
+            />
           ))}
-          <SubmitButton className={styles.button} hasLoader>
-            <ErrorMessage>{error}</ErrorMessage>
+          <SubmitButton className={styles.button} error={error} hasLoader>
             {t('buttonChangePassword')}
           </SubmitButton>
         </Form>

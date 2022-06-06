@@ -12,9 +12,7 @@ import ReactPaginate from 'react-paginate';
 import type { TableOptions } from 'react-table';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import Link from '@components/link';
-import type ROUTES from '@constants/routes';
 import combineCss from '@helpers/combine-css';
-import { makeUrl } from '@helpers/make-url';
 import DefaultFilter from './default-filter';
 import Select from './select';
 import styles from './styles.module.scss';
@@ -24,8 +22,8 @@ interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEnti
   setPage: (page: number) => void;
   pageSize: number;
   setPageSize: (count: number) => void;
+  onRoute: (id: string) => string;
   count: number;
-  link: ROUTES;
 }
 
 const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX.Element => {
@@ -37,7 +35,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     page: currentPage,
     setPage,
     count,
-    link,
+    onRoute,
   } = props;
 
   const pageCount = Math.ceil(count / pageSize);
@@ -74,18 +72,18 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
   );
 
   const onChangePageSize = useCallback(
-    (countUser: number) => {
-      setStorePageSize(countUser);
-      setPageSize(countUser);
+    (size: number) => {
+      setStorePageSize(size);
+      setPageSize(size);
       setPage(1);
     },
     [setPage, setPageSize, setStorePageSize],
   );
 
   const onPaginationChange = useCallback(
-    (selectedPage: number) => {
-      setPage(selectedPage + 1);
-      gotoPage(selectedPage);
+    (sheet: number) => {
+      setPage(sheet + 1);
+      gotoPage(sheet);
     },
     [gotoPage, setPage],
   );
@@ -113,64 +111,72 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
   return (
     <div className={styles.container}>
       <div className={styles.scroll}>
-        <table {...getTableProps()} className={styles.table}>
-          <thead className={styles.head}>
-            {headerGroups.map((headerGroup) => {
-              const rowProps = headerGroup.getHeaderGroupProps();
+        <div {...getTableProps()} className={styles.table}>
+          {headerGroups.map((headerGroup) => {
+            const rowProps = headerGroup.getHeaderGroupProps();
 
-              return (
-                <tr {...rowProps} key={rowProps.key}>
-                  {headerGroup.headers.map((column) => {
-                    const cellProps = column.getHeaderProps(column.getSortByToggleProps());
+            return (
+              <div
+                className={styles.head}
+                {...rowProps}
+                key={rowProps.key}
+                style={{ gridTemplateColumns: `repeat(${columns.length}, 150px)` }}>
+                {headerGroup.headers.map((column) => {
+                  const cellProps = column.getHeaderProps(column.getSortByToggleProps());
 
-                    return (
-                      <th scope="col" key={cellProps.key}>
-                        <div {...cellProps} className={styles.wrapperSort}>
-                          {column.render('Header')}
-                          <span className={styles.wrapperIconSort}>
-                            {column.isSorted ? (
-                              column.isSortedDesc ? (
-                                <Icon path={mdiSortDescending} size={1} color="#6c7293" />
-                              ) : (
-                                <Icon path={mdiSortAscending} size={1} color="#6c7293" />
-                              )
+                  return (
+                    <div className={styles.headerItem} key={cellProps.key}>
+                      <div {...cellProps} className={styles.wrapperSort}>
+                        {column.render('Header')}
+                        <span className={styles.wrapperIconSort}>
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <Icon path={mdiSortDescending} size={1} color="#6c7293" />
                             ) : (
-                              ''
-                            )}
-                          </span>
-                        </div>
-                        <div>{column.canFilter ? column.render('Filter') : ''}</div>
-                      </th>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </thead>
-          <tbody className={styles.body} {...getTableBodyProps()}>
+                              <Icon path={mdiSortAscending} size={1} color="#6c7293" />
+                            )
+                          ) : (
+                            ''
+                          )}
+                        </span>
+                      </div>
+                      <div>{column.canFilter ? column.render('Filter') : ''}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+          <div className={styles.body} {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
 
               const rowProps = row.getRowProps();
 
               return (
-                <tr {...rowProps} key={rowProps.key}>
+                <div
+                  className={styles.row}
+                  {...rowProps}
+                  key={rowProps.key}
+                  style={{ gridTemplateColumns: `repeat(${columns.length}, 150px)` }}>
                   {row.cells.map((cell) => {
                     const cellProps = cell.getCellProps();
 
                     return (
-                      <td {...cellProps} key={cellProps.key}>
-                        <Link className={styles.link} to={makeUrl([link, String(row.original.id)])}>
-                          {cell.render('Cell')}
-                        </Link>
-                      </td>
+                      <Link
+                        className={styles.link}
+                        {...cellProps}
+                        key={cellProps.key}
+                        to={onRoute(String(row.original.id))}>
+                        {cell.render('Cell')}
+                      </Link>
                     );
                   })}
-                </tr>
+                </div>
               );
             })}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
       <div className={styles.pagination}>
         <div className={styles.buttons}>

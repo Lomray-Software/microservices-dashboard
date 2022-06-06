@@ -7,9 +7,9 @@ import type { IBaseException } from '@store/endpoints/interfaces/common/microser
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
-import UserPageStore from '@store/modules/pages/user/index';
+import UserPageStore from '@store/modules/pages/user';
 
-export interface IEditProfileState {
+export interface IEditProfile {
   firstName: string;
   middleName: string;
   lastName: string;
@@ -35,7 +35,7 @@ class EditUserStore implements IUi {
   /**
    * Current user fields
    */
-  public initialValues: IEditProfileState;
+  public initialValues: IEditProfile;
 
   /**
    * User store
@@ -84,9 +84,7 @@ class EditUserStore implements IUi {
   /**
    * Save user fields
    */
-  public async save(
-    values: IEditProfileState,
-  ): Promise<true | IValidationErrors<IEditProfileState>> {
+  public async save(values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> {
     const { firstName, lastName, middleName, phone, birthDay, username } = values;
 
     const [userError, profileError] = await Promise.all([
@@ -96,13 +94,10 @@ class EditUserStore implements IUi {
 
     // handle errors
     if (userError || profileError) {
-      return formatValidationError<IEditProfileState, IUser & IProfile>(
-        [userError as IBaseException, profileError as IBaseException],
-        {
-          firstName: 'firstName',
-          lastName: 'lastName',
-        },
-      );
+      return formatValidationError<IEditProfile, IUser & IProfile>([
+        userError as IBaseException,
+        profileError as IBaseException,
+      ]);
     }
 
     return true;
