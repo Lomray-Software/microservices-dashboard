@@ -9,6 +9,11 @@
     grid-row: 3/4;
   }
 
+  .title {
+    margin-bottom: 20px;
+    @include font-size(18px, $font-weight-bold, $text-primary);
+  }
+
   .form {
     display: grid;
     grid-template-columns: 1fr;

@@ -31,6 +31,7 @@ const ChangePassword: FC<StoreProps> = ({
 
   return (
     <div className={styles.column}>
+      <h3 className={styles.title}>{t('changePassword')}</h3>
       <Formik initialValues={initialValues} onSubmit={onSave} validationSchema={validationSchema}>
         <Form className={styles.form}>
           {fields.map((name) => (

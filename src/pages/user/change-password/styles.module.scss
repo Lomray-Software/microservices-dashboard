@@ -5,6 +5,11 @@
 .column {
   margin-bottom: 10px;
 
+  .title {
+    margin-bottom: 20px;
+    @include font-size(18px, $font-weight-bold, $text-primary);
+  }
+
   @include media-breakpoint-down(md) {
     grid-row: 3/4;
   }
