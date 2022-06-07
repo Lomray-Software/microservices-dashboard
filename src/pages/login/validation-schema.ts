@@ -8,13 +8,13 @@ type SchemaType = SchemaOf<ILoginForm>;
 const validationSchema = (): SchemaType =>
   object({
     login: string()
-      .required(i18n.t('forms:vRequired'))
       .trim()
+      .required(i18n.t('forms:vRequired'))
       .min(2, i18n.t('forms:vTooShort'))
       .max(70, i18n.t('forms:vTooLong')),
     password: string()
-      .required(i18n.t('forms:vRequired'))
       .trim()
+      .required(i18n.t('forms:vRequired'))
       .min(2, i18n.t('forms:vTooShort'))
       .max(70, i18n.t('forms:vTooLong')),
   });

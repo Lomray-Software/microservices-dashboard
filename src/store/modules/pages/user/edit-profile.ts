@@ -2,12 +2,12 @@ import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-validation-errors';
 import { formatValidationError } from '@helpers/handle-validation-errors';
 import type { ClassReturnType } from '@interfaces/helpers';
-import type { IUi } from '@interfaces/store-type';
+import type { IDomain } from '@interfaces/store-type';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
-import UserPageStore from '@store/modules/pages/user';
+import UserPageStore from './index';
 
 export interface IEditProfile {
   firstName: string;
@@ -21,7 +21,7 @@ export interface IEditProfile {
 /**
  * Edit profile store
  */
-class EditUserStore implements IUi {
+class EditUserStore implements IDomain {
   /**
    * This is not a singleton
    */
@@ -41,7 +41,7 @@ class EditUserStore implements IUi {
    * User store
    * @private
    */
-  private userStore: ClassReturnType<typeof UserPageStore>;
+  private userPageStore: ClassReturnType<typeof UserPageStore>;
 
   /**
    * @private
@@ -53,9 +53,10 @@ class EditUserStore implements IUi {
    */
   constructor({ storeManager, endpoints }: IConstructorParams) {
     this.api = endpoints;
-    this.userStore = storeManager.getStore(UserPageStore);
+    this.userPageStore = storeManager.getStore(UserPageStore);
 
-    const { firstName, lastName, middleName, phone, profile, username } = this.userStore.user || {};
+    const { firstName, lastName, middleName, phone, profile, username } =
+      this.userPageStore.user || {};
     const { birthDay } = profile || {};
 
     this.initialValues = {
@@ -88,8 +89,8 @@ class EditUserStore implements IUi {
     const { firstName, lastName, middleName, phone, birthDay, username } = values;
 
     const [userError, profileError] = await Promise.all([
-      this.userStore.updateUser({ firstName, lastName, middleName, phone, username }),
-      this.userStore.updateProfile({ birthDay }),
+      this.userPageStore.updateUser({ firstName, lastName, middleName, phone, username }),
+      this.userPageStore.updateProfile({ birthDay }),
     ]);
 
     // handle errors

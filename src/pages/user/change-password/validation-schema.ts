@@ -7,7 +7,7 @@ type SchemaType = SchemaOf<Omit<IChangePassword, 'userId'>>;
 
 const validationSchema = (): SchemaType =>
   object({
-    newPassword: string().required(i18n.t('forms:vRequired')).trim(),
+    newPassword: string().trim().required(i18n.t('forms:vRequired')),
     reEnterNewPassword: string().oneOf([ref('newPassword'), null], i18n.t('forms:vNotMatch')),
   });
 

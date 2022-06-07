@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import EntityFields from '@components/entity-fields';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import { fields } from '../fields';
+import { fields } from '../data';
 import styles from './styles.module.scss';
 
 interface IOverview {

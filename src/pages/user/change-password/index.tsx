@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik';
 import type { FC } from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '@components/error-message';
 import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
 import { setErrorForm } from '@helpers/handle-validation-errors';
@@ -44,7 +45,8 @@ const ChangePassword: FC<StoreProps> = ({
               isInline
             />
           ))}
-          <SubmitButton className={styles.button} error={error} hasLoader>
+          <ErrorMessage>{error}</ErrorMessage>
+          <SubmitButton className={styles.button} hasLoader>
             {t('buttonChangePassword')}
           </SubmitButton>
         </Form>

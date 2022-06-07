@@ -3,11 +3,12 @@ import { Form, Formik } from 'formik';
 import type { FC } from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '@components/error-message';
 import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
 import { setErrorForm } from '@helpers/handle-validation-errors';
 import type { IEditProfile } from '@store/modules/pages/user/edit-profile';
-import { fields } from '../fields';
+import { fields } from '../data';
 import type { StoreProps } from './index.stores';
 import validationSchema from './validation-schema';
 import styles from './styles.module.scss';
@@ -41,7 +42,8 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
               isInline
             />
           ))}
-          <SubmitButton className={styles.button} error={error} hasLoader>
+          <ErrorMessage>{error}</ErrorMessage>
+          <SubmitButton className={styles.button} hasLoader>
             {t('user-page:buttonEditProfile')}
           </SubmitButton>
         </Form>

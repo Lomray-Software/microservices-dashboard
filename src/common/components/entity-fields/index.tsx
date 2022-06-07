@@ -2,11 +2,11 @@ import type { FC } from 'react';
 import React from 'react';
 import styles from './styles.module.scss';
 
-interface IFields {
+interface IEntityFields {
   data: { label: string; value: string }[];
 }
 
-const EntityFields: FC<IFields> = ({ data }) => (
+const EntityFields: FC<IEntityFields> = ({ data }) => (
   <div className={styles.column}>
     {data.map(({ label, value }) => (
       <div key={String(label)} className={styles.columnInfo}>

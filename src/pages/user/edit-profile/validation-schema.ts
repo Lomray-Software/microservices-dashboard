@@ -8,14 +8,14 @@ type SchemaType = SchemaOf<Partial<IEditProfile>>;
 const validationSchema = (): SchemaType =>
   object({
     username: string()
-      .required(i18n.t('forms:vRequired'))
       .trim()
+      .required(i18n.t('forms:vRequired'))
       .min(2, i18n.t('forms:vTooShort'))
       // eslint-disable-next-line sonarjs/no-duplicate-string
       .max(70, i18n.t('forms:vTooLong')),
     firstName: string()
-      .required(i18n.t('forms:vRequired'))
       .trim()
+      .required(i18n.t('forms:vRequired'))
       .min(2, i18n.t('forms:vTooShort'))
       .max(70, i18n.t('forms:vTooLong')),
     middleName: string().trim().max(70, i18n.t('forms:vTooLong')),

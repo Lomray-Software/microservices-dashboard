@@ -108,6 +108,10 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     setPage(currentPage + 1);
   };
 
+  const styleColumn = {
+    gridTemplateColumns: `repeat(${columns.length}, minmax(150px, 1fr))`,
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.scroll}>
@@ -116,11 +120,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
             const rowProps = headerGroup.getHeaderGroupProps();
 
             return (
-              <div
-                className={styles.head}
-                {...rowProps}
-                key={rowProps.key}
-                style={{ gridTemplateColumns: `repeat(${columns.length}, 150px)` }}>
+              <div className={styles.head} {...rowProps} key={rowProps.key} style={styleColumn}>
                 {headerGroup.headers.map((column) => {
                   const cellProps = column.getHeaderProps(column.getSortByToggleProps());
 
@@ -154,11 +154,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
               const rowProps = row.getRowProps();
 
               return (
-                <div
-                  className={styles.row}
-                  {...rowProps}
-                  key={rowProps.key}
-                  style={{ gridTemplateColumns: `repeat(${columns.length}, 150px)` }}>
+                <div className={styles.row} {...rowProps} key={rowProps.key} style={styleColumn}>
                   {row.cells.map((cell) => {
                     const cellProps = cell.getCellProps();
 

@@ -29,6 +29,7 @@ class UserPageStore implements IDomain {
       user: observable,
       setUser: action.bound,
       getUser: action.bound,
+      getUserName: action.bound,
     });
   }
 
@@ -66,6 +67,10 @@ class UserPageStore implements IDomain {
     }
 
     this.user.profile = profile;
+  }
+
+  public getUserName(user: IUser | null): string {
+    return user?.username ?? `${String(user?.firstName)} ${String(user?.lastName)}`;
   }
 
   /**

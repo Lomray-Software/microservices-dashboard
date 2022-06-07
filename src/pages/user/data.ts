@@ -8,6 +8,8 @@ const fields = [
   'birthDay',
 ] as const;
 
+const tabs = ['overview', 'editProfile', 'changePassword'] as const;
+
 type TKeyField = typeof fields[number];
 
-export { fields, TKeyField };
+export { fields, tabs, TKeyField };

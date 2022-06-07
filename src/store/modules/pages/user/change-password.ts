@@ -37,7 +37,7 @@ class ChangePasswordStore implements IDomain {
    * User store
    * @private
    */
-  private userStore: ClassReturnType<typeof UserPageStore>;
+  private userPageStore: ClassReturnType<typeof UserPageStore>;
 
   /**
    * @private
@@ -49,7 +49,7 @@ class ChangePasswordStore implements IDomain {
    */
   constructor({ storeManager, endpoints }: IConstructorParams) {
     this.api = endpoints;
-    this.userStore = storeManager.getStore(UserPageStore);
+    this.userPageStore = storeManager.getStore(UserPageStore);
 
     this.initialValues = {
       newPassword: '',
@@ -80,7 +80,7 @@ class ChangePasswordStore implements IDomain {
     const { error } = await this.api.users.user.changePassword(
       {
         ...fields,
-        userId: this.userStore.user?.id,
+        userId: this.userPageStore.user?.id,
       },
       { shouldShowErrors: false },
     );
