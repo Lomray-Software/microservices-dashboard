@@ -1,6 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-validation-errors';
 import { formatValidationError } from '@helpers/handle-validation-errors';
+import shallowDiff from '@helpers/shallow-diff';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
@@ -13,7 +14,7 @@ export interface IEditProfile {
   firstName: string;
   middleName: string;
   lastName: string;
-  phone: string;
+  phone: string | null;
   birthDay: string;
   username: string;
 }
@@ -63,7 +64,7 @@ class EditUserStore implements IDomain {
       firstName: firstName ?? '',
       lastName: lastName ?? '',
       middleName: middleName ?? '',
-      phone: phone ?? '',
+      phone: phone || null,
       birthDay: birthDay ?? '',
       username: username ?? '',
     };
@@ -86,10 +87,10 @@ class EditUserStore implements IDomain {
    * Save user fields
    */
   public async save(values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> {
-    const { firstName, lastName, middleName, phone, birthDay, username } = values;
+    const { birthDay, ...userFields } = shallowDiff(values, this.initialValues);
 
     const [userError, profileError] = await Promise.all([
-      this.userPageStore.updateUser({ firstName, lastName, middleName, phone, username }),
+      this.userPageStore.updateUser(userFields),
       this.userPageStore.updateProfile({ birthDay }),
     ]);
 

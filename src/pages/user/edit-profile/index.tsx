@@ -43,7 +43,7 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
             />
           ))}
           <ErrorMessage>{error}</ErrorMessage>
-          <SubmitButton className={styles.button} hasLoader>
+          <SubmitButton className={styles.button} hasLoader isInitialDisabled>
             {t('user-page:buttonEditProfile')}
           </SubmitButton>
         </Form>

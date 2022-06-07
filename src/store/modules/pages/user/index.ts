@@ -77,6 +77,10 @@ class UserPageStore implements IDomain {
    * Update user
    */
   public async updateUser(fields: Partial<IUser>): Promise<IBaseException | undefined> {
+    // if (_.isEmpty(fields)) {
+    //   return;
+    // }
+
     const { result, error } = await this.api.users.user.update(
       {
         fields,
@@ -101,6 +105,10 @@ class UserPageStore implements IDomain {
    * Update user profile
    */
   public async updateProfile(fields: Partial<IProfile>): Promise<IBaseException | undefined> {
+    // if (_.isEmpty(fields)) {
+    //   return;
+    // }
+
     if (fields.params) {
       fields.params = { ...this.user?.profile?.params, ...fields.params };
     }
