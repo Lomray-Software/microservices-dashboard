@@ -6,13 +6,12 @@
   padding: 16px;
   display: grid;
   grid-template-rows: min-content auto;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: min-content 1fr;
   grid-column-gap: 20px;
   background-color: $background-primary;
   border-radius: 8px;
 
   @include media-breakpoint-down(lg) {
-    grid-template-columns: 200px 1fr;
     grid-column-gap: 10px;
   }
 
