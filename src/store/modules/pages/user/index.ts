@@ -1,3 +1,4 @@
+import isEmpty from 'lodash.isempty';
 import { action, makeObservable, observable } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
@@ -29,7 +30,7 @@ class UserPageStore implements IDomain {
       user: observable,
       setUser: action.bound,
       getUser: action.bound,
-      getUserName: action.bound,
+      setProfile: action.bound,
     });
   }
 
@@ -69,17 +70,15 @@ class UserPageStore implements IDomain {
     this.user.profile = profile;
   }
 
-  public getUserName(user: IUser | null): string {
-    return user?.username ?? `${String(user?.firstName)} ${String(user?.lastName)}`;
-  }
-
   /**
    * Update user
    */
   public async updateUser(fields: Partial<IUser>): Promise<IBaseException | undefined> {
-    // if (_.isEmpty(fields)) {
-    //   return;
-    // }
+    console.log({ fields }, 'updateUser');
+
+    if (isEmpty(fields)) {
+      return;
+    }
 
     const { result, error } = await this.api.users.user.update(
       {
@@ -105,9 +104,11 @@ class UserPageStore implements IDomain {
    * Update user profile
    */
   public async updateProfile(fields: Partial<IProfile>): Promise<IBaseException | undefined> {
-    // if (_.isEmpty(fields)) {
-    //   return;
-    // }
+    console.log({ fields }, 'updateProfile');
+
+    if (isEmpty(fields)) {
+      return;
+    }
 
     if (fields.params) {
       fields.params = { ...this.user?.profile?.params, ...fields.params };

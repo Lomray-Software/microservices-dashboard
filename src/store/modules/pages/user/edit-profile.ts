@@ -34,6 +34,11 @@ class EditUserStore implements IDomain {
   public error: string | null = null;
 
   /**
+   * API success
+   */
+  public isSuccess = false;
+
+  /**
    * Current user fields
    */
   public initialValues: IEditProfile;
@@ -71,6 +76,7 @@ class EditUserStore implements IDomain {
 
     makeObservable(this, {
       initialValues: observable,
+      isSuccess: observable,
       save: action.bound,
       setError: action.bound,
     });
@@ -81,6 +87,13 @@ class EditUserStore implements IDomain {
    */
   public setError(message: string | null): void {
     this.error = message;
+  }
+
+  /**
+   * Set success send
+   */
+  public setSuccess(isSuccess: boolean): void {
+    this.isSuccess = isSuccess;
   }
 
   /**
@@ -101,6 +114,8 @@ class EditUserStore implements IDomain {
         profileError as IBaseException,
       ]);
     }
+
+    this.setSuccess(true);
 
     return true;
   }

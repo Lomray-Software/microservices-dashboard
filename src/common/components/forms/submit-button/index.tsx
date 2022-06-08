@@ -4,6 +4,7 @@ import React from 'react';
 import type { IButtonPrimary } from '@components/button-primary';
 import ButtonPrimary from '@components/button-primary';
 import Spinner from '@components/loaders/spinner';
+import combineCss from '@helpers/combine-css';
 
 interface ISubmitButton extends Omit<IButtonPrimary, 'onPress'> {
   isInitialDisabled?: boolean;
@@ -20,12 +21,18 @@ const SubmitButton: FC<ISubmitButton> = ({
   hasLoader = false,
   ...props
 }) => {
-  const { isSubmitting, isValid, dirty: isDirty } = useFormikContext();
+  const { isSubmitting, isValid, dirty: isDirty, status } = useFormikContext();
+
+  console.log({ status });
 
   const isDisabled = isSubmitting || (isInitialDisabled ? !(isValid && isDirty) : !isValid);
 
   return (
-    <ButtonPrimary type="submit" disabled={isDisabled} {...props}>
+    <ButtonPrimary
+      type="submit"
+      disabled={isDisabled}
+      className={combineCss(String(props.className))}
+      {...props}>
       {hasLoader && isSubmitting ? <Spinner /> : children}
     </ButtonPrimary>
   );

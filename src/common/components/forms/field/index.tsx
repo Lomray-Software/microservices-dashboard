@@ -34,7 +34,7 @@ const Field: FC<TProps> = ({ name, title, isInline = false, ...props }) => (
           <Input
             onChange={handleChange(name)}
             onBlur={handleBlur(String(name))}
-            value={value ?? initialValue}
+            value={value ?? initialValue ?? ''}
             name={name}
             {...props}
           />

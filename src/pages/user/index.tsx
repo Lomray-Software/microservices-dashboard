@@ -6,6 +6,7 @@ import Breadcrumbs from '@components/breadcrumbs';
 import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
+import UserHelper from '@store/entities/user';
 import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
 import { tabs } from './data';
@@ -21,7 +22,7 @@ type Props = StoreProps;
  * Users list page
  * @constructor
  */
-const User: SSRComponent<Props> = ({ userPage: { user, getUserName } }) => {
+const User: SSRComponent<Props> = ({ userPage: { user } }) => {
   const { t } = useTranslation(['user-page', 'menu']);
 
   return (
@@ -31,7 +32,7 @@ const User: SSRComponent<Props> = ({ userPage: { user, getUserName } }) => {
       </Helmet>
       <Breadcrumbs>
         <Breadcrumbs.Item to={ROUTES.USERS} title={t('menu:users')} />
-        <Breadcrumbs.Item to={ROUTES.USERS} title={getUserName(user)} />
+        <Breadcrumbs.Item to={ROUTES.USERS} title={UserHelper.getName(user)} />
       </Breadcrumbs>
       <Tabs className={styles.body}>
         <TabList className={styles.tabs}>
