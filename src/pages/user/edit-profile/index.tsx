@@ -35,6 +35,7 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
         <Form className={styles.form}>
           {fields.map((fieldName) => (
             <Field
+              type={fieldName === 'birthDay' ? 'date' : 'text'}
               key={fieldName}
               name={fieldName}
               placeholder={t(`users-page:${fieldName}`)}
