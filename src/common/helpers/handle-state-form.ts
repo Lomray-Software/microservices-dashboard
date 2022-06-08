@@ -44,7 +44,7 @@ const formatValidationError = <TFormValue, TResValues>(
 };
 
 /**
- * Set errors for fields and main error
+ * Set errors for fields and main error also adding notification for success
  */
 const handleStateForm = <TFormValue>(
   result: IValidationErrors<TFormValue> | boolean,
