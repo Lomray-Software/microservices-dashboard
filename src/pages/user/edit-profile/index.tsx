@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorMessage from '@components/error-message';
 import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
-import { setErrorForm } from '@helpers/handle-validation-errors';
+import { handleStateForm } from '@helpers/handle-state-form';
 import type { IEditProfile } from '@store/modules/pages/user/edit-profile';
 import { fields } from '../data';
 import type { StoreProps } from './index.stores';
@@ -23,7 +23,7 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
     async (values, { setErrors }) => {
       const result = await save(validationSchema().cast(values) as IEditProfile);
 
-      setErrorForm(result, setErrors, setError);
+      handleStateForm(result, setErrors, setError);
     },
     [save, setError],
   );

@@ -89,3 +89,11 @@ ul {
     position: relative;
   }
 }
+
+.rnc__notification-title {
+  @include font-size(16px, $font-weight-medium, $text-primary);
+}
+
+.rnc__notification-message {
+  @include font-size(14px, $font-weight-medium, $text-primary);
+}

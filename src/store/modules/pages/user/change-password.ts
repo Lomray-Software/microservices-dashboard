@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
-import type { IValidationErrors } from '@helpers/handle-validation-errors';
-import { formatValidationError } from '@helpers/handle-validation-errors';
+import type { IValidationErrors } from '@helpers/handle-state-form';
+import { formatValidationError } from '@helpers/handle-state-form';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';

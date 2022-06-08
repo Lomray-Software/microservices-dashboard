@@ -23,33 +23,5 @@
 
   .button {
     @include button(300px);
-
-    &:before {
-      cursor: pointer;
-      transition: all .3s ease-in;
-      height: 100%;
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      max-width: 0;
-      background-color: $green;
-    }
-
-    &.success {
-      span {
-        z-index: 2;
-      }
-
-      &:before {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        content: attr(data-success);
-        width: 100%;
-        max-width: 100%;
-      }
-    }
   }
 }

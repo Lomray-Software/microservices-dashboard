@@ -6,5 +6,6 @@
   position: absolute;
   bottom: -20px;
   left: 12px;
-  @include font-size(14px, $font-weight-light, $pink);
+  white-space: nowrap;
+  @include font-size(12px, $font-weight-light, $pink);
 }

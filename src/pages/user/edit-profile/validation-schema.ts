@@ -24,7 +24,7 @@ const validationSchema = (): SchemaType =>
     middleName: string().trim().max(70, i18n.t('forms:vTooLong')),
     lastName: string().trim().max(70, i18n.t('forms:vTooLong')),
     phone: string().trim().max(70, i18n.t('forms:vTooLong')).nullable().stripEmptyString(),
-    birthDay: string().trim().max(70, i18n.t('forms:vTooLong')),
+    birthDay: string().trim().max(70, i18n.t('forms:vTooLong')).nullable().stripEmptyString(),
   });
 
 export default validationSchema;

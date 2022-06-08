@@ -8,12 +8,12 @@ class User {
   /**
    * Get user avatar or default image
    */
-  static getAvatar({ profile: { photo } }: IUser): string | any {
-    return (photo && { uri: photo }) || DefaultUserImg;
+  static getAvatar(profile: IUser['profile'] | undefined): string {
+    return profile?.photo || (DefaultUserImg as string);
   }
 
   /**
-   * Get user name
+   * Get username
    */
   static getName(user: IUser | null): string {
     return [user?.firstName, user?.lastName].join(' ');

@@ -1,6 +1,7 @@
+import pick from 'lodash.pick';
 import { action, makeObservable, observable } from 'mobx';
-import type { IValidationErrors } from '@helpers/handle-validation-errors';
-import { formatValidationError } from '@helpers/handle-validation-errors';
+import type { IValidationErrors } from '@helpers/handle-state-form';
+import { formatValidationError } from '@helpers/handle-state-form';
 import shallowDiff from '@helpers/shallow-diff';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
@@ -11,12 +12,12 @@ import type { IConstructorParams } from '@store/manager';
 import UserPageStore from './index';
 
 export interface IEditProfile {
+  username: string;
   firstName: string;
   middleName: string;
   lastName: string;
   phone: string | null;
-  birthDay: string;
-  username: string;
+  birthDay: string | null;
 }
 
 /**
@@ -32,11 +33,6 @@ class EditUserStore implements IDomain {
    * API error
    */
   public error: string | null = null;
-
-  /**
-   * API success
-   */
-  public isSuccess = false;
 
   /**
    * Current user fields
@@ -66,17 +62,16 @@ class EditUserStore implements IDomain {
     const { birthDay } = profile || {};
 
     this.initialValues = {
-      firstName: firstName ?? '',
-      lastName: lastName ?? '',
-      middleName: middleName ?? '',
-      phone: phone || null,
-      birthDay: birthDay ?? '',
       username: username ?? '',
+      firstName: firstName ?? '',
+      middleName: middleName ?? '',
+      lastName: lastName ?? '',
+      phone: phone || null,
+      birthDay: birthDay || null,
     };
 
     makeObservable(this, {
       initialValues: observable,
-      isSuccess: observable,
       save: action.bound,
       setError: action.bound,
     });
@@ -90,21 +85,16 @@ class EditUserStore implements IDomain {
   }
 
   /**
-   * Set success send
-   */
-  public setSuccess(isSuccess: boolean): void {
-    this.isSuccess = isSuccess;
-  }
-
-  /**
    * Save user fields
    */
   public async save(values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> {
-    const { birthDay, ...userFields } = shallowDiff(values, this.initialValues);
+    const fields = shallowDiff(values, this.initialValues);
+    const userFields = pick(fields, ['username', 'firstName', 'middleName', 'lastName', 'phone']);
+    const profileField = pick(fields, ['birthDay']);
 
     const [userError, profileError] = await Promise.all([
       this.userPageStore.updateUser(userFields),
-      this.userPageStore.updateProfile({ birthDay }),
+      this.userPageStore.updateProfile(profileField),
     ]);
 
     // handle errors
@@ -114,8 +104,6 @@ class EditUserStore implements IDomain {
         profileError as IBaseException,
       ]);
     }
-
-    this.setSuccess(true);
 
     return true;
   }

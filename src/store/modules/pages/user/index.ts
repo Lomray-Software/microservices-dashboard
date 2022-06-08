@@ -74,8 +74,6 @@ class UserPageStore implements IDomain {
    * Update user
    */
   public async updateUser(fields: Partial<IUser>): Promise<IBaseException | undefined> {
-    console.log({ fields }, 'updateUser');
-
     if (isEmpty(fields)) {
       return;
     }
@@ -104,8 +102,6 @@ class UserPageStore implements IDomain {
    * Update user profile
    */
   public async updateProfile(fields: Partial<IProfile>): Promise<IBaseException | undefined> {
-    console.log({ fields }, 'updateProfile');
-
     if (isEmpty(fields)) {
       return;
     }

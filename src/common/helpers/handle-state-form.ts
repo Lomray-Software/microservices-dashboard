@@ -1,4 +1,6 @@
 import i18n from 'i18next';
+import { Store } from 'react-notifications-component';
+import translation from '@common/services/localization';
 import ucfirst from '@helpers/ucfirst';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 
@@ -44,12 +46,31 @@ const formatValidationError = <TFormValue, TResValues>(
 /**
  * Set errors for fields and main error
  */
-const setErrorForm = <TFormValue>(
+const handleStateForm = <TFormValue>(
   result: IValidationErrors<TFormValue> | boolean,
   setErrors: (errors: Partial<TFormValue>) => void,
   setError: (message?: string | null) => void,
 ): void => {
   if (typeof result === 'boolean') {
+    Store.addNotification({
+      title: translation.t('users-page:titleNotification'),
+      message: translation.t('users-page:messageNotification'),
+      type: 'success',
+      insert: 'top',
+      container: 'top-right',
+      animationIn: ['animate__animated', 'animate__fadeIn'],
+      animationOut: ['animate__animated', 'animate__fadeOut'],
+      dismiss: {
+        duration: 4000,
+        onScreen: true,
+      },
+      slidingExit: {
+        duration: 200,
+        timingFunction: 'ease-out',
+        delay: 0,
+      },
+    });
+
     return;
   }
 
@@ -62,4 +83,4 @@ const setErrorForm = <TFormValue>(
   }
 };
 
-export { setErrorForm, formatValidationError };
+export { handleStateForm, formatValidationError };

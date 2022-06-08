@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorMessage from '@components/error-message';
 import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
-import { setErrorForm } from '@helpers/handle-validation-errors';
+import { handleStateForm } from '@helpers/handle-state-form';
 import type { IChangePassword } from '@store/modules/pages/user/change-password';
 import fields from './fields';
 import type { StoreProps } from './index.stores';
@@ -25,7 +25,7 @@ const ChangePassword: FC<StoreProps> = ({
     async (values, { setErrors }) => {
       const result = await save(validationSchema().cast(values) as IChangePassword);
 
-      setErrorForm(result, setErrors, setError);
+      handleStateForm(result, setErrors, setError);
     },
     [save, setError],
   );

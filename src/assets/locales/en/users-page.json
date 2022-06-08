@@ -10,5 +10,7 @@
   "createdAt": "Created At",
   "updatedAt": "Updated At",
   "deletedAt": "Deleted At",
-  "list": "User list"
+  "list": "User list",
+  "titleNotification": "Form submission information",
+  "messageNotification": "Changes saved"
 }

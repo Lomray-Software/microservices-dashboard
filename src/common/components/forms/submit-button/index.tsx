@@ -21,9 +21,7 @@ const SubmitButton: FC<ISubmitButton> = ({
   hasLoader = false,
   ...props
 }) => {
-  const { isSubmitting, isValid, dirty: isDirty, status } = useFormikContext();
-
-  console.log({ status });
+  const { isSubmitting, isValid, dirty: isDirty } = useFormikContext();
 
   const isDisabled = isSubmitting || (isInitialDisabled ? !(isValid && isDirty) : !isValid);
 

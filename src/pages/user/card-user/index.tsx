@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import React from 'react';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
+import User from '@store/entities/user';
 import styles from './styles.module.scss';
 
 interface ICardUser {
@@ -13,7 +14,7 @@ interface ICardUser {
 const CardUser: FC<ICardUser> = ({ profile, firstName, lastName, email }) => (
   <div className={styles.user}>
     <div className={styles.wrapperImage}>
-      <img className={styles.img} src={profile?.photo} alt="user-avatar" />
+      <img className={styles.img} src={User.getAvatar(profile)} alt="user-avatar" />
     </div>
     <p className={styles.name}>
       <span>{firstName}</span>
