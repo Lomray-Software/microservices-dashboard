@@ -60,7 +60,11 @@
       &:hover {
         .link {
           background-color: $black;
-          color: $text-primary
+          color: $text-primary;
+
+          &:hover {
+            z-index: 100;
+          }
         }
       }
     }
@@ -72,6 +76,7 @@
       padding: 15px;
       width: 100%;
       text-decoration: none;
+      text-overflow: clip;
       @include font-size(14px, $font-weight-bold, $text-secondary);
     }
   }
