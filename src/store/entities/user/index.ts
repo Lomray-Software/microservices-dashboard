@@ -1,4 +1,4 @@
-import DefaultUserImg from '@assets/images/user/default-user.jpg';
+import DefaultUserImg from '@assets/images/default/default-user.jpg';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 
 /**
