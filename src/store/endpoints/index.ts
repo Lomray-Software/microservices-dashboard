@@ -13,6 +13,7 @@ import type IUpdate from '@store/endpoints/interfaces/common/update';
 import type IView from '@store/endpoints/interfaces/common/view';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
+import type IChangePassword from '@store/endpoints/interfaces/users/methods/user/change-password';
 import type {
   ISignInInput,
   ISignInOutput,
@@ -21,7 +22,6 @@ import type {
   ISignOutInput,
   ISignOutOutput,
 } from '@store/endpoints/interfaces/users/methods/user/sign-out';
-import type { IChangePassword } from '@store/modules/pages/user/change-password';
 
 interface IEndpointsCreateHandlerConfig
   extends Pick<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}

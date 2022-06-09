@@ -8,5 +8,6 @@
   "newPassword": "New Password",
   "reEnterNewPassword": "Re-enter New Password",
   "buttonEditProfile": "Save Change",
-  "buttonChangePassword": "Change Password"
+  "buttonChangePassword": "Change Password",
+  "userNotFound": "User not found."
 }

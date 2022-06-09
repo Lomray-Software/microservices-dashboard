@@ -8,5 +8,6 @@
   "newPassword": "Новый пароль",
   "reEnterNewPassword": "Повторно введите новый пароль",
   "buttonEditProfile": "Сохранить изменения",
-  "buttonChangePassword": "Изменить пароль"
+  "buttonChangePassword": "Изменить пароль",
+  "userNotFound": "Пользователь не найден."
 }

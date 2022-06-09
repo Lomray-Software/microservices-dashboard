@@ -3,15 +3,13 @@ import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
-import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
-import type IUser from '@store/endpoints/interfaces/users/entities/user';
+import i18n from '@services/localization';
 import type { IConstructorParams } from '@store/manager';
 import UserPageStore from './index';
 
 export interface IChangePassword {
   newPassword: string;
   reEnterNewPassword?: string;
-  userId?: IUser['id'];
 }
 
 /**
@@ -59,7 +57,6 @@ class ChangePasswordStore implements IDomain {
     makeObservable(this, {
       initialValues: observable,
       save: action.bound,
-      updatePassword: action.bound,
       error: observable,
       setError: action.bound,
     });
@@ -73,32 +70,28 @@ class ChangePasswordStore implements IDomain {
   }
 
   /**
-   *
-   * Update password
-   */
-  public async updatePassword(fields: IChangePassword): Promise<IBaseException | undefined> {
-    const { error } = await this.api.users.user.changePassword(
-      {
-        ...fields,
-        userId: this.userPageStore.user?.id,
-      },
-      { shouldShowErrors: false },
-    );
-
-    return error;
-  }
-
-  /**
    * Save password fields
    */
   public async save(values: IChangePassword): Promise<true | IValidationErrors<IChangePassword>> {
     const { newPassword } = values;
+    const userId = this.userPageStore.user?.id;
 
-    const changePasswordError = await this.updatePassword({ newPassword });
+    if (!userId) {
+      return { message: i18n.t('user-page:userNotFound') };
+    }
+
+    const { error } = await this.api.users.user.changePassword(
+      {
+        newPassword,
+        userId,
+        allowByAdmin: true,
+      },
+      { shouldShowErrors: false },
+    );
 
     // handle errors
-    if (changePasswordError) {
-      return formatValidationError<IChangePassword, IChangePassword>(changePasswordError);
+    if (error) {
+      return formatValidationError<IChangePassword, IChangePassword>(error);
     }
 
     return true;
