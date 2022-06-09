@@ -15,7 +15,6 @@
 @mixin button($width) {
   position: relative;
   width: $width;
-  justify-self: center;
   padding: 16px 32px;
   text-transform: uppercase;
   background-color: $button-login;

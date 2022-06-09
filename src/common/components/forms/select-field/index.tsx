@@ -26,22 +26,26 @@ const SelectField: FC<ISelectField> = ({ name, options, title, isInline = false 
     className={combineCss(styles.container, isInline ? styles.containerLine : '')}>
     {title && <span className={styles.description}>{title}</span>}
     <DefaultField name={name}>
-      {({ field: { value }, form: { setFieldValue }, meta: { initialValue } }: FieldProps) => (
-        <div className={styles.wrapperInput}>
-          <Select
-            styles={colourStyles}
-            isClearable
-            isSearchable={false}
-            options={options}
-            onChange={(option) => setFieldValue(name, option.value)}
-            value={value ?? initialValue ?? ''}
-            name={name}
-            placeholder={value}
-            className={styles.containerSelect}
-          />
-          <ErrorMessage name={name} />
-        </div>
-      )}
+      {({ field: { value }, form: { setFieldValue }, meta: { initialValue } }: FieldProps) => {
+        const placeholder = options.find((option) => option.value === value);
+
+        return (
+          <div className={styles.wrapperInput}>
+            <Select
+              styles={colourStyles}
+              isClearable
+              isSearchable={false}
+              options={options}
+              onChange={(option) => setFieldValue(name, option.value)}
+              value={value ?? initialValue ?? ''}
+              name={name}
+              placeholder={placeholder?.label}
+              className={styles.containerSelect}
+            />
+            <ErrorMessage name={name} />
+          </div>
+        );
+      }}
     </DefaultField>
   </Label>
 );

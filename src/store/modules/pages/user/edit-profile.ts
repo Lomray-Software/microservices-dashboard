@@ -1,3 +1,4 @@
+import map from 'lodash.map';
 import pick from 'lodash.pick';
 import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
@@ -5,6 +6,7 @@ import { formatValidationError } from '@helpers/handle-state-form';
 import shallowDiff from '@helpers/shallow-diff';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
+import { profileFields as profileValue, userFields as userValue } from '@pages/user/data';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
@@ -92,12 +94,12 @@ class EditUserStore implements IDomain {
   public async save(values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> {
     const fields = shallowDiff(values, this.initialValues);
 
-    const userFields = pick(fields, ['username', 'firstName', 'middleName', 'lastName', 'phone']);
-    const profileField = pick(fields, ['birthDay', 'gender']);
+    const userFields = pick(fields, map(userValue, 'name'));
+    const profileFields = pick(fields, map(profileValue, 'name'));
 
     const [userError, profileError] = await Promise.all([
       this.userPageStore.updateUser(userFields),
-      this.userPageStore.updateProfile(profileField),
+      this.userPageStore.updateProfile(profileFields),
     ]);
 
     // handle errors

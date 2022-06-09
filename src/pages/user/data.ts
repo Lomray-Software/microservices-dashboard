@@ -23,8 +23,6 @@ const profileFields = [
 
 const tabs = ['overview', 'editProfile', 'changePassword'] as const;
 
-type TKeyUserFields = typeof userFields[number];
-type TNameUserFields = typeof userFields[number]['name'];
 type TNameProfileFields = typeof profileFields[number]['name'];
 type TTypeProfileFields = typeof profileFields[number]['type'];
 
@@ -34,4 +32,4 @@ interface IProfileFields {
   options: ISelectOptions[];
 }
 
-export { userFields, tabs, TKeyUserFields, profileFields, IProfileFields, TNameUserFields };
+export { userFields, tabs, profileFields, IProfileFields };
