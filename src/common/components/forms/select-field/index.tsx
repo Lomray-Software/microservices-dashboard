@@ -18,7 +18,7 @@ interface ISelectField {
 }
 
 /**
- * Formik input
+ * Select formik
  */
 const SelectField: FC<ISelectField> = ({ name, options, title, isInline = false }) => (
   <Label
