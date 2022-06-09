@@ -10,7 +10,9 @@
   "createdAt": "Созданно",
   "updatedAt": "Обновленно",
   "deletedAt": "Удаленно",
-  "list": "Список пользователей",
-  "titleNotification": "Информация о подаче формы",
-  "messageNotification": "Изменения сохранены"
+  "male": "Мужской",
+  "female": "Женский",
+  "notKnown": "Не известный",
+  "notSpecified": "Не определен",
+  "list": "Список пользователей"
 }

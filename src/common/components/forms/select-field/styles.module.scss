@@ -1,0 +1,34 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import 'src/assets/styles/util/media-query';
+
+.container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  &.containerLine {
+    grid-template-columns: minmax(100px, 200px) 1fr;
+
+    @include media-breakpoint-down(lg) {
+      grid-template-columns: minmax(100px, 200px) 1fr;
+    }
+
+    @include media-breakpoint-down(lg) {
+      grid-template-columns: minmax(100px, 150px) 1fr;
+    }
+  }
+
+  .description {
+    align-self: center;
+    @include font-size(15px, $font-weight-bold, $text-secondary);
+  }
+
+  .wrapperInput {
+    position: relative;
+  }
+
+  .containerSelect {
+    @include font-size(14px, $font-weight-light, $text-primary);
+  }
+}

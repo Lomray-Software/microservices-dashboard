@@ -18,6 +18,7 @@ export interface IEditProfile {
   lastName: string;
   phone: string | null;
   birthDay: string | null;
+  gender: string | null;
 }
 
 /**
@@ -59,7 +60,7 @@ class EditUserStore implements IDomain {
 
     const { firstName, lastName, middleName, phone, profile, username } =
       this.userPageStore.user || {};
-    const { birthDay } = profile || {};
+    const { birthDay, gender } = profile || {};
 
     this.initialValues = {
       username: username ?? '',
@@ -68,6 +69,7 @@ class EditUserStore implements IDomain {
       lastName: lastName ?? '',
       phone: phone || null,
       birthDay: birthDay || null,
+      gender: gender || null,
     };
 
     makeObservable(this, {
@@ -89,8 +91,9 @@ class EditUserStore implements IDomain {
    */
   public async save(values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> {
     const fields = shallowDiff(values, this.initialValues);
+
     const userFields = pick(fields, ['username', 'firstName', 'middleName', 'lastName', 'phone']);
-    const profileField = pick(fields, ['birthDay']);
+    const profileField = pick(fields, ['birthDay', 'gender']);
 
     const [userError, profileError] = await Promise.all([
       this.userPageStore.updateUser(userFields),

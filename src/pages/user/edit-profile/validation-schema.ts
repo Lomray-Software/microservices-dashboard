@@ -1,12 +1,9 @@
-import { object, string } from 'yup';
 import type { SchemaOf } from 'yup';
 import i18n from '@common/services/localization';
-import ExtendYupValidation from '@helpers/extend-yup-validation';
+import { object, string } from '@services/yup';
 import type { IEditProfile } from '@store/modules/pages/user/edit-profile';
 
-type SchemaType = SchemaOf<Partial<IEditProfile>>;
-
-ExtendYupValidation();
+type SchemaType = SchemaOf<Omit<Partial<IEditProfile>, 'gender'>>;
 
 const validationSchema = (): SchemaType =>
   object({

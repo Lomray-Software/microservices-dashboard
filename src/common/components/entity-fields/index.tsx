@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 
 interface IEntityFields {
-  data: { label: string; value: string }[];
+  data: { label: string; value?: string }[];
 }
 
 const EntityFields: FC<IEntityFields> = ({ data }) => (

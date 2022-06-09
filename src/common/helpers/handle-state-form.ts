@@ -53,8 +53,8 @@ const handleStateForm = <TFormValue>(
 ): void => {
   if (typeof result === 'boolean') {
     Store.addNotification({
-      title: translation.t('users-page:titleNotification'),
-      message: translation.t('users-page:messageNotification'),
+      title: translation.t('translation:titleNotification'),
+      message: translation.t('translation:messageNotification'),
       type: 'success',
       insert: 'top',
       container: 'top-right',

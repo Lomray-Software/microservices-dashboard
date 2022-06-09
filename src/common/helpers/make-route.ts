@@ -3,7 +3,6 @@ import { makeUrl } from '@helpers/make-url';
 
 /**
  * Creating a route with a prefix
- *
  */
 const makeRoute =
   (link: ROUTES) =>

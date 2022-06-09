@@ -1,6 +1,6 @@
-import { object, string, ref } from 'yup';
 import type { SchemaOf } from 'yup';
 import i18n from '@common/services/localization';
+import { object, string, ref } from '@services/yup';
 import type { IChangePassword } from '@store/modules/pages/user/change-password';
 
 type SchemaType = SchemaOf<Omit<IChangePassword, 'userId'>>;

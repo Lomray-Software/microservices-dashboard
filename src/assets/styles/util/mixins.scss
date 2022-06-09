@@ -28,4 +28,8 @@
   &:hover {
     background-color: $button-login-hover;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }

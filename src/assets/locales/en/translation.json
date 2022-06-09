@@ -14,5 +14,7 @@
   "settings": "Settings",
   "logOut": "Log Out",
   "accessDenied": "You do not have access to this functionality.",
-  "success": "Успешно !"
+  "success": "Success !",
+  "titleNotification": "Information",
+  "messageNotification": "Changes saved"
 }
