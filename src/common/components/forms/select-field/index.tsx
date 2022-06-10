@@ -4,15 +4,19 @@ import type { FC } from 'react';
 import React from 'react';
 import Select from 'react-select';
 import combineCss from '@helpers/combine-css';
-import type { ISelectOptions } from '@interfaces/select-options';
 import ErrorMessage from '../error-message';
 import Label from '../label';
 import colourStyles from './styles';
 import styles from './styles.module.scss';
 
+export interface ISelectOptions {
+  label: string;
+  value: string;
+}
+
 interface ISelectField {
   name: string;
-  options: ISelectOptions[];
+  options?: ISelectOptions[];
   title?: string;
   isInline?: boolean;
 }
@@ -27,7 +31,7 @@ const SelectField: FC<ISelectField> = ({ name, options, title, isInline = false 
     {title && <span className={styles.description}>{title}</span>}
     <DefaultField name={name}>
       {({ field: { value }, form: { setFieldValue }, meta: { initialValue } }: FieldProps) => {
-        const placeholder = options.find((option) => option.value === value);
+        const placeholder = options?.find((option) => option.value === value);
 
         return (
           <div className={styles.wrapperInput}>

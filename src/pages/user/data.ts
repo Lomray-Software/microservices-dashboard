@@ -1,12 +1,12 @@
 import i18n from '@common/services/localization';
-import type { ISelectOptions } from '@interfaces/select-options';
+import type { ISelectOptions } from '@components/forms/select-field';
 
 const userFields = [
-  { name: 'username' },
-  { name: 'firstName' },
-  { name: 'middleName' },
-  { name: 'lastName' },
-  { name: 'phone' },
+  { name: 'username', type: 'text' },
+  { name: 'firstName', type: 'text' },
+  { name: 'middleName', type: 'text' },
+  { name: 'lastName', type: 'text' },
+  { name: 'phone', type: 'phone' },
 ] as const;
 
 const genderOptions = [
