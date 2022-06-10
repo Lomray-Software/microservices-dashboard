@@ -1,8 +1,0 @@
-@import 'src/assets/styles/util/vars';
-@import 'src/assets/styles/util/mixins';
-@import 'src/assets/styles/util/media-query';
-
-.title {
-  margin-bottom: 20px;
-  @include font-size(18px, $font-weight-bold, $text-primary);
-}

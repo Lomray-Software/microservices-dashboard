@@ -10,8 +10,8 @@ import colourStyles from './styles';
 import styles from './styles.module.scss';
 
 export interface ISelectOptions {
-  label: string;
   value: string;
+  label?: string;
 }
 
 interface ISelectField {

@@ -8,7 +8,7 @@ type TProps = LabelHTMLAttributes<HTMLLabelElement>;
  * Custom label
  */
 const Label: FC<TProps> = ({ children, ...props }) => (
-  <label className={styles.label} {...props}>
+  <label className={styles.title} {...props}>
     {children}
   </label>
 );

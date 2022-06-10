@@ -1,20 +1,31 @@
-// import type { FC } from 'react';
-// import React from 'react';
-// import EntityFields from '@components/entity-fields';
-// import type { IEntityField } from '@components/fields';
-// import styles from './styles.module.scss';
-//
-// interface IOverview {
-//   title: string;
-//   entity: Record<string, any> | null;
-//   fields: IEntityField[];
-// }
-//
-// const Overview: FC<IOverview> = ({ title, fields, entity }) => (
-//   <>
-//     <h3 className={styles.title}>{title}</h3>
-//     <EntityFields data={[]} />
-//   </>
-// );
-//
-// export default Overview;
+import type { FC } from 'react';
+import React from 'react';
+import EntityFields from '@components/entity-fields';
+import type { IEntityField } from '@components/fields';
+import styles from './styles.module.scss';
+
+interface IData {
+  fields: IEntityField[];
+  entity?: Record<string, any> | null;
+}
+
+interface IOverview {
+  data: IData[];
+  title: string;
+}
+
+const Overview: FC<IOverview> = ({ data, title }) => (
+  <>
+    <h3 className={styles.title}>{title}</h3>
+    {data.map(({ entity, fields }, i) => {
+      const result = fields.map(({ name, title: label }) => ({
+        value: entity?.[name],
+        label,
+      }));
+
+      return <EntityFields key={result[i].label} data={result} />;
+    })}
+  </>
+);
+
+export default Overview;
