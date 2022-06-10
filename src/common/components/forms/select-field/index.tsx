@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 
 export interface ISelectOptions {
   value: string;
-  label?: string;
+  label: string;
 }
 
 interface ISelectField {

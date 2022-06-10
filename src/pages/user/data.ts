@@ -1,10 +1,10 @@
 import i18n from '@common/services/localization';
 
 const genderOptions = [
-  { value: 'male', title: i18n.t('users-page:male') },
-  { value: 'female', title: i18n.t('users-page:female') },
-  { value: 'notKnown', title: i18n.t('users-page:notKnown') },
-  { value: 'notSpecified', title: i18n.t('users-page:notSpecified') },
+  { value: 'male', label: i18n.t('users-page:male') },
+  { value: 'female', label: i18n.t('users-page:female') },
+  { value: 'notKnown', label: i18n.t('users-page:notKnown') },
+  { value: 'notSpecified', label: i18n.t('users-page:notSpecified') },
 ];
 
 const profileFields = [
