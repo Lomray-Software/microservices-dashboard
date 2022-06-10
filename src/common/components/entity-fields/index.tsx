@@ -9,7 +9,7 @@ interface IEntityFields {
 const EntityFields: FC<IEntityFields> = ({ data }) => (
   <div className={styles.column}>
     {data.map(({ label, value }) => (
-      <div key={String(label)} className={styles.columnInfo}>
+      <div key={label} className={styles.columnInfo}>
         <span className={styles.description}>{label}</span>
         <span className={styles.info}>{value}</span>
       </div>
