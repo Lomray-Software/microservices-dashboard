@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import isEmpty from 'lodash.isempty';
 import { action, makeObservable, observable } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
@@ -103,10 +104,20 @@ class UsersPageStore implements IDomain {
   public onChangeOrderBy(name: string, value: string): Promise<void> {
     const orderBy = { ...this.sortBy };
 
-    if (value) {
+    if (isEmpty(orderBy)) {
       orderBy[name] = value;
-    } else if (orderBy[name] && !value) {
-      delete orderBy[name];
+
+      return this.setSortBy(orderBy);
+    }
+
+    if (orderBy.hasOwnProperty(name)) {
+      orderBy[name] = value;
+    } else {
+      for (const prop of Object.keys(orderBy)) {
+        delete orderBy[prop];
+      }
+
+      orderBy[name] = value;
     }
 
     return this.setSortBy(orderBy);
