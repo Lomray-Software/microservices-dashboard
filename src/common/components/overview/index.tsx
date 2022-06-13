@@ -1,11 +1,11 @@
 import type { FC } from 'react';
 import React from 'react';
-import EntityFields from '@components/entity-fields';
-import type { IEntityField } from '@components/fields';
+import EntityFields from './entity-fields';
+import type { IField } from './fields';
 import styles from './styles.module.scss';
 
 interface IData {
-  fields: IEntityField[];
+  fields: IField[];
   entity?: Record<string, any> | null;
 }
 

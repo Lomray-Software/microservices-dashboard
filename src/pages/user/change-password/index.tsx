@@ -4,8 +4,8 @@ import type { FC } from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '@components/error-message';
-import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
+import Fields from '@components/overview/fields';
 import { handleStateForm } from '@helpers/handle-state-form';
 import type { IChangePassword } from '@store/modules/pages/user/change-password';
 import fields from './fields';
@@ -35,16 +35,7 @@ const ChangePassword: FC<StoreProps> = ({
       <h3 className={styles.title}>{t('changePassword')}</h3>
       <Formik initialValues={initialValues} onSubmit={onSave} validationSchema={validationSchema}>
         <Form className={styles.form}>
-          {fields.map((name) => (
-            <Field
-              key={name}
-              type="password"
-              name={name}
-              placeholder={t(name)}
-              title={t(name)}
-              isInline
-            />
-          ))}
+          <Fields fields={fields} isInline />
           <ErrorMessage>{error}</ErrorMessage>
           <SubmitButton className={styles.button} hasLoader>
             {t('buttonChangePassword')}

@@ -18,10 +18,10 @@ const profileFields = [
 ];
 
 const userFields = [
-  { name: 'username', type: 'text', title: i18n.t('users-page:username') },
-  { name: 'firstName', type: 'text', title: i18n.t('users-page:firstName') },
-  { name: 'middleName', type: 'text', title: i18n.t('users-page:middleName') },
-  { name: 'lastName', type: 'text', title: i18n.t('users-page:lastName') },
+  { name: 'username', title: i18n.t('users-page:username') },
+  { name: 'firstName', title: i18n.t('users-page:firstName') },
+  { name: 'middleName', title: i18n.t('users-page:middleName') },
+  { name: 'lastName', title: i18n.t('users-page:lastName') },
   { name: 'phone', type: 'phone', title: i18n.t('users-page:phone') },
 ];
 

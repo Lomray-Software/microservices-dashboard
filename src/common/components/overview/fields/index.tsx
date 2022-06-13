@@ -4,21 +4,21 @@ import Field from '@components/forms/field';
 import type { ISelectOptions } from '@components/forms/select-field';
 import SelectField from '@components/forms/select-field';
 
-export interface IEntityField {
+export interface IField {
   name: string;
-  type: string;
   title: string;
+  type?: string;
   options?: ISelectOptions[];
 }
 
 export interface IFields {
-  fields: IEntityField[];
+  fields: IField[];
   isInline?: boolean;
 }
 
 const Fields: FC<IFields> = ({ fields, isInline }) => (
   <>
-    {fields.map(({ name, type, options, title, ...field }) => {
+    {fields.map(({ name, title, options, type = 'text', ...field }) => {
       switch (type) {
         case 'select':
           return (
@@ -31,6 +31,7 @@ const Fields: FC<IFields> = ({ fields, isInline }) => (
             />
           );
 
+        case 'password':
         case 'date':
         case 'text':
         default:
