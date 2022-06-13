@@ -39,7 +39,7 @@ const Fields: FC<IFields> = ({ fields, isInline }) => (
               key={name}
               type={type}
               name={name}
-              title={name}
+              title={title}
               placeholder={title}
               isInline={isInline}
               {...field}
