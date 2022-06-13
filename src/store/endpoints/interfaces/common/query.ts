@@ -101,7 +101,7 @@ interface IJsonQueryRelation {
   where?: IJsonQueryWhere;
 }
 
-interface IJsonQuery<TEntity = ObjectLiteral> {
+export interface IJsonQuery<TEntity = ObjectLiteral> {
   attributes?: (keyof TEntity)[];
   orderBy?: {
     [field in keyof TEntity]?: keyof typeof IJsonQueryOrder | IJsonQueryOrderField;
