@@ -1,4 +1,5 @@
-import i18n from '@common/services/localization';
+import type { IField } from '@components/forms/fields';
+import i18n from '@services/localization';
 
 const genderOptions = [
   { value: 'male', label: i18n.t('users-page:male') },
@@ -7,7 +8,7 @@ const genderOptions = [
   { value: 'notSpecified', label: i18n.t('users-page:notSpecified') },
 ];
 
-const profileFields = [
+const profileFields: IField[] = [
   { name: 'birthDay', type: 'date', title: i18n.t('users-page:birthDay') },
   {
     name: 'gender',
@@ -17,11 +18,11 @@ const profileFields = [
   },
 ];
 
-const userFields = [
-  { name: 'username', type: 'text', title: i18n.t('users-page:username') },
-  { name: 'firstName', type: 'text', title: i18n.t('users-page:firstName') },
-  { name: 'middleName', type: 'text', title: i18n.t('users-page:middleName') },
-  { name: 'lastName', type: 'text', title: i18n.t('users-page:lastName') },
+const userFields: IField[] = [
+  { name: 'username', title: i18n.t('users-page:username') },
+  { name: 'firstName', title: i18n.t('users-page:firstName') },
+  { name: 'middleName', title: i18n.t('users-page:middleName') },
+  { name: 'lastName', title: i18n.t('users-page:lastName') },
   { name: 'phone', type: 'phone', title: i18n.t('users-page:phone') },
 ];
 

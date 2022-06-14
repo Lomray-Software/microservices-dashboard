@@ -7,7 +7,7 @@ import Overview from '@components/overview';
 import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
-import UserHelper from '@store/entities/user';
+import UserEntity from '@store/entities/user';
 import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
 import { tabs, userFields, profileFields } from './data';
@@ -32,7 +32,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
       </Helmet>
       <Breadcrumbs>
         <Breadcrumbs.Item to={ROUTES.USERS} title={t('menu:users')} />
-        <Breadcrumbs.Item to={ROUTES.USERS} title={UserHelper.getName(user)} />
+        <Breadcrumbs.Item to={ROUTES.USERS} title={UserEntity.getName(user)} />
       </Breadcrumbs>
       <Tabs className={styles.body}>
         <TabList className={styles.tabs}>
