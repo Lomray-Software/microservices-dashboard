@@ -1,17 +1,9 @@
-import {
-  mdiChevronDoubleLeft,
-  mdiChevronDoubleRight,
-  mdiChevronLeft,
-  mdiChevronRight,
-} from '@mdi/js';
 import React, { useCallback } from 'react';
 import type { TableOptions } from 'react-table';
 import { usePagination, useTable } from 'react-table';
 import Link from '@components/link';
-import Button from './button';
 import DefaultFilter from './default-filter';
 import Pagination from './pagination';
-import Select from './select';
 import SortBy from './sort-by';
 import styles from './styles.module.scss';
 
@@ -163,33 +155,17 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
           </div>
         </div>
       </div>
-      <div className={styles.pagination}>
-        <div className={styles.buttons}>
-          <Button
-            iconPath={mdiChevronDoubleLeft}
-            isDisabled={1 === storePage}
-            onClick={onStartPage}
-          />
-          <Button iconPath={mdiChevronLeft} isDisabled={1 === storePage} onClick={onPreviousPage} />
-          <Pagination
-            page={storePage}
-            size={pageSize}
-            count={pageCount}
-            handlePagination={onPaginationChange}
-          />
-          <Button
-            iconPath={mdiChevronRight}
-            isDisabled={pageCount <= storePage}
-            onClick={onNextPage}
-          />
-          <Button
-            iconPath={mdiChevronDoubleRight}
-            isDisabled={pageCount <= storePage}
-            onClick={onLastPage}
-          />
-        </div>
-        <Select pageSize={pageSize} setPageSize={onChangePageSize} />
-      </div>
+      <Pagination
+        page={storePage}
+        size={pageSize}
+        count={pageCount}
+        handlePagination={onPaginationChange}
+        onStartPage={onStartPage}
+        onPreviousPage={onPreviousPage}
+        onNextPage={onNextPage}
+        onLastPage={onLastPage}
+        onChangePageSize={onChangePageSize}
+      />
     </div>
   );
 };

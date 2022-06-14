@@ -41,6 +41,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-bottom: 5px;
 
       .wrapperIconSort {
         width: 15px;
@@ -80,21 +81,5 @@
       text-overflow: clip;
       @include font-size(14px, $font-weight-bold, $text-secondary);
     }
-  }
-}
-
-.pagination {
-  height: 250px;
-  display: grid;
-  grid-template-columns: 1fr 60px;
-  justify-content: space-between;
-  align-items: start;
-  padding: 15px 15px;
-
-  .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-self: center;
   }
 }

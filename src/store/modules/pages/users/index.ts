@@ -10,7 +10,7 @@ import type { IConstructorParams } from '@store/manager';
 
 type TSortBy = IJsonQuery<IUser>['orderBy'];
 
-type TWhere = Record<string, { [IJsonQueryOperator.like]: string }>;
+type TWhere = IJsonQuery<IUser>['where'];
 
 /**
  * Users page store

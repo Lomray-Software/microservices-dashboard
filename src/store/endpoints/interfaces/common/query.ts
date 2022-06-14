@@ -89,7 +89,7 @@ export type FilterFields<TEntity = ObjectLiteral> = {
   [field in keyof TEntity]: string | number | null | FilterCondition;
 };
 
-type IJsonQueryWhere<TEntity = ObjectLiteral> =
+export type IJsonQueryWhere<TEntity = ObjectLiteral> =
   | {
       [IJsonQueryJunction.and]?: NonEmptyArray<IJsonQueryWhere<TEntity>>;
       [IJsonQueryJunction.or]?: NonEmptyArray<IJsonQueryWhere<TEntity>>;

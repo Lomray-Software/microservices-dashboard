@@ -60,9 +60,7 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
               <Field name="login" type="text" placeholder={t('login-page:fieldLogin')} />
               <Field name="password" type="password" placeholder={t('login-page:fieldPassword')} />
               <ErrorMessage>{error}</ErrorMessage>
-              <SubmitButton className={styles.button} hasLoader>
-                {t('login-page:buttonText')}
-              </SubmitButton>
+              <SubmitButton hasLoader>{t('login-page:buttonText')}</SubmitButton>
             </Form>
           </Formik>
         </div>

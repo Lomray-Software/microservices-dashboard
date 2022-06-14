@@ -1,6 +1,6 @@
 import type { ChangeEvent, FC } from 'react';
 import React, { useState } from 'react';
-import styles from './styles.module.scss';
+import Input from '@components/forms/input';
 
 interface IDefaultFilter {
   name: string;
@@ -15,7 +15,7 @@ const DefaultFilter: FC<IDefaultFilter> = ({ onFilter, name }): JSX.Element => {
     onFilter(name, e.target.value);
   };
 
-  return <input className={styles.input} type="text" value={value} onChange={handleChange} />;
+  return <Input value={value} onChange={handleChange} />;
 };
 
 export default DefaultFilter;

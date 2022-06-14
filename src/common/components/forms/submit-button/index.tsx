@@ -4,6 +4,7 @@ import React from 'react';
 import type { IButtonPrimary } from '@components/button-primary';
 import ButtonPrimary from '@components/button-primary';
 import Spinner from '@components/loaders/spinner';
+import styles from './styles.module.scss';
 
 interface ISubmitButton extends Omit<IButtonPrimary, 'onPress'> {
   isInitialDisabled?: boolean;
@@ -25,7 +26,7 @@ const SubmitButton: FC<ISubmitButton> = ({
   const isDisabled = isSubmitting || (isInitialDisabled ? !(isValid && isDirty) : !isValid);
 
   return (
-    <ButtonPrimary type="submit" disabled={isDisabled} {...props}>
+    <ButtonPrimary type="submit" disabled={isDisabled} className={styles.button} {...props}>
       {hasLoader && isSubmitting ? <Spinner /> : children}
     </ButtonPrimary>
   );
