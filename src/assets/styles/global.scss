@@ -1,6 +1,7 @@
 @import 'util/fonts';
 @import 'util/vars';
 @import 'util/media-query';
+@import "util/mixins";
 
 *,
 *::before,
@@ -28,6 +29,12 @@ header {
 
 main {
   grid-area: main;
+  padding: 70px 30px;
+  overflow: hidden;
+
+  @include media-breakpoint-down(md) {
+    padding: 70px 0;
+  }
 }
 
 nav {
@@ -41,8 +48,6 @@ footer {
 
 input {
   outline: none;
-  outline-width: 0;
-  outline-color: transparent;
 }
 
 ul {
@@ -54,4 +59,41 @@ ul {
   max-width: $boxed-container-width;
   padding: 0 15px;
   margin: 0 auto;
+}
+
+// This selector need for position breadcrumbs
+.wrapper {
+  position: relative;
+}
+
+.react-tabs__tab {
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  @include font-size(16px, $font-weight-medium, $text-secondary);
+
+  &.react-tabs__tab--selected {
+    border-bottom: 1px solid $text-primary;
+    color: $text-primary;
+  }
+}
+
+// These styles are necessary for correct positioning in the grid, since an inactive element in the flow
+.react-tabs__tab-panel {
+  position: absolute;
+
+  &.react-tabs__tab-panel--selected {
+    position: relative;
+  }
+}
+
+.rnc__notification-title {
+  @include font-size(16px, $font-weight-medium, $text-primary);
+}
+
+.rnc__notification-message {
+  @include font-size(14px, $font-weight-medium, $text-primary);
 }

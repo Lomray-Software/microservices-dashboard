@@ -13,5 +13,8 @@
   "profileTitle": "Profile",
   "settings": "Settings",
   "logOut": "Log Out",
-  "accessDenied": "You do not have access to this functionality."
+  "accessDenied": "You do not have access to this functionality.",
+  "success": "Success",
+  "titleNotification": "Information",
+  "messageNotification": "Changes saved"
 }

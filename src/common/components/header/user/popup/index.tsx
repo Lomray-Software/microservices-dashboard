@@ -1,19 +1,22 @@
 import { mdiCogSync, mdiExitRun } from '@mdi/js';
 import Icon from '@mdi/react';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ButtonPrimary from '@components/button-primary';
 import Link from '@components/link';
 import ROUTES from '@constants/routes';
 import combineCss from '@helpers/combine-css';
+import { makeUrl } from '@helpers/make-url';
 import styles from './styles.module.scss';
 
 interface IPopup {
   isOpen: boolean;
   signOut: () => void;
+  userId?: string;
 }
 
-const Popup: FC<IPopup> = ({ isOpen, signOut }) => {
+const Popup: FC<IPopup> = ({ isOpen, signOut, userId }) => {
   const { t } = useTranslation();
 
   return (
@@ -27,7 +30,9 @@ const Popup: FC<IPopup> = ({ isOpen, signOut }) => {
           <div className={styles.round}>
             <Icon path={mdiCogSync} size={1} color="yellow" />
           </div>
-          <Link to={ROUTES.SETTINGS} className={combineCss(styles.item, styles.link)}>
+          <Link
+            to={makeUrl([ROUTES.USERS, String(userId)])}
+            className={combineCss(styles.item, styles.link)}>
             {t('settings')}
           </Link>
           <span className={styles.bottomElement} />

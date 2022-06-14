@@ -1,0 +1,46 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import 'src/assets/styles/util/media-query';
+
+.user {
+  display: grid;
+  grid-template-rows: 120px repeat(3, min-content);
+  grid-row-gap: 10px;
+  grid-template-columns: 1fr;
+
+  .wrapperImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+  }
+
+  .name {
+    text-align: center;
+    @include font-size(24px, $font-weight-bold, $text-primary);
+
+    & span:first-child {
+      margin-right: 5px;
+    }
+
+    @include media-breakpoint-down(lg) {
+      font-size: 18px;
+    }
+  }
+
+  .email {
+    text-align: center;
+    @include font-size(20px, $font-weight-medium, $text-secondary);
+
+    @include media-breakpoint-down(lg) {
+      font-size: 16px;
+    }
+  }
+}
+

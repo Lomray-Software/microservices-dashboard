@@ -1,0 +1,13 @@
+{
+  "pageTitle": "Пользователь",
+  "overview": "Обзор",
+  "editProfile": "Редактировать профиль",
+  "changePassword": "Изменить пароль",
+  "titleInfo": "Детали профиля",
+  "oldPassword": "Текущий пароль",
+  "newPassword": "Новый пароль",
+  "reEnterNewPassword": "Повторно введите новый пароль",
+  "buttonEditProfile": "Сохранить изменения",
+  "buttonChangePassword": "Изменить пароль",
+  "userNotFound": "Пользователь не найден."
+}

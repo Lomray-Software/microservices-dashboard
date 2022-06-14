@@ -13,5 +13,8 @@
   "profileTitle": "Профиль",
   "settings": "Настройки",
   "logOut": "Выйти",
-  "accessDenied": "У вас нет доступа к этому функционалу."
+  "accessDenied": "У вас нет доступа к этому функционалу.",
+  "success": "Успешно",
+  "titleNotification": "Информация",
+  "messageNotification": "Изменения сохранены"
 }

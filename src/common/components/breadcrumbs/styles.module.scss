@@ -1,0 +1,46 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import "src/assets/styles/util/media-query";
+
+.list {
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: -45px;
+
+  .link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    outline: none;
+    text-decoration: none;
+    @include font-size(14px, $font-weight-bold, $text-muted);
+
+    &:after {
+      content: '/';
+      margin: 0 3px;
+    }
+  }
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+
+    &:last-child {
+      pointer-events: none;
+      background-color: $select-color;
+      border-radius: 8px;
+
+      & .link {
+        @include font-size(14px, $font-weight-bold, $text-primary);
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+}

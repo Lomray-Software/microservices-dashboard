@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
-import { StoreProps } from '@components/header/user/index.stores';
+import type { FC } from 'react';
+import React from 'react';
 import useToggle from '@hooks/use-toggle';
+import type { StoreProps } from './index.stores';
 import Popup from './popup';
 import styles from './styles.module.scss';
 
@@ -20,7 +21,7 @@ const User: FC<StoreProps> = ({ userStore: { user }, authStore: { signOut } }) =
           {user?.firstName}
           <i className={styles.chevron} />
         </p>
-        <Popup isOpen={isOpenPopup} signOut={signOut} />
+        <Popup isOpen={isOpenPopup} signOut={signOut} userId={user?.id} />
       </div>
     </>
   );

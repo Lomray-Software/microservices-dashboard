@@ -58,13 +58,7 @@
     }
 
     .button {
-      padding: 16px 32px;
-      text-transform: uppercase;
-      background-color: $button-login;
-      outline: none;
-      border: none;
-      border-radius: 4px;
-      @include font-size(14px, $font-weight-light, $white);
+      @include button(100%)
     }
   }
 }

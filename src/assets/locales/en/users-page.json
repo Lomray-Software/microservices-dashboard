@@ -1,10 +1,18 @@
 {
   "pageTitle": "Users",
+  "username": "Username",
   "firstName": "First name",
-  "lastName": "Last name",
   "middleName": "Middle name",
+  "lastName": "Last name",
   "phone": "Phone",
+  "gender": "Gender",
+  "birthDay": "Birthday",
   "createdAt": "Created At",
   "updatedAt": "Updated At",
-  "deletedAt": "Deleted At"
+  "deletedAt": "Deleted At",
+  "male": "Male",
+  "female": "Female",
+  "notKnown": "Not know",
+  "notSpecified": "Not specified",
+  "list": "User list"
 }

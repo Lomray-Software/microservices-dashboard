@@ -24,6 +24,16 @@ class UsersPageStore implements IDomain {
   public count = 0;
 
   /**
+   * Page size
+   */
+  public pageSize = 10;
+
+  /**
+   * Current page
+   */
+  public page = 1;
+
+  /**
    * @private
    */
   private api: IConstructorParams['endpoints'];
@@ -38,9 +48,13 @@ class UsersPageStore implements IDomain {
       error: observable,
       users: observable,
       count: observable,
+      page: observable,
+      pageSize: observable,
       setError: action.bound,
       setUsers: action.bound,
       setCount: action.bound,
+      setPageSize: action.bound,
+      setPage: action.bound,
       getUsers: action.bound,
     });
   }
@@ -67,11 +81,31 @@ class UsersPageStore implements IDomain {
   }
 
   /**
+   * Set page size
+   */
+  public setPageSize(count: number): Promise<void> {
+    this.pageSize = count;
+
+    return this.getUsers();
+  }
+
+  /**
+   * Set current page
+   */
+  public setPage(page: number): Promise<void> {
+    this.page = page;
+
+    return this.getUsers();
+  }
+
+  /**
    * Get users list
    */
   public async getUsers(): Promise<void> {
     this.setError(null);
-    const { result, error } = await this.api.users.user.list();
+    const { result, error } = await this.api.users.user.list({
+      query: { pageSize: this.pageSize, page: this.page },
+    });
 
     if (error || !result) {
       this.setError(error?.message ?? i18n.t('unknownError'));

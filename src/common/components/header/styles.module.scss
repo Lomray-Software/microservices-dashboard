@@ -3,6 +3,7 @@
 @import "src/assets/styles/util/media-query";
 
 .header {
+  position: relative;
   height: 100%;
   width: 100%;
   display: grid;
@@ -127,6 +128,7 @@
       display: block;
 
       &.wrapperNavigationOpen {
+        z-index: 100;
         opacity: 1;
         transform: translateX(0%);
       }

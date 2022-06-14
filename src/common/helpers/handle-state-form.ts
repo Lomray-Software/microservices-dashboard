@@ -1,5 +1,7 @@
 import i18n from 'i18next';
+import { Store } from 'react-notifications-component';
 import ucfirst from '@helpers/ucfirst';
+import translation from '@services/localization';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 
 export interface IValidationErrors<TFormValue> {
@@ -41,4 +43,44 @@ const formatValidationError = <TFormValue, TResValues>(
   return { fields, message: fields === undefined ? groupErrors?.[0]?.message : undefined };
 };
 
-export default formatValidationError;
+/**
+ * Set errors for fields and main error also adding notification for success
+ */
+const handleStateForm = <TFormValue>(
+  result: IValidationErrors<TFormValue> | boolean,
+  setErrors: (errors: Partial<TFormValue>) => void,
+  setError: (message?: string | null) => void,
+): void => {
+  if (typeof result === 'boolean') {
+    Store.addNotification({
+      title: translation.t('translation:titleNotification'),
+      message: translation.t('translation:messageNotification'),
+      type: 'success',
+      insert: 'top',
+      container: 'top-right',
+      animationIn: ['animate__animated', 'animate__fadeIn'],
+      animationOut: ['animate__animated', 'animate__fadeOut'],
+      dismiss: {
+        duration: 4000,
+        onScreen: true,
+      },
+      slidingExit: {
+        duration: 200,
+        timingFunction: 'ease-out',
+        delay: 0,
+      },
+    });
+
+    return;
+  }
+
+  const { fields, message } = result;
+
+  if (fields) {
+    setErrors(fields);
+  } else {
+    setError(message);
+  }
+};
+
+export { handleStateForm, formatValidationError };

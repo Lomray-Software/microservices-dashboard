@@ -1,0 +1,18 @@
+{
+  "pageTitle": "Пользователи",
+  "username": "Имя пользователя",
+  "firstName": "Имя",
+  "middleName": "Отчество",
+  "lastName": "Фамилия",
+  "phone": "Телефон",
+  "gender": "Пол",
+  "birthDay": "Дата рождения",
+  "createdAt": "Созданно",
+  "updatedAt": "Обновленно",
+  "deletedAt": "Удаленно",
+  "male": "Мужской",
+  "female": "Женский",
+  "notKnown": "Не известный",
+  "notSpecified": "Не определен",
+  "list": "Список пользователей"
+}
