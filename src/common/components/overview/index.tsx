@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import React from 'react';
+import type { IField } from '../forms/fields';
 import EntityFields from './entity-fields';
-import type { IField } from './fields';
 import styles from './styles.module.scss';
 
 interface IData {
@@ -14,6 +14,9 @@ interface IOverview {
   title: string;
 }
 
+/**
+ * Print entity fields
+ */
 const Overview: FC<IOverview> = ({ data, title }) => (
   <>
     <h3 className={styles.title}>{title}</h3>

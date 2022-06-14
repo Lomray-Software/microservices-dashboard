@@ -1,4 +1,4 @@
-import i18n from '@common/services/localization';
+import i18n from '@services/localization';
 
 const fields = [
   { name: 'newPassword', type: 'password', title: i18n.t('user-page:newPassword') },

@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 import type { SchemaOf } from 'yup';
-import i18n from '@common/services/localization';
+import i18n from '@services/localization';
 import type { ILoginForm } from './index';
 
 type SchemaType = SchemaOf<ILoginForm>;

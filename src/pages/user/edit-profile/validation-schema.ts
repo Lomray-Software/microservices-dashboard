@@ -1,5 +1,5 @@
 import type { SchemaOf } from 'yup';
-import i18n from '@common/services/localization';
+import i18n from '@services/localization';
 import { object, string } from '@services/yup';
 import type { IEditProfile } from '@store/modules/pages/user/edit-profile';
 

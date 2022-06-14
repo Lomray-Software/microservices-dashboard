@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { Store } from 'react-notifications-component';
-import translation from '@common/services/localization';
 import ucfirst from '@helpers/ucfirst';
+import translation from '@services/localization';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 
 export interface IValidationErrors<TFormValue> {

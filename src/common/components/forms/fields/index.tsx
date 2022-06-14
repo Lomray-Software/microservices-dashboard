@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import React from 'react';
-import Field from '@components/forms/field';
-import type { ISelectOptions } from '@components/forms/select-field';
-import SelectField from '@components/forms/select-field';
+import Field from '../field';
+import type { ISelectOptions } from '../select-field';
+import SelectField from '../select-field';
 
 export interface IField {
   name: string;
