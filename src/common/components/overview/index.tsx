@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import React from 'react';
-import type { IField } from '../forms/fields';
+import type { IField } from '@components/forms/fields';
 import EntityFields from './entity-fields';
 import styles from './styles.module.scss';
 
