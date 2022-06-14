@@ -4,16 +4,15 @@ import {
   mdiChevronLeft,
   mdiChevronRight,
 } from '@mdi/js';
-import Icon from '@mdi/react';
 import React, { useCallback } from 'react';
-import ReactPaginate from 'react-paginate';
 import type { TableOptions } from 'react-table';
 import { usePagination, useTable } from 'react-table';
 import Link from '@components/link';
-import SortBy from '@components/sort-by';
-import combineCss from '@helpers/combine-css';
+import Button from './button';
 import DefaultFilter from './default-filter';
+import Pagination from './pagination';
 import Select from './select';
+import SortBy from './sort-by';
 import styles from './styles.module.scss';
 
 interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEntity, any> {
@@ -21,7 +20,7 @@ interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEnti
   setPage: (page: number) => void;
   pageSize: number;
   setPageSize: (count: number) => void;
-  onFilter: (where: string, substring: string) => void;
+  onFilter: (name: string, value: string) => void;
   onRoute: (id: string) => string;
   count: number;
 }
@@ -124,7 +123,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                         {column.render('Header')}
                         <SortBy id={column.id} onChange={onSortBy} />
                       </div>
-                      <DefaultFilter onFilter={onFilter} id={column.id} />
+                      <DefaultFilter onFilter={onFilter} name={column.id} />
                     </div>
                   );
                 })}
@@ -166,45 +165,28 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
       </div>
       <div className={styles.pagination}>
         <div className={styles.buttons}>
-          <button
-            className={combineCss(styles.button, 1 === storePage ? styles.disable : '')}
-            type="button"
+          <Button
+            iconPath={mdiChevronDoubleLeft}
+            isDisabled={1 === storePage}
             onClick={onStartPage}
-            disabled={1 === storePage}>
-            <Icon path={mdiChevronDoubleLeft} size={1} color="#8f5fe8" />
-          </button>
-          <button
-            className={styles.button}
-            type="button"
-            onClick={onPreviousPage}
-            disabled={1 === storePage}>
-            <Icon path={mdiChevronLeft} size={1} color="#8f5fe8" />
-          </button>
-          <ReactPaginate
-            forcePage={storePage - 1}
-            className={styles.itemPagination}
-            nextLabel={null}
-            previousLabel={null}
-            breakLabel="..."
-            pageRangeDisplayed={pageSize}
-            pageCount={pageCount}
-            activeClassName={styles.itemPaginationActive}
-            onPageChange={({ selected }) => onPaginationChange(selected)}
           />
-          <button
-            className={styles.button}
-            type="button"
+          <Button iconPath={mdiChevronLeft} isDisabled={1 === storePage} onClick={onPreviousPage} />
+          <Pagination
+            page={storePage}
+            size={pageSize}
+            count={pageCount}
+            handlePagination={onPaginationChange}
+          />
+          <Button
+            iconPath={mdiChevronRight}
+            isDisabled={pageCount <= storePage}
             onClick={onNextPage}
-            disabled={pageCount === storePage}>
-            <Icon path={mdiChevronRight} size={1} color="#8f5fe8" />
-          </button>
-          <button
-            className={styles.button}
-            type="button"
+          />
+          <Button
+            iconPath={mdiChevronDoubleRight}
+            isDisabled={pageCount <= storePage}
             onClick={onLastPage}
-            disabled={pageCount === storePage}>
-            <Icon path={mdiChevronDoubleRight} size={1} color="#8f5fe8" />
-          </button>
+          />
         </div>
         <Select pageSize={pageSize} setPageSize={onChangePageSize} />
       </div>

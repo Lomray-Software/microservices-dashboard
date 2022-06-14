@@ -3,20 +3,19 @@ import React, { useState } from 'react';
 import styles from './styles.module.scss';
 
 interface IDefaultFilter {
-  id: string;
-  onFilter: (where: string, substring: string) => void;
+  name: string;
+  onFilter: (name: string, value: string) => void;
 }
 
-const DefaultFilter: FC<IDefaultFilter> = ({ onFilter, id }): JSX.Element => {
+const DefaultFilter: FC<IDefaultFilter> = ({ onFilter, name }): JSX.Element => {
   const [value, setValue] = useState('');
 
-  const handeChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-
-    onFilter(id, e.target.value);
+    onFilter(name, e.target.value);
   };
 
-  return <input className={styles.input} type="text" value={value} onChange={handeChange} />;
+  return <input className={styles.input} type="text" value={value} onChange={handleChange} />;
 };
 
 export default DefaultFilter;

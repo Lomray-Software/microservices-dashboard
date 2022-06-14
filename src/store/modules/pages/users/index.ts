@@ -10,6 +10,8 @@ import type { IConstructorParams } from '@store/manager';
 
 type TSortBy = IJsonQuery<IUser>['orderBy'];
 
+type TWhere = Record<string, { [IJsonQueryOperator.like]: string }>;
+
 /**
  * Users page store
  */
@@ -40,10 +42,14 @@ class UsersPageStore implements IDomain {
   public page = 1;
 
   /**
-   * Sorting conditions for reviews
+   * Sorting conditions for users
    */
   public sortBy: TSortBy = {};
 
+  /**
+   * Filter for users
+   */
+  public where: TWhere = {};
   /**
    * @private
    */
@@ -56,6 +62,7 @@ class UsersPageStore implements IDomain {
     this.api = endpoints;
 
     makeObservable(this, {
+      where: observable,
       sortBy: observable,
       error: observable,
       users: observable,
@@ -68,7 +75,7 @@ class UsersPageStore implements IDomain {
       setPageSize: action.bound,
       setPage: action.bound,
       getUsers: action.bound,
-      onFilterUser: action.bound,
+      setWhere: action.bound,
       setSortBy: action.bound,
       onChangeOrderBy: action.bound,
     });
@@ -151,13 +158,13 @@ class UsersPageStore implements IDomain {
   /**
    * Get users list
    */
-  public async getUsers(filter: Record<string, any> = {}): Promise<void> {
+  public async getUsers(): Promise<void> {
     this.setError(null);
     const { result, error } = await this.api.users.user.list({
       query: {
         pageSize: this.pageSize,
         page: this.page,
-        where: filter,
+        where: this.where,
         orderBy: this.sortBy,
       },
     });
@@ -175,12 +182,13 @@ class UsersPageStore implements IDomain {
   }
 
   /**
-   * Filter users list
+   * Set where filtering users list
    */
-  public onFilterUser = debounce((where: string, substring: string) => {
+  public setWhere = debounce((name: string, value: string) => {
     this.page = 1;
+    this.where = { [name]: { [IJsonQueryOperator.like]: `%${value}%` } };
 
-    return this.getUsers({ [where]: { [IJsonQueryOperator.like]: `%${substring}%` } });
+    return this.getUsers();
   }, 500);
 }
 

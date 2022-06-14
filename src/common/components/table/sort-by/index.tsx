@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { IJsonQueryOrder } from '@store/endpoints/interfaces/common/query';
 import styles from './styles.module.scss';
 
-export interface ISortByItem {
+export interface ISortBy {
   id: string;
   onChange: (name: string, value: IJsonQueryOrder | undefined) => void;
   initValue?: IJsonQueryOrder;
@@ -13,7 +13,12 @@ export interface ISortByItem {
 
 const COLOR_ICON = '#6c7293';
 
-const SortBy: FC<ISortByItem> = ({ id, initValue, onChange }) => {
+const item = {
+  [IJsonQueryOrder.ASC]: <Icon path={mdiSortDescending} size={1} color={COLOR_ICON} />,
+  [IJsonQueryOrder.DESC]: <Icon path={mdiSortAscending} size={1} color={COLOR_ICON} />,
+};
+
+const SortBy: FC<ISortBy> = ({ id, initValue, onChange }) => {
   const [value, setValue] = useState(initValue);
 
   const onPress = useCallback(() => {
@@ -37,14 +42,8 @@ const SortBy: FC<ISortByItem> = ({ id, initValue, onChange }) => {
     }
 
     setValue(nextOrder);
-
     onChange(id, nextOrder);
   }, [id, onChange, value]);
-
-  const item = {
-    [IJsonQueryOrder.ASC]: <Icon path={mdiSortDescending} size={1} color={COLOR_ICON} />,
-    [IJsonQueryOrder.DESC]: <Icon path={mdiSortAscending} size={1} color={COLOR_ICON} />,
-  };
 
   return (
     <button type="button" className={styles.button} onClick={onPress}>
