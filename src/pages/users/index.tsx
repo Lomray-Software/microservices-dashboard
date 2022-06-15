@@ -28,16 +28,16 @@ const Users: SSRComponent<Props> = ({
     count,
     page,
     setSortBy,
-    handleSubscribe,
+    addSubscribe,
   },
 }) => {
   const { t } = useTranslation(['users-page', 'menu']);
 
   useEffect(() => {
-    const disposer = handleSubscribe();
+    const disposer = addSubscribe();
 
     return () => disposer();
-  }, [handleSubscribe]);
+  }, [addSubscribe]);
 
   const columns: Column<IUser>[] = useMemo(
     () => [

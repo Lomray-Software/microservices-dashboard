@@ -79,7 +79,7 @@ class UsersPageStore implements IDomain {
     });
   }
 
-  public handleSubscribe = (): IReactionDisposer =>
+  public addSubscribe = (): IReactionDisposer =>
     reaction(
       () => ({ sortBy: this.sortBy, where: this.where, pageSize: this.pageSize, page: this.page }),
       () => {
