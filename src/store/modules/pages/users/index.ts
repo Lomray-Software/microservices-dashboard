@@ -1,4 +1,3 @@
-import debounce from 'lodash.debounce';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
@@ -157,14 +156,14 @@ class UsersPageStore implements IDomain {
   /**
    * Set where filtering users list
    */
-  public setWhere = debounce((name: string, value: string) => {
+  public setWhere(name: string, value: string): Promise<void> {
     runInAction(() => {
       this.page = 1;
     });
     this.where = { [name]: { [IJsonQueryOperator.like]: `%${value}%` } };
 
     return this.getUsers();
-  }, 500);
+  }
 }
 
 export default UsersPageStore;

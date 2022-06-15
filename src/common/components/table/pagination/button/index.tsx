@@ -10,7 +10,7 @@ interface IButton {
 }
 
 const Button: FC<IButton> = ({ iconPath, isDisabled, onClick }) => (
-  <ButtonPrimary addition="secondary" type="button" onClick={onClick} disabled={isDisabled}>
+  <ButtonPrimary kind="secondary" type="button" onClick={onClick} disabled={isDisabled}>
     <Icon path={iconPath} size={1.2} color="#8f5fe8" />
   </ButtonPrimary>
 );
