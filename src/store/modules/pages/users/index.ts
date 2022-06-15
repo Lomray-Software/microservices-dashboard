@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, reaction } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
 import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
@@ -76,6 +76,13 @@ class UsersPageStore implements IDomain {
       setWhere: action.bound,
       setSortBy: action.bound,
     });
+
+    reaction(
+      () => ({ sortBy: this.sortBy, where: this.where, pageSize: this.pageSize, page: this.page }),
+      () => {
+        void this.getUsers();
+      },
+    );
   }
 
   /**
@@ -95,11 +102,9 @@ class UsersPageStore implements IDomain {
   /**
    * Set sort by for users
    */
-  public setSortBy(sortBy: TSortBy): Promise<void> {
+  public setSortBy(sortBy: TSortBy): void {
     this.sortBy = sortBy;
-    this.page = 1;
-
-    return this.getUsers();
+    this.setPage(1);
   }
 
   /**
@@ -112,19 +117,15 @@ class UsersPageStore implements IDomain {
   /**
    * Set page size
    */
-  public setPageSize(count: number): Promise<void> {
+  public setPageSize(count: number): void {
     this.pageSize = count;
-
-    return this.getUsers();
   }
 
   /**
    * Set current page
    */
-  public setPage(page: number): Promise<void> {
+  public setPage(page: number): void {
     this.page = page;
-
-    return this.getUsers();
   }
 
   /**
@@ -156,13 +157,9 @@ class UsersPageStore implements IDomain {
   /**
    * Set where filtering users list
    */
-  public setWhere(name: string, value: string): Promise<void> {
-    runInAction(() => {
-      this.page = 1;
-    });
+  public setWhere(name: string, value: string): void {
+    this.setPage(1);
     this.where = { [name]: { [IJsonQueryOperator.like]: `%${value}%` } };
-
-    return this.getUsers();
   }
 }
 
