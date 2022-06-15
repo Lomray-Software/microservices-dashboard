@@ -1,0 +1,23 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+
+.button {
+  @include button(fit-content);
+
+  &[data-additional='secondary'] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid $select-color;
+    padding: 6px 12px;
+    border-radius: 0;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+  }
+}

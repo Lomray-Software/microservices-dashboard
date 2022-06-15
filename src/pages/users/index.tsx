@@ -19,7 +19,7 @@ type Props = StoreProps;
  * @constructor
  */
 const Users: SSRComponent<Props> = ({
-  pageStore: { users, setPageSize, pageSize, setPage, setWhere, count, page, onChangeOrderBy },
+  pageStore: { users, setPageSize, pageSize, setPage, setWhere, count, page, setSortBy },
 }) => {
   const { t } = useTranslation(['users-page', 'menu']);
 
@@ -80,7 +80,7 @@ const Users: SSRComponent<Props> = ({
         setPageSize={setPageSize}
         setPage={setPage}
         onFilter={setWhere}
-        onSortBy={onChangeOrderBy}
+        onSortBy={setSortBy}
         page={page}
         count={count}
         onRoute={makeRoute(ROUTES.USERS)}

@@ -1,6 +1,5 @@
 import debounce from 'lodash.debounce';
-import isEmpty from 'lodash.isempty';
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
 import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
@@ -77,7 +76,6 @@ class UsersPageStore implements IDomain {
       getUsers: action.bound,
       setWhere: action.bound,
       setSortBy: action.bound,
-      onChangeOrderBy: action.bound,
     });
   }
 
@@ -103,31 +101,6 @@ class UsersPageStore implements IDomain {
     this.page = 1;
 
     return this.getUsers();
-  }
-
-  /**
-   * Change order by for sort
-   */
-  public onChangeOrderBy(name: string, value: string): Promise<void> {
-    const orderBy = { ...this.sortBy };
-
-    if (isEmpty(orderBy)) {
-      orderBy[name] = value;
-
-      return this.setSortBy(orderBy);
-    }
-
-    if (orderBy.hasOwnProperty(name)) {
-      orderBy[name] = value;
-    } else {
-      for (const prop of Object.keys(orderBy)) {
-        delete orderBy[prop];
-      }
-
-      orderBy[name] = value;
-    }
-
-    return this.setSortBy(orderBy);
   }
 
   /**
@@ -185,7 +158,9 @@ class UsersPageStore implements IDomain {
    * Set where filtering users list
    */
   public setWhere = debounce((name: string, value: string) => {
-    this.page = 1;
+    runInAction(() => {
+      this.page = 1;
+    });
     this.where = { [name]: { [IJsonQueryOperator.like]: `%${value}%` } };
 
     return this.getUsers();

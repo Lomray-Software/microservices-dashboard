@@ -7,8 +7,8 @@ import {
 import type { FC } from 'react';
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import Button from '@components/table/pagination/button';
-import Select from '@components/table/select';
+import Select from '../select';
+import Button from './button';
 import styles from './styles.module.scss';
 
 interface IPagination {

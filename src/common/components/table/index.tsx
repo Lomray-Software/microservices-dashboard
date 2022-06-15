@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import type { TableOptions } from 'react-table';
 import { usePagination, useTable } from 'react-table';
 import Link from '@components/link';
+import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
 import DefaultFilter from './default-filter';
 import Pagination from './pagination';
 import SortBy from './sort-by';
@@ -14,6 +15,7 @@ interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEnti
   setPageSize: (count: number) => void;
   onFilter: (name: string, value: string) => void;
   onRoute: (id: string) => string;
+  onSortBy: (sortBy: IJsonQuery<TEntity>['orderBy']) => void;
   count: number;
 }
 
@@ -113,7 +115,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                     <div className={styles.headerItem} key={cellProps.key}>
                       <div {...cellProps} className={styles.wrapperSort}>
                         {column.render('Header')}
-                        <SortBy id={column.id} onChange={onSortBy} />
+                        <SortBy id={column.id} setOrderBy={onSortBy} />
                       </div>
                       <DefaultFilter onFilter={onFilter} name={column.id} />
                     </div>
