@@ -94,7 +94,7 @@ class UsersPageStore implements IDomain {
   }
 
   /**
-   * Set sort by for review
+   * Set sort by for users
    */
   public setSortBy(sortBy: TSortBy): Promise<void> {
     this.sortBy = sortBy;

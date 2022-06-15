@@ -5,15 +5,15 @@ import styles from './styles.module.scss';
 
 export interface IButtonPrimary extends React.HTMLProps<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset';
-  color?: 'primary' | 'secondary';
+  addition?: 'primary' | 'secondary';
 }
 
 /**
  * Primary button
  * @constructor
  */
-const ButtonPrimary: FC<IButtonPrimary> = ({ type, color = 'primary', ...props }) => (
-  <button type={type} className={styles.button} data-additional={color} {...props} />
+const ButtonPrimary: FC<IButtonPrimary> = ({ type, addition = 'primary', ...props }) => (
+  <button type={type} className={styles.button} data-additional={addition} {...props} />
 );
 
 export default ButtonPrimary;

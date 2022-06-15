@@ -3,12 +3,13 @@ import Icon from '@mdi/react';
 import isEmpty from 'lodash.isempty';
 import type { FC } from 'react';
 import React, { useCallback, useState } from 'react';
+import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
 import { IJsonQueryOrder } from '@store/endpoints/interfaces/common/query';
 import styles from './styles.module.scss';
 
 export interface ISortBy {
   id: string;
-  setOrderBy: (sortBy: Record<string, any>) => void;
+  setOrderBy: (sortBy: IJsonQuery<Record<string, any>>['orderBy']) => void;
   initValue?: IJsonQueryOrder;
 }
 
@@ -17,7 +18,7 @@ const COLOR_ICON = '#6c7293';
 const setOrder = (
   id: string,
   value: IJsonQueryOrder | undefined,
-  handleChange: (sortBy: any) => void,
+  handleChange: (sortBy: IJsonQuery<Record<string, any>>['orderBy']) => void,
 ): void => {
   const orderBy = {};
 
