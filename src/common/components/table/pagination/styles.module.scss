@@ -1,0 +1,45 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+
+.pagination {
+  height: 250px;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  justify-content: space-between;
+  align-items: start;
+  padding: 15px 15px;
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+  }
+
+  .itemPagination {
+    display: flex;
+    cursor: pointer;
+
+    & > li {
+      border: 1px solid $select-color;
+
+      & > a {
+        display: block;
+        padding: 6px 12px;
+        @include font-size(15px, $font-weight-bold, $text-primary);
+      }
+
+      &:first-child {
+        display: none;
+      }
+
+      &:last-child {
+        display: none;
+      }
+
+      &.itemPaginationActive {
+        background: $select-color;
+      }
+    }
+  }
+}

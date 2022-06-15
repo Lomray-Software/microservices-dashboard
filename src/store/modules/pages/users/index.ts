@@ -1,8 +1,15 @@
-import { action, makeObservable, observable } from 'mobx';
+import type { IReactionDisposer } from 'mobx';
+import { action, makeObservable, observable, reaction } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
+import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
+import { IJsonQueryOperator } from '@store/endpoints/interfaces/common/query';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
+
+type TSortBy = IJsonQuery<IUser>['orderBy'];
+
+type TWhere = IJsonQuery<IUser>['where'];
 
 /**
  * Users page store
@@ -34,6 +41,15 @@ class UsersPageStore implements IDomain {
   public page = 1;
 
   /**
+   * Sorting conditions for users
+   */
+  public sortBy: TSortBy = {};
+
+  /**
+   * Filter for users
+   */
+  public where: TWhere = {};
+  /**
    * @private
    */
   private api: IConstructorParams['endpoints'];
@@ -45,6 +61,8 @@ class UsersPageStore implements IDomain {
     this.api = endpoints;
 
     makeObservable(this, {
+      where: observable,
+      sortBy: observable,
       error: observable,
       users: observable,
       count: observable,
@@ -56,8 +74,22 @@ class UsersPageStore implements IDomain {
       setPageSize: action.bound,
       setPage: action.bound,
       getUsers: action.bound,
+      setWhere: action.bound,
+      setSortBy: action.bound,
     });
   }
+
+  /**
+   * Add state subscribers
+   * Get users when state changed
+   */
+  public addSubscribe = (): IReactionDisposer =>
+    reaction(
+      () => ({ sortBy: this.sortBy, where: this.where, pageSize: this.pageSize, page: this.page }),
+      () => {
+        void this.getUsers();
+      },
+    );
 
   /**
    * Set users
@@ -74,6 +106,14 @@ class UsersPageStore implements IDomain {
   }
 
   /**
+   * Set sort by for users
+   */
+  public setSortBy(sortBy: TSortBy): void {
+    this.sortBy = sortBy;
+    this.setPage(1);
+  }
+
+  /**
    * Set users count
    */
   public setCount(count: number): void {
@@ -83,19 +123,15 @@ class UsersPageStore implements IDomain {
   /**
    * Set page size
    */
-  public setPageSize(count: number): Promise<void> {
+  public setPageSize(count: number): void {
     this.pageSize = count;
-
-    return this.getUsers();
   }
 
   /**
    * Set current page
    */
-  public setPage(page: number): Promise<void> {
+  public setPage(page: number): void {
     this.page = page;
-
-    return this.getUsers();
   }
 
   /**
@@ -104,7 +140,12 @@ class UsersPageStore implements IDomain {
   public async getUsers(): Promise<void> {
     this.setError(null);
     const { result, error } = await this.api.users.user.list({
-      query: { pageSize: this.pageSize, page: this.page },
+      query: {
+        pageSize: this.pageSize,
+        page: this.page,
+        where: this.where,
+        orderBy: this.sortBy,
+      },
     });
 
     if (error || !result) {
@@ -117,6 +158,14 @@ class UsersPageStore implements IDomain {
 
     this.setUsers(list);
     this.setCount(count || 0);
+  }
+
+  /**
+   * Set where filtering users list
+   */
+  public setWhere(name: string, value: string): void {
+    this.setPage(1);
+    this.where = { [name]: { [IJsonQueryOperator.like]: `%${value}%` } };
   }
 }
 

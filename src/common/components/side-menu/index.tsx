@@ -1,14 +1,15 @@
 import Icon from '@mdi/react';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import Link from '@components/link';
-import { StoreProps } from '@components/side-menu/index.stores';
 import { APP_SHORT_NAME } from '@constants/index';
 import MENU from '@constants/menu';
 import ROUTES from '@constants/routes';
 import combineCss from '@helpers/combine-css';
 import getActiveMenu from '@helpers/get-active-menu';
+import type { StoreProps } from './index.stores';
 import styles from './styles.module.scss';
 
 interface ISideMenu {

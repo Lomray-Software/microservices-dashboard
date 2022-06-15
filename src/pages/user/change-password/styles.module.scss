@@ -20,8 +20,4 @@
     grid-template-columns: 1fr;
     grid-row-gap: 30px;
   }
-
-  .button {
-    @include button(300px);
-  }
 }

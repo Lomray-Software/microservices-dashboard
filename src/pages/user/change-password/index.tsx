@@ -37,7 +37,7 @@ const ChangePassword: FC<StoreProps> = ({
         <Form className={styles.form}>
           <Fields fields={fields} isInline />
           <ErrorMessage>{error}</ErrorMessage>
-          <SubmitButton className={styles.button} hasLoader>
+          <SubmitButton hasLoader isInitialDisabled>
             {t('buttonChangePassword')}
           </SubmitButton>
         </Form>
