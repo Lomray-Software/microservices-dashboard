@@ -13,7 +13,7 @@ export interface IButtonPrimary extends React.HTMLProps<HTMLButtonElement> {
  * @constructor
  */
 const ButtonPrimary: FC<IButtonPrimary> = ({ type, kind = 'primary', ...props }) => (
-  <button type={type} className={styles.button} data-additional={kind} {...props} />
+  <button type={type} className={styles.button} data-kind={kind} {...props} />
 );
 
 export default ButtonPrimary;

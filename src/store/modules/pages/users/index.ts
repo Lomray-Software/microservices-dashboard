@@ -1,3 +1,4 @@
+import type { IReactionDisposer } from 'mobx';
 import { action, makeObservable, observable, reaction } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
@@ -76,14 +77,15 @@ class UsersPageStore implements IDomain {
       setWhere: action.bound,
       setSortBy: action.bound,
     });
+  }
 
+  public handleSubscribe = (): IReactionDisposer =>
     reaction(
       () => ({ sortBy: this.sortBy, where: this.where, pageSize: this.pageSize, page: this.page }),
       () => {
         void this.getUsers();
       },
     );
-  }
 
   /**
    * Set users

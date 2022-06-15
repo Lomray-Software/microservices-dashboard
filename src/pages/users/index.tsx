@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import type { Column } from 'react-table';
@@ -19,9 +19,25 @@ type Props = StoreProps;
  * @constructor
  */
 const Users: SSRComponent<Props> = ({
-  pageStore: { users, setPageSize, pageSize, setPage, setWhere, count, page, setSortBy },
+  pageStore: {
+    users,
+    setPageSize,
+    pageSize,
+    setPage,
+    setWhere,
+    count,
+    page,
+    setSortBy,
+    handleSubscribe,
+  },
 }) => {
   const { t } = useTranslation(['users-page', 'menu']);
+
+  useEffect(() => {
+    const disposer = handleSubscribe();
+
+    return () => disposer();
+  }, [handleSubscribe]);
 
   const columns: Column<IUser>[] = useMemo(
     () => [

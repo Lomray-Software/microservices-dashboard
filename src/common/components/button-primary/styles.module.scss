@@ -4,7 +4,7 @@
 .button {
   @include button(fit-content);
 
-  &[data-additional='secondary'] {
+  &[data-kind='secondary'] {
     display: flex;
     justify-content: center;
     align-items: center;

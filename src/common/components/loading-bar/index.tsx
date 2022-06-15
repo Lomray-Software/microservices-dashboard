@@ -9,7 +9,7 @@ const LoadingBar: FC = () => {
 
   useEffect(() => PageLoading.setLoadingBarRef(ref), []);
 
-  return <LoadingBarComponent color="#f11946" ref={ref} />;
+  return <LoadingBarComponent color="#8f5fe8" ref={ref} />;
 };
 
 export default LoadingBar;
