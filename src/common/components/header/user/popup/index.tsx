@@ -22,10 +22,6 @@ const Popup: FC<IPopup> = ({ isOpen, signOut, userId }) => {
   return (
     <div className={combineCss(styles.modalUser, isOpen ? styles.open : '')}>
       <ul aria-label={t('profileTitle')} className={styles.list}>
-        <li className={styles.title}>
-          <span className={styles.item}>{t('profileTitle')}</span>
-          <span className={styles.bottomElement} />
-        </li>
         <li>
           <div className={styles.round}>
             <Icon path={mdiCogSync} size={1} color="yellow" />

@@ -79,6 +79,10 @@ class UsersPageStore implements IDomain {
     });
   }
 
+  /**
+   * Add state subscribers
+   * Get users when state changed
+   */
   public addSubscribe = (): IReactionDisposer =>
     reaction(
       () => ({ sortBy: this.sortBy, where: this.where, pageSize: this.pageSize, page: this.page }),
