@@ -73,10 +73,6 @@ const Users: SSRComponent<Props> = ({
         Header: t('users-page:updatedAt'),
         accessor: 'updatedAt',
       },
-      {
-        Header: t('users-page:deletedAt'),
-        accessor: 'deletedAt',
-      },
     ],
     [t],
   );

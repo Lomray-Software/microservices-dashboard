@@ -8,4 +8,9 @@
   transform: translateX(-50%);
   align-items: center;
   @include font-size(14px, $font-weight-light, $pink);
+
+  &[data-kind='secondary'] {
+    position: static;
+    transform: translate(0, 0);
+  }
 }

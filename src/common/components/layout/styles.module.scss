@@ -1,6 +1,7 @@
 @import "src/assets/styles/util/media-query";
 
 .wrapper {
+  min-height: 100vh;
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-rows: 70px min-content;

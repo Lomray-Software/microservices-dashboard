@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce';
 import type { ChangeEvent, FC } from 'react';
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import Input from '@components/forms/input';
 
 interface IDefaultFilter {
@@ -9,14 +9,12 @@ interface IDefaultFilter {
 }
 
 const DefaultFilter: FC<IDefaultFilter> = ({ onFilter, name }): JSX.Element => {
-  const [value, setValue] = useState('');
+  const debounceFilter = useMemo(
+    () => debounce((e: ChangeEvent<HTMLInputElement>) => onFilter(name, e.target.value), 500),
+    [name, onFilter],
+  );
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    debounce(() => onFilter(name, e.target.value), 500)();
-  };
-
-  return <Input value={value} onChange={handleChange} />;
+  return <Input type="text" onChange={debounceFilter} />;
 };
 
 export default DefaultFilter;
