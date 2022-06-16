@@ -9,21 +9,21 @@ const genderOptions = [
 ];
 
 const profileFields: IField[] = [
-  { name: 'birthDay', type: 'date', title: i18n.t('users-page:birthDay') },
+  { name: 'birthDay', type: 'date', title: 'users-page:birthDay' },
   {
     name: 'gender',
     options: genderOptions,
     type: 'select',
-    title: i18n.t('users-page:gender'),
+    title: 'users-page:gender',
   },
 ];
 
 const userFields: IField[] = [
-  { name: 'username', title: i18n.t('users-page:username') },
-  { name: 'firstName', title: i18n.t('users-page:firstName') },
-  { name: 'middleName', title: i18n.t('users-page:middleName') },
-  { name: 'lastName', title: i18n.t('users-page:lastName') },
-  { name: 'phone', type: 'phone', title: i18n.t('users-page:phone') },
+  { name: 'username', title: 'users-page:username' },
+  { name: 'firstName', title: 'users-page:firstName' },
+  { name: 'middleName', title: 'users-page:middleName' },
+  { name: 'lastName', title: 'users-page:lastName' },
+  { name: 'phone', type: 'phone', title: 'users-page:phone' },
 ];
 
 const tabs = ['overview', 'editProfile', 'changePassword'] as const;

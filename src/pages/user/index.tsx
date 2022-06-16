@@ -23,7 +23,7 @@ type Props = StoreProps;
  * @constructor
  */
 const User: SSRComponent<Props> = ({ userPage: { user } }) => {
-  const { t } = useTranslation(['user-page', 'menu']);
+  const { t } = useTranslation(['user-page', 'users-page', 'menu']);
 
   return (
     <div className="wrapper">
