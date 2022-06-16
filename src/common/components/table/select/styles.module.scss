@@ -8,6 +8,7 @@
   border: 1px solid $select-color;
   border-radius: 2px;
   background-color: transparent;
+  z-index: 100;
 
   .value {
     display: flex;

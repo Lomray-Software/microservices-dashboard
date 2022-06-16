@@ -16,5 +16,7 @@
   "accessDenied": "You do not have access to this functionality.",
   "success": "Success",
   "titleNotification": "Information",
-  "messageNotification": "Changes saved"
+  "messageNotification": "Changes saved",
+  "allRights": "All rights reserved",
+  "developed": "Developed by"
 }

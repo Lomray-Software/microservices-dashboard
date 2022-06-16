@@ -19,7 +19,7 @@
 
     &:after {
       content: '/';
-      margin: 0 3px;
+      margin: 0 5px 0 10px;
     }
   }
 
@@ -31,7 +31,6 @@
 
     &:last-child {
       pointer-events: none;
-      background-color: $select-color;
       border-radius: 8px;
 
       & .link {

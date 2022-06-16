@@ -1,0 +1,37 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import "src/assets/styles/util/media-query";
+
+.footer {
+  position: relative;
+  bottom: 0;
+
+  .wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 0;
+
+    li {
+      @include font-size(18px, $font-weight-bold, $text-secondary);
+      margin-bottom: 10px;
+
+      @include media-breakpoint-down(sm) {
+        @include font-size(14px, $font-weight-bold, $text-secondary);
+      }
+
+      a {
+        text-decoration: none;
+        @include font-size(18px, $font-weight-bold, $text-secondary);
+
+        @include media-breakpoint-down(sm) {
+          @include font-size(14px, $font-weight-bold, $text-secondary);
+        }
+
+        &:hover {
+          color: $select-color;
+        }
+      }
+    }
+  }
+}

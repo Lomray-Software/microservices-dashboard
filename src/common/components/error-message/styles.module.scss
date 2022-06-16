@@ -2,10 +2,6 @@
 @import 'src/assets/styles/util/mixins';
 
 .errorMessage {
-  position: absolute;
-  bottom: 55px;
-  left: 50%;
-  transform: translateX(-50%);
-  align-items: center;
+  min-height: 20px;
   @include font-size(14px, $font-weight-light, $pink);
 }

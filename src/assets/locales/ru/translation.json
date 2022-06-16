@@ -16,5 +16,7 @@
   "accessDenied": "У вас нет доступа к этому функционалу.",
   "success": "Успешно",
   "titleNotification": "Информация",
-  "messageNotification": "Изменения сохранены"
+  "messageNotification": "Изменения сохранены",
+  "allRights": "Все права защищены",
+  "developed": "Разработано"
 }

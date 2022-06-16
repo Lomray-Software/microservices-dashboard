@@ -20,7 +20,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  color: #FFFFFF;
 }
 
 header {
@@ -29,11 +28,12 @@ header {
 
 main {
   grid-area: main;
-  padding: 70px 30px;
+  padding: 70px 30px 125px;
   overflow: hidden;
+  min-height: calc(100vh - 70px);
 
   @include media-breakpoint-down(md) {
-    padding: 70px 0;
+    padding: 70px 0 125px;
   }
 }
 

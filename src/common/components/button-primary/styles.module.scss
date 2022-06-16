@@ -14,10 +14,11 @@
     border: 1px solid $select-color;
     padding: 6px 12px;
     border-radius: 0;
+  }
 
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.4;
-    }
+  &:disabled {
+    background-color: $text-muted;
+    cursor: not-allowed;
+    opacity: 0.4;
   }
 }

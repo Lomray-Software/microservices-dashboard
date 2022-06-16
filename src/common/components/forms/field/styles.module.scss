@@ -27,4 +27,10 @@
   .wrapperInput {
     position: relative;
   }
+
+  .wrapperErrorMessage {
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+  }
 }

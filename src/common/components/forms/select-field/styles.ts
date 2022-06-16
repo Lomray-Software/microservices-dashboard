@@ -53,6 +53,11 @@ const colourStyles: StylesConfig = {
       ...styles[':active'],
       backgroundColor: '#8f5fe8',
     },
+
+    ':hover': {
+      ...styles[':hover'],
+      backgroundColor: '#8f5fe8',
+    },
   }),
   singleValue: (styles) => ({
     ...styles,
