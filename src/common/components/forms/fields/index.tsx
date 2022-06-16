@@ -1,12 +1,14 @@
 import type { FC } from 'react';
 import React from 'react';
+import i18n from '@services/localization';
+import type { TranslationDictionary } from '@services/localization';
 import Field from '../field';
 import type { ISelectOptions } from '../select-field';
 import SelectField from '../select-field';
 
 export interface IField {
   name: string;
-  title: string;
+  title: TranslationDictionary;
   type?: string;
   options?: ISelectOptions[];
 }
@@ -26,7 +28,7 @@ const Fields: FC<IFields> = ({ fields, isInline }) => (
               key={name}
               options={options}
               name={name}
-              title={title}
+              title={i18n.t(title)}
               isInline={isInline}
             />
           );
@@ -40,8 +42,8 @@ const Fields: FC<IFields> = ({ fields, isInline }) => (
               key={name}
               type={type}
               name={name}
-              title={title}
-              placeholder={title}
+              title={i18n.t(title)}
+              placeholder={i18n.t(title)}
               isInline={isInline}
               {...field}
             />

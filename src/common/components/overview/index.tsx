@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import React from 'react';
 import type { IField } from '@components/forms/fields';
+import i18n from '@services/localization';
 import EntityFields from './entity-fields';
 import styles from './styles.module.scss';
 
@@ -23,7 +24,7 @@ const Overview: FC<IOverview> = ({ data, title }) => (
     {data.map(({ entity, fields }, i) => {
       const result = fields.map(({ name, title: label }) => ({
         value: entity?.[name],
-        label,
+        label: i18n.t(label),
       }));
 
       return <EntityFields key={result[i].label} data={result} />;

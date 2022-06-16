@@ -42,7 +42,7 @@ const Users: SSRComponent<Props> = ({
   const columns: Column<IUser>[] = useMemo(
     () => [
       {
-        Header: 'id',
+        Header: 'Id',
         accessor: 'id',
       },
       {

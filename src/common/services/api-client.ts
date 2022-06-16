@@ -1,7 +1,8 @@
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import JwtDecode from 'jwt-decode';
 import type { JwtPayload } from 'jwt-decode';
+import JwtDecode from 'jwt-decode';
+import { Store } from 'react-notifications-component';
 import Cookies from 'universal-cookie';
 import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_PROD, IS_SERVER } from '@constants/index';
 import waitFor from '@helpers/wait-for';
@@ -201,7 +202,7 @@ class ApiClient {
         const { result } = await this.endpoints.authentication.token.renew(
           {
             refresh,
-            returnType: TokenCreateReturnType.cookies,
+            returnType: IS_PROD ? TokenCreateReturnType.cookies : TokenCreateReturnType.directly,
           },
           { shouldShowErrors: false },
         );
@@ -312,7 +313,24 @@ class ApiClient {
         }
 
         if (shouldShowErrors) {
-          // @TODO show flash message
+          Store.addNotification({
+            title: i18n.t('translation:errorTitle'),
+            message: data.error.message,
+            type: 'danger',
+            insert: 'top',
+            container: 'top-right',
+            animationIn: ['animate__animated', 'animate__fadeIn'],
+            animationOut: ['animate__animated', 'animate__fadeOut'],
+            dismiss: {
+              duration: 4000,
+              onScreen: true,
+            },
+            slidingExit: {
+              duration: 200,
+              timingFunction: 'ease-out',
+              delay: 0,
+            },
+          });
         }
       }
 
