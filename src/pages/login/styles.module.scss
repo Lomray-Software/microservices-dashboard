@@ -50,7 +50,6 @@
     display: grid;
     grid-template-columns: 405px;
     grid-template-rows: repeat(3, min-content);
-    grid-row-gap: 30px;
     padding-top: 24px;
 
     @include media-breakpoint-down(xs) {

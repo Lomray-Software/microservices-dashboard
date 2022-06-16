@@ -38,7 +38,9 @@ const Field: FC<TProps> = ({ name, title, isInline = false, ...props }) => (
             name={name}
             {...props}
           />
-          <ErrorMessage name={name} />
+          <div className={styles.wrapperErrorMessage}>
+            <ErrorMessage name={name} />
+          </div>
         </div>
       )}
     </DefaultField>
