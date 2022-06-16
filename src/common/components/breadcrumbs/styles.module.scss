@@ -31,7 +31,6 @@
 
     &:last-child {
       pointer-events: none;
-      background-color: $select-color;
       border-radius: 8px;
 
       & .link {
