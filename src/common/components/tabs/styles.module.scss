@@ -27,5 +27,21 @@
     @include media-breakpoint-down(md) {
       grid-column: 1/2;
     }
+
+    .tab {
+      cursor: pointer;
+      transition: all 0.3s ease-in;
+      padding: 8px 16px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      text-decoration: none;
+      @include font-size(16px, $font-weight-medium, $text-secondary);
+
+      &.selected {
+        border-bottom: 1px solid $text-primary;
+        color: $text-primary;
+      }
+    }
   }
 }

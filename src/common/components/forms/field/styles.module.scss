@@ -21,6 +21,7 @@
 
   .description {
     align-self: center;
+    margin-bottom: 25px;
     @include font-size(15px, $font-weight-bold, $text-secondary);
   }
 
