@@ -26,6 +26,4 @@ const userFields: IField[] = [
   { name: 'phone', type: 'phone', title: 'users-page:phone' },
 ];
 
-const tabs = ['overview', 'editProfile', 'changePassword'] as const;
-
-export { userFields, tabs, profileFields };
+export { userFields, profileFields };

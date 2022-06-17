@@ -19,13 +19,36 @@
     grid-template-columns: 1fr;
   }
 
-  .tabs {
+  .head {
     display: flex;
     grid-column: 1/3;
     margin-bottom: 20px;
 
     @include media-breakpoint-down(md) {
       grid-column: 1/2;
+    }
+
+    .headItem {
+      cursor: pointer;
+      transition: all 0.3s ease-in;
+      padding: 8px 16px;
+
+      button {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        text-decoration: none;
+        @include font-size(16px, $font-weight-medium, $text-secondary);
+      }
+
+      &.selected {
+        border-bottom: 1px solid $text-primary;
+
+        button {
+          color: $text-primary;
+        }
+      }
     }
   }
 }
