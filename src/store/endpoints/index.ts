@@ -6,11 +6,19 @@ import type {
   ITokenRenewInput,
   ITokenRenewOutput,
 } from '@store/endpoints/interfaces/authentication/methods/token/renew';
+import type IUserRole from '@store/endpoints/interfaces/authorization/entities/user-role';
 import type IUserRoleMyOutput from '@store/endpoints/interfaces/authorization/methods/user-role/my';
+import type {
+  IUserRoleViewInput,
+  IUserRoleViewOutput,
+} from '@store/endpoints/interfaces/authorization/methods/user-role/view';
+import type ICreate from '@store/endpoints/interfaces/common/create';
 import type IList from '@store/endpoints/interfaces/common/list';
 import type { IQuery } from '@store/endpoints/interfaces/common/query';
+import type IRemove from '@store/endpoints/interfaces/common/remove';
 import type IUpdate from '@store/endpoints/interfaces/common/update';
 import type IView from '@store/endpoints/interfaces/common/view';
+import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type IChangePassword from '@store/endpoints/interfaces/users/methods/user/change-password';
@@ -84,6 +92,15 @@ class Endpoints {
   authorization = {
     userRole: {
       my: this.createHandler<never, IUserRoleMyOutput>('authorization.user-role.my'),
+      view: this.createHandler<IUserRoleViewInput, IUserRoleViewOutput>(
+        'authorization.user-role.view',
+      ),
+      remove: this.createHandler<IQuery<IUserRole>, IRemove<IUserRole>>(
+        'authorization.user-role.remove',
+      ),
+      create: this.createHandler<ICreate<IUserRole>, IView<IUserRole>>(
+        'authorization.user-role.assign',
+      ),
     },
   };
 
@@ -106,6 +123,14 @@ class Endpoints {
     },
     profile: {
       update: this.createHandler<IUpdate<IProfile>, IView<IProfile>>('users.profile.update'),
+    },
+    identityProvider: {
+      list: this.createHandler<IQuery<IIdentityProvider>, IList<IIdentityProvider>>(
+        'users.identity-provider.list',
+      ),
+      remove: this.createHandler<IQuery<IIdentityProvider>, IRemove<IIdentityProvider>>(
+        'users.identity-provider.remove',
+      ),
     },
   };
 }

@@ -1,3 +1,5 @@
+import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
+
 export const WINDOW_OBJ = (typeof window !== 'undefined' ? window : {}) as any;
 
 export const IS_CLIENT = process.env.BUILD_TARGET === 'client';
@@ -23,7 +25,7 @@ export const IS_TRANSLATE = true;
 
 export const DEFAULT_APP_LANGUAGE = 'en';
 
-export const ACCESS_USER_ROLES = ['admin'];
+export const ACCESS_USER_ROLES = [Role.admin];
 
 export const APP_LANGUAGES = IS_TRANSLATE ? ['en', 'ru'] : [DEFAULT_APP_LANGUAGE];
 
