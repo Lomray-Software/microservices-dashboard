@@ -66,15 +66,6 @@ ul {
   position: relative;
 }
 
-// These styles are necessary for correct positioning in the grid, since an inactive element in the flow
-.react-tabs__tab-panel {
-  position: absolute;
-
-  &.react-tabs__tab-panel--selected {
-    position: relative;
-  }
-}
-
 .rnc__notification-title {
   @include font-size(16px, $font-weight-medium, $text-primary);
 }

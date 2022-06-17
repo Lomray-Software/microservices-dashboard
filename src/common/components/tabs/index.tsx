@@ -1,9 +1,8 @@
 import * as queryString from 'querystring';
-import type { ReactElement } from 'react';
+import type { FC, ReactElement } from 'react';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import combineCss from '@helpers/combine-css';
-import type { SSRComponent } from '@interfaces/ssr-component';
 import styles from './styles.module.scss';
 
 interface ITabs {
@@ -16,7 +15,7 @@ interface ITabs {
   >;
 }
 
-const Tabs: SSRComponent<ITabs> = ({ tabs, children }) => {
+const Tabs: FC<ITabs> = ({ tabs, children }) => {
   const history = useHistory();
   const { pathname, search } = useLocation();
 
@@ -33,19 +32,19 @@ const Tabs: SSRComponent<ITabs> = ({ tabs, children }) => {
 
   return (
     <section className={styles.body}>
-      <ul className={styles.head}>
+      <div className={styles.tabs}>
         {Object.keys(tabs).map((tab) => (
-          <li
+          <button
             key={tab}
-            className={combineCss(styles.headItem, active === tab ? styles.selected : '')}>
-            <button type="button" onClick={onSetActiveItem.bind(null, tab)}>
-              {tabs[tab].title}
-            </button>
-          </li>
+            className={combineCss(styles.tab, active === tab ? styles.selected : '')}
+            type="button"
+            onClick={onSetActiveItem.bind(null, tab)}>
+            {tabs[tab].title}
+          </button>
         ))}
-      </ul>
+      </div>
       {children}
-      <article>{Component}</article>
+      <div>{Component}</div>
     </section>
   );
 };
