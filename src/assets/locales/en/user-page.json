@@ -9,5 +9,11 @@
   "reEnterNewPassword": "Re-enter New Password",
   "buttonEditProfile": "Save Change",
   "buttonChangePassword": "Change Password",
-  "userNotFound": "User not found."
+  "userNotFound": "User not found.",
+  "identityProviders": "Identity Providers",
+  "provider": "Provider",
+  "identifier": "Identifier",
+  "type": "Type",
+  "createdAt": "Created At",
+  "updatedAt": "Updated At"
 }

@@ -7,6 +7,7 @@ import Tabs from '@components/tabs';
 import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
+import IdentityProviders from '@pages/user/identity-providers/index.wrapper';
 import i18n from '@services/localization';
 import UserEntity from '@store/entities/user';
 import CardUser from './card-user';
@@ -55,6 +56,11 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
           changePassword: {
             title: i18n.t('user-page:changePassword'),
             Component: <ChangePassword />,
+          },
+          identityProviders: {
+            title: i18n.t('user-page:identityProviders'),
+            Component: <IdentityProviders id={user?.id} />,
+            shouldChildren: false,
           },
         }}>
         <CardUser

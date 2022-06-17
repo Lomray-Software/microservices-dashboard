@@ -60,7 +60,7 @@
       transition: all 0.3s ease;
 
       &:hover {
-        .link {
+        .cell {
           background-color: $black;
           color: $text-primary;
 
@@ -71,7 +71,7 @@
       }
     }
 
-    .link {
+    .cell {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -79,6 +79,7 @@
       width: 100%;
       text-decoration: none;
       text-overflow: clip;
+      cursor: pointer;
       @include font-size(14px, $font-weight-bold, $text-secondary);
     }
   }

@@ -14,9 +14,9 @@ interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEnti
   pageSize: number;
   setPageSize: (count: number) => void;
   onFilter: (name: string, value: string) => void;
-  onRoute: (id: string) => string;
   onSortBy: (sortBy: IJsonQuery<TEntity>['orderBy']) => void;
   count: number;
+  onRoute?: (id: string) => string;
 }
 
 const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX.Element => {
@@ -106,7 +106,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                 {...rowProps}
                 key={rowProps.key}
                 style={{
-                  gridTemplateColumns: `repeat(${columns.length}, 200px)`,
+                  gridTemplateColumns: `repeat(${columns.length}, minmax(200px, 1fr))`,
                 }}>
                 {headerGroup.headers.map((column) => {
                   const cellProps = column.getHeaderProps();
@@ -136,19 +136,21 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                   {...rowProps}
                   key={rowProps.key}
                   style={{
-                    gridTemplateColumns: `repeat(${columns.length}, 200px)`,
+                    gridTemplateColumns: `repeat(${columns.length}, minmax(200px, 1fr))`,
                   }}>
                   {row.cells.map((cell) => {
                     const cellProps = cell.getCellProps();
 
-                    return (
+                    return onRoute ? (
                       <Link
-                        className={styles.link}
+                        className={styles.cell}
                         {...cellProps}
                         key={cellProps.key}
                         to={onRoute(String(row.original.id))}>
                         {cell.render('Cell')}
                       </Link>
+                    ) : (
+                      <div className={styles.cell}>{cell.render('Cell')}</div>
                     );
                   })}
                 </div>

@@ -9,5 +9,11 @@
   "reEnterNewPassword": "Повторно введите новый пароль",
   "buttonEditProfile": "Сохранить изменения",
   "buttonChangePassword": "Изменить пароль",
-  "userNotFound": "Пользователь не найден."
+  "userNotFound": "Пользователь не найден.",
+  "identityProviders": "Методы входа",
+  "provider": "Провайдер",
+  "identifier": "Индификатор",
+  "type": "Тип",
+  "createdAt": "Созданно",
+  "updatedAt": "Обновленно"
 }
