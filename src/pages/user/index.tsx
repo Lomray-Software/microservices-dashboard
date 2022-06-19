@@ -45,8 +45,14 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
                 data={[
                   { fields: userFields, entity: user },
                   { fields: profileFields, entity: user?.profile },
-                ]}
-              />
+                ]}>
+                <CardUser
+                  profile={user?.profile}
+                  firstName={user?.firstName}
+                  lastName={user?.lastName}
+                  email={user?.email}
+                />
+              </Overview>
             ),
           },
           editProfile: {
@@ -59,17 +65,10 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
           },
           identityProviders: {
             title: i18n.t('user-page:identityProviders'),
-            Component: <IdentityProviders id={user?.id} />,
-            shouldChildren: false,
+            Component: <IdentityProviders userId={user?.id} />,
           },
-        }}>
-        <CardUser
-          profile={user?.profile}
-          firstName={user?.firstName}
-          lastName={user?.lastName}
-          email={user?.email}
-        />
-      </Tabs>
+        }}
+      />
     </div>
   );
 };

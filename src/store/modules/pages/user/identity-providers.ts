@@ -136,13 +136,15 @@ class IdentityProviderStore implements IDomain {
   /**
    * Get identities list
    */
-  public async getIdentities(id?: string): Promise<void> {
+  public async getIdentities(userId?: string): Promise<void> {
     const { result, error } = await this.api.users.identityProvider.list({
       query: {
-        userId: id,
         pageSize: this.pageSize,
         page: this.page,
-        where: this.where,
+        where: {
+          ...this.where,
+          userId,
+        },
         orderBy: this.sortBy,
       },
     });

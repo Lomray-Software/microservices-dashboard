@@ -6,3 +6,13 @@
   margin-bottom: 20px;
   @include font-size(18px, $font-weight-bold, $text-primary);
 }
+
+.content {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-column-gap: 20px;
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+  }
+}

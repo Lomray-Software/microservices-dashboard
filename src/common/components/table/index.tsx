@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react';
 import React, { useCallback } from 'react';
 import type { TableOptions } from 'react-table';
 import { usePagination, useTable } from 'react-table';
@@ -17,6 +18,7 @@ interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEnti
   onSortBy: (sortBy: IJsonQuery<TEntity>['orderBy']) => void;
   count: number;
   onRoute?: (id: string) => string;
+  expandComponent?: ReactElement;
 }
 
 const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX.Element => {
@@ -31,6 +33,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     onSortBy,
     setPage,
     onRoute,
+    expandComponent,
   } = props;
 
   const pageCount = Math.ceil(count / pageSize);
@@ -153,6 +156,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                       <div className={styles.cell}>{cell.render('Cell')}</div>
                     );
                   })}
+                  {expandComponent}
                 </div>
               );
             })}

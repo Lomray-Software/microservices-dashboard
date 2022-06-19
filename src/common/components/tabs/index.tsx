@@ -11,19 +11,18 @@ interface ITabs {
     {
       Component: ReactElement;
       title: string;
-      shouldChildren?: boolean;
     }
   >;
 }
 
-const Tabs: FC<ITabs> = ({ tabs, children }) => {
+const Tabs: FC<ITabs> = ({ tabs }) => {
   const history = useHistory();
   const { pathname, search } = useLocation();
 
   const name = new URLSearchParams(search).get('tab');
   const active = name || Object.keys(tabs)[0];
 
-  const { Component, shouldChildren = true } = tabs[active];
+  const { Component } = tabs[active];
 
   const onSetActiveItem = (tab: string) => {
     const query = queryString.stringify({ tab });
@@ -44,8 +43,7 @@ const Tabs: FC<ITabs> = ({ tabs, children }) => {
           </button>
         ))}
       </div>
-      {shouldChildren && children}
-      <div className={shouldChildren ? '' : styles.fullSize}>{Component}</div>
+      {Component}
     </section>
   );
 };

@@ -7,7 +7,7 @@ import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entiti
 import type { StoreProps } from './index.stores';
 
 interface IIdentityProviders {
-  id?: string;
+  userId?: string;
 }
 
 type TProps = StoreProps & IIdentityProviders;
@@ -25,16 +25,16 @@ const IdentityProviders: FC<TProps> = ({
     addSubscribe,
     getIdentities,
   },
-  id,
+  userId,
 }) => {
   const { t } = useTranslation('user-page');
 
   useEffect(() => {
-    void getIdentities(id);
+    void getIdentities(userId);
     const disposer = addSubscribe();
 
     return () => disposer();
-  }, [addSubscribe, getIdentities, id]);
+  }, [addSubscribe, getIdentities, userId]);
 
   const columns: Column<IIdentityProvider>[] = useMemo(
     () => [
@@ -62,6 +62,15 @@ const IdentityProviders: FC<TProps> = ({
     [t],
   );
 
+  const expandComponent = useMemo(
+    () => (
+      <div>
+        <input></input>
+      </div>
+    ),
+    [],
+  );
+
   return (
     <Table<IIdentityProvider>
       page={page}
@@ -73,6 +82,7 @@ const IdentityProviders: FC<TProps> = ({
       count={count}
       columns={columns}
       data={identityProvides}
+      expandComponent={expandComponent}
     />
   );
 };

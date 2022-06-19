@@ -110,7 +110,6 @@ export interface IJsonQuery<TEntity = ObjectLiteral> {
   pageSize?: number;
   relations?: string[] | IJsonQueryRelation[];
   where?: IJsonQueryWhere<TEntity>;
-  userId?: string;
 }
 
 export interface IQuery<TEntity = ObjectLiteral> {

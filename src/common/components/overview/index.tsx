@@ -18,17 +18,22 @@ interface IOverview {
 /**
  * Print entity fields
  */
-const Overview: FC<IOverview> = ({ data, title }) => (
+const Overview: FC<IOverview> = ({ data, title, children }) => (
   <>
     <h3 className={styles.title}>{title}</h3>
-    {data.map(({ entity, fields }, i) => {
-      const result = fields.map(({ name, title: label }) => ({
-        value: entity?.[name],
-        label: i18n.t(label),
-      }));
+    <div className={React.isValidElement(children) ? styles.content : ''}>
+      {children}
+      <div>
+        {data.map(({ entity, fields }, i) => {
+          const result = fields.map(({ name, title: label }) => ({
+            value: entity?.[name],
+            label: i18n.t(label),
+          }));
 
-      return <EntityFields key={result[i].label} data={result} />;
-    })}
+          return <EntityFields key={result[i].label} data={result} />;
+        })}
+      </div>
+    </div>
   </>
 );
 
