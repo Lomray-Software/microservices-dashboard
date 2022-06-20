@@ -1,8 +1,9 @@
 import type { ReactElement } from 'react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import type { TableOptions } from 'react-table';
 import { usePagination, useTable, useExpanded } from 'react-table';
 import Link from '@components/link';
+import combineCss from '@helpers/combine-css';
 import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
 import DefaultFilter from './default-filter';
 import Pagination from './pagination';
@@ -57,9 +58,23 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
       autoResetRowState: true,
       autoResetSortBy: false,
       initialState: { pageSize },
+      defaultColumn: { width: 200 },
     },
     useExpanded,
     usePagination,
+  );
+
+  /**
+   * Create template for columns table
+   * If no values are passed, it creates default templates
+   */
+  const templatesForColumns = useMemo(
+    () =>
+      headerGroups[0].headers.reduce(
+        (acc, { maxWidth, width }) => `${acc}minmax(${String(width)}px, ${String(maxWidth)}px) `,
+        '',
+      ),
+    [headerGroups],
   );
 
   const onChangePageSize = useCallback(
@@ -110,10 +125,10 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
               <div
                 className={styles.head}
                 {...rowProps}
-                key={rowProps.key}
                 style={{
-                  gridTemplateColumns: `repeat(${columns.length}, minmax(200px, 1fr))`,
-                }}>
+                  gridTemplateColumns: templatesForColumns,
+                }}
+                key={rowProps.key}>
                 {headerGroup.headers.map((column) => {
                   const cellProps = column.getHeaderProps();
 
@@ -121,9 +136,11 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                     <div className={styles.headerItem} key={cellProps.key}>
                       <div {...cellProps} className={styles.wrapperSort}>
                         {column.render('Header')}
-                        <SortBy id={column.id} setOrderBy={onSortBy} />
+                        {!column.disableSortBy && <SortBy id={column.id} setOrderBy={onSortBy} />}
                       </div>
-                      <DefaultFilter onFilter={onFilter} name={column.id} />
+                      {!column.disableFilters && (
+                        <DefaultFilter onFilter={onFilter} name={column.id} />
+                      )}
                     </div>
                   );
                 })}
@@ -135,16 +152,17 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
               prepareRow(row);
 
               const rowProps = row.getRowProps();
+              const isExpanded = expanded[row.id];
 
               return (
                 <div
                   role="presentation"
-                  className={styles.row}
+                  className={combineCss(styles.row, isExpanded ? styles.expandedRow : '')}
                   {...rowProps}
                   onClick={toggleRowExpanded.bind(null, row.id, !row.isExpanded)}
                   key={rowProps.key}
                   style={{
-                    gridTemplateColumns: `repeat(${columns.length}, minmax(200px, 1fr))`,
+                    gridTemplateColumns: templatesForColumns,
                   }}>
                   {row.cells.map((cell) => {
                     const cellProps = cell.getCellProps();
@@ -163,7 +181,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                       </div>
                     );
                   })}
-                  {expandComponent && expanded[row.id] && expandComponent(row.id)}
+                  {expandComponent && isExpanded && expandComponent(row.id)}
                 </div>
               );
             })}

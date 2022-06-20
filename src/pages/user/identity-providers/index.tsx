@@ -1,7 +1,10 @@
+import { mdiDelete } from '@mdi/js';
+import Icon from '@mdi/react';
 import type { FC } from 'react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Column } from 'react-table';
+import ButtonPrimary from '@components/button-primary';
 import Overview from '@components/overview';
 import Table from '@components/table';
 import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
@@ -21,6 +24,7 @@ const IdentityProviders: FC<StoreProps> = ({
     setSortBy,
     addSubscribe,
     getIdentities,
+    removeIdentity,
   },
 }) => {
   const { t } = useTranslation('user-page');
@@ -46,8 +50,21 @@ const IdentityProviders: FC<StoreProps> = ({
         Header: t('type'),
         accessor: 'type',
       },
+      {
+        id: 'remove',
+        width: 50,
+        maxWidth: 50,
+        Header: () => null,
+        disableSortBy: true,
+        disableFilters: true,
+        Cell: () => (
+          <ButtonPrimary kind="secondary" onClick={removeIdentity}>
+            <Icon path={mdiDelete} size={1.2} color="#8f5fe8" />
+          </ButtonPrimary>
+        ),
+      },
     ],
-    [t],
+    [removeIdentity, t],
   );
 
   const expandComponent = useCallback(

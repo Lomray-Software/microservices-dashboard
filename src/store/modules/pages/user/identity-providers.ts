@@ -84,6 +84,7 @@ class IdentityProviderStore implements IDomain {
       setPage: action.bound,
       setWhere: action.bound,
       setSortBy: action.bound,
+      removeIdentity: action.bound,
     });
   }
 
@@ -166,6 +167,32 @@ class IdentityProviderStore implements IDomain {
 
     this.setIdentities(list);
     this.setCount(count || 0);
+  }
+
+  /**
+   * Remove identity provider
+   */
+  public async removeIdentity(): Promise<void> {
+    const { result, error } = await this.api.users.identityProvider.remove({
+      query: {
+        pageSize: this.pageSize,
+        page: this.page,
+        where: {
+          ...this.where,
+          userId: this.userPageStore.user?.id,
+        },
+        orderBy: this.sortBy,
+      },
+    });
+
+    if (error || !result?.entities) {
+      return;
+    }
+
+    const { entities, deleted } = result;
+
+    this.setIdentities(entities);
+    this.setCount(this.count - deleted.length || 0);
   }
 
   /**
