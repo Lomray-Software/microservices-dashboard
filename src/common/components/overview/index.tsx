@@ -23,14 +23,14 @@ const Overview: FC<IOverview> = ({ data, title, children }) => (
     <h3 className={styles.title}>{title}</h3>
     <div className={React.isValidElement(children) ? styles.content : ''}>
       {children}
-      <div>
-        {data.map(({ entity, fields }, i) => {
+      <div className={styles.wrapper}>
+        {data.map(({ entity, fields }) => {
           const result = fields.map(({ name, title: label }) => ({
             value: entity?.[name],
             label: i18n.t(label),
           }));
 
-          return <EntityFields key={result[i].label} data={result} />;
+          return <EntityFields key={fields.join('')} data={result} />;
         })}
       </div>
     </div>

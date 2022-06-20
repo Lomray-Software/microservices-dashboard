@@ -15,5 +15,7 @@
   "identifier": "Identifier",
   "type": "Type",
   "createdAt": "Created At",
-  "updatedAt": "Updated At"
+  "updatedAt": "Updated At",
+  "params": "Params",
+  "uid": "Uid"
 }

@@ -1,10 +1,12 @@
 import type { IReactionDisposer } from 'mobx';
 import { action, makeObservable, observable, reaction } from 'mobx';
+import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
 import { IJsonQueryOperator } from '@store/endpoints/interfaces/common/query';
 import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
 import type { IConstructorParams } from '@store/manager';
+import UserPageStore from './index';
 
 type TSortBy = IJsonQuery<IIdentityProvider>['orderBy'];
 type TWhere = IJsonQuery<IIdentityProvider>['where'];
@@ -49,6 +51,12 @@ class IdentityProviderStore implements IDomain {
   public where: TWhere = {};
 
   /**
+   * User page store
+   * @private
+   */
+  private userPageStore: ClassReturnType<typeof UserPageStore>;
+
+  /**
    * @private
    */
   private api: IConstructorParams['endpoints'];
@@ -56,8 +64,9 @@ class IdentityProviderStore implements IDomain {
   /**
    * @constructor
    */
-  constructor({ endpoints }: IConstructorParams) {
+  constructor({ endpoints, storeManager }: IConstructorParams) {
     this.api = endpoints;
+    this.userPageStore = storeManager.getStore(UserPageStore);
 
     makeObservable(this, {
       identityProvides: observable,
@@ -136,14 +145,14 @@ class IdentityProviderStore implements IDomain {
   /**
    * Get identities list
    */
-  public async getIdentities(userId?: string): Promise<void> {
+  public async getIdentities(): Promise<void> {
     const { result, error } = await this.api.users.identityProvider.list({
       query: {
         pageSize: this.pageSize,
         page: this.page,
         where: {
           ...this.where,
-          userId,
+          userId: this.userPageStore.user?.id,
         },
         orderBy: this.sortBy,
       },

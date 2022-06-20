@@ -8,11 +8,34 @@
 }
 
 .content {
+  width: 100%;
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-column-gap: 20px;
 
   @include media-breakpoint-down(md) {
     grid-template-columns: 1fr;
+  }
+
+  .wrapper {
+    display: block;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  @include media-breakpoint-down(lg) {
+    flex-direction: column;
+  }
+
+  @include media-breakpoint-down(md) {
+    flex-direction: row;
+  }
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
   }
 }

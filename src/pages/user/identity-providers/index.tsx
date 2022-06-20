@@ -1,18 +1,15 @@
 import type { FC } from 'react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Column } from 'react-table';
+import Overview from '@components/overview';
 import Table from '@components/table';
 import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
+import { fieldsIdentity, fieldsIdentityParams } from './fields';
 import type { StoreProps } from './index.stores';
+import styles from './styles.module.scss';
 
-interface IIdentityProviders {
-  userId?: string;
-}
-
-type TProps = StoreProps & IIdentityProviders;
-
-const IdentityProviders: FC<TProps> = ({
+const IdentityProviders: FC<StoreProps> = ({
   identityProvider: {
     page,
     pageSize,
@@ -25,16 +22,15 @@ const IdentityProviders: FC<TProps> = ({
     addSubscribe,
     getIdentities,
   },
-  userId,
 }) => {
   const { t } = useTranslation('user-page');
 
   useEffect(() => {
-    void getIdentities(userId);
+    void getIdentities();
     const disposer = addSubscribe();
 
     return () => disposer();
-  }, [addSubscribe, getIdentities, userId]);
+  }, [addSubscribe, getIdentities]);
 
   const columns: Column<IIdentityProvider>[] = useMemo(
     () => [
@@ -50,25 +46,26 @@ const IdentityProviders: FC<TProps> = ({
         Header: t('type'),
         accessor: 'type',
       },
-      {
-        Header: t('createdAt'),
-        accessor: 'createdAt',
-      },
-      {
-        Header: t('updatedAt'),
-        accessor: 'updatedAt',
-      },
     ],
     [t],
   );
 
-  const expandComponent = useMemo(
-    () => (
-      <div>
-        <input></input>
+  const expandComponent = useCallback(
+    (id) => (
+      <div className={styles.expandContainer}>
+        <Overview
+          title={`${t('params')}:`}
+          data={[
+            { fields: fieldsIdentity, entity: identityProvides[id] },
+            {
+              fields: fieldsIdentityParams,
+              entity: identityProvides[id].params,
+            },
+          ]}
+        />
       </div>
     ),
-    [],
+    [identityProvides, t],
   );
 
   return (

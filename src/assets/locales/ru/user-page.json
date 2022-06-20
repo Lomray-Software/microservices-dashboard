@@ -15,5 +15,7 @@
   "identifier": "Индификатор",
   "type": "Тип",
   "createdAt": "Созданно",
-  "updatedAt": "Обновленно"
+  "updatedAt": "Обновленно",
+  "params": "Параметры",
+  "uid": "Uid"
 }

@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import React, { useCallback } from 'react';
 import type { TableOptions } from 'react-table';
-import { usePagination, useTable } from 'react-table';
+import { usePagination, useTable, useExpanded } from 'react-table';
 import Link from '@components/link';
 import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
 import DefaultFilter from './default-filter';
@@ -18,7 +18,7 @@ interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEnti
   onSortBy: (sortBy: IJsonQuery<TEntity>['orderBy']) => void;
   count: number;
   onRoute?: (id: string) => string;
-  expandComponent?: ReactElement;
+  expandComponent?: (id: string) => ReactElement;
 }
 
 const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX.Element => {
@@ -48,6 +48,8 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     nextPage,
     previousPage,
     setPageSize,
+    toggleRowExpanded,
+    state: { expanded },
   } = useTable(
     {
       columns,
@@ -56,6 +58,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
       autoResetSortBy: false,
       initialState: { pageSize },
     },
+    useExpanded,
     usePagination,
   );
 
@@ -135,8 +138,10 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
 
               return (
                 <div
+                  role="presentation"
                   className={styles.row}
                   {...rowProps}
+                  onClick={toggleRowExpanded.bind(null, row.id, !row.isExpanded)}
                   key={rowProps.key}
                   style={{
                     gridTemplateColumns: `repeat(${columns.length}, minmax(200px, 1fr))`,
@@ -153,10 +158,12 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                         {cell.render('Cell')}
                       </Link>
                     ) : (
-                      <div className={styles.cell}>{cell.render('Cell')}</div>
+                      <div className={styles.cell} {...cellProps} key={cellProps.key}>
+                        {cell.render('Cell')}
+                      </div>
                     );
                   })}
-                  {expandComponent}
+                  {expandComponent && expanded[row.id] && expandComponent(row.id)}
                 </div>
               );
             })}

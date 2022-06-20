@@ -65,7 +65,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
           },
           identityProviders: {
             title: i18n.t('user-page:identityProviders'),
-            Component: <IdentityProviders userId={user?.id} />,
+            Component: <IdentityProviders />,
           },
         }}
       />
