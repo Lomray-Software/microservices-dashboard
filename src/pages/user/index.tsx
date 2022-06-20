@@ -43,8 +43,8 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
               <Overview
                 title={t('user-page:overview')}
                 data={[
-                  { fields: userFields, entity: user },
-                  { fields: profileFields, entity: user?.profile },
+                  { fields: userFields, entity: user, key: 'userFields' },
+                  { fields: profileFields, entity: user?.profile, key: 'profileFields' },
                 ]}>
                 <CardUser
                   profile={user?.profile}

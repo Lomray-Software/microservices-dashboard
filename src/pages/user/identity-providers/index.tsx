@@ -73,10 +73,11 @@ const IdentityProviders: FC<StoreProps> = ({
         <Overview
           title={`${t('params')}:`}
           data={[
-            { fields: fieldsIdentity, entity: identityProvides[id] },
+            { fields: fieldsIdentity, entity: identityProvides[id], key: 'fieldsIdentity' },
             {
               fields: fieldsIdentityParams,
               entity: identityProvides[id].params,
+              key: 'fieldsIdentityParams',
             },
           ]}
         />
