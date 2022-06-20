@@ -192,7 +192,7 @@ class IdentityProviderStore implements IDomain {
     );
 
     this.setIdentities(convertedIdentitiesProvider);
-    this.setCount(convertedIdentitiesProvider.length || 0);
+    this.setCount(convertedIdentitiesProvider.length);
   }
 
   /**
