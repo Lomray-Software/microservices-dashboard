@@ -3,7 +3,7 @@ import Icon from '@mdi/react';
 import type { FC } from 'react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Column } from 'react-table';
+import type { Column, Row } from 'react-table';
 import ButtonPrimary from '@components/button-primary';
 import Overview from '@components/overview';
 import Table from '@components/table';
@@ -57,8 +57,10 @@ const IdentityProviders: FC<StoreProps> = ({
         Header: () => null,
         disableSortBy: true,
         disableFilters: true,
-        Cell: () => (
-          <ButtonPrimary kind="secondary" onClick={removeIdentity}>
+        Cell: ({ row }: { row: Row<IIdentityProvider> }) => (
+          <ButtonPrimary
+            kind="secondary"
+            onClick={removeIdentity.bind(null, row.original.provider, row.original.identifier)}>
             <Icon path={mdiDelete} size={1.2} color="#8f5fe8" />
           </ButtonPrimary>
         ),

@@ -172,16 +172,14 @@ class IdentityProviderStore implements IDomain {
   /**
    * Remove identity provider
    */
-  public async removeIdentity(): Promise<void> {
+  public async removeIdentity(provider: string, identifier: string): Promise<void> {
     const { result, error } = await this.api.users.identityProvider.remove({
       query: {
-        pageSize: this.pageSize,
-        page: this.page,
         where: {
-          ...this.where,
           userId: this.userPageStore.user?.id,
+          provider,
+          identifier,
         },
-        orderBy: this.sortBy,
       },
     });
 
@@ -189,10 +187,12 @@ class IdentityProviderStore implements IDomain {
       return;
     }
 
-    const { entities, deleted } = result;
+    const convertedIdentitiesProvider = this.identityProvides.filter(
+      (identity) => identity.provider === provider && identity.identifier === identifier,
+    );
 
-    this.setIdentities(entities);
-    this.setCount(this.count - deleted.length || 0);
+    this.setIdentities(convertedIdentitiesProvider);
+    this.setCount(convertedIdentitiesProvider.length || 0);
   }
 
   /**
