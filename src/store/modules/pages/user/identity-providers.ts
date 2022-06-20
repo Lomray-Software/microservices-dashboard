@@ -21,12 +21,12 @@ class IdentityProviderStore implements IDomain {
   public error: string | null = null;
 
   /**
-   * IdentityProvides
+   * Identity provides
    */
   public identityProvides: IIdentityProvider[] = [];
 
   /**
-   * Users count
+   * Identity provides count
    */
   public count = 0;
 
@@ -41,12 +41,12 @@ class IdentityProviderStore implements IDomain {
   public page = 1;
 
   /**
-   * Sorting conditions for identityProvides
+   * Sorting conditions for identity provides
    */
   public sortBy: TSortBy = {};
 
   /**
-   * Filter for identityProvides
+   * Filter for identity provides
    */
   public where: TWhere = {};
 
@@ -107,7 +107,7 @@ class IdentityProviderStore implements IDomain {
   }
 
   /**
-   * Set sort by for users
+   * Set sort by for identity provides
    */
   public setSortBy(sortBy: TSortBy): void {
     this.sortBy = sortBy;
@@ -115,7 +115,7 @@ class IdentityProviderStore implements IDomain {
   }
 
   /**
-   * Set users count
+   * Set identity provides count
    */
   public setCount(count: number): void {
     this.count = count;
@@ -136,14 +136,14 @@ class IdentityProviderStore implements IDomain {
   }
 
   /**
-   * Set identities
+   * Set identity provides
    */
   public setIdentities(identities: IIdentityProvider[]): void {
     this.identityProvides = identities;
   }
 
   /**
-   * Get identities list
+   * Get identity provides list
    */
   public async getIdentities(): Promise<void> {
     const { result, error } = await this.api.users.identityProvider.list({
