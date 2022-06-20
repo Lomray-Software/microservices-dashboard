@@ -15,7 +15,7 @@ interface ITabs {
   >;
 }
 
-const Tabs: FC<ITabs> = ({ tabs, children }) => {
+const Tabs: FC<ITabs> = ({ tabs }) => {
   const history = useHistory();
   const { pathname, search } = useLocation();
 
@@ -43,8 +43,7 @@ const Tabs: FC<ITabs> = ({ tabs, children }) => {
           </button>
         ))}
       </div>
-      {children}
-      <div>{Component}</div>
+      {Component}
     </section>
   );
 };

@@ -17,18 +17,6 @@
   margin-bottom: 0;
   @include font-size(14px, $font-weight-medium, $text-secondary);
 
-  @include media-breakpoint-down(md) {
-    width: 900px;
-  }
-
-  @include media-breakpoint-down(sm) {
-    width: 700px;
-  }
-
-  @include media-breakpoint-down(xs) {
-    width: 500px;
-  }
-
   .head {
     display: grid;
 
@@ -60,7 +48,7 @@
       transition: all 0.3s ease;
 
       &:hover {
-        .link {
+        .cell {
           background-color: $black;
           color: $text-primary;
 
@@ -69,9 +57,32 @@
           }
         }
       }
+
+      &.expandedRow {
+        & > div:last-child {
+          border: 1px solid $black;
+          border-top: none;
+        }
+
+        .cell {
+          border-top: 1px solid $black;
+        }
+
+        & > :first-child {
+          border-left: 1px solid $black;
+        }
+
+        .cell:nth-last-child(2) {
+          border-right: 1px solid $black;
+        }
+      }
+
+      &:first-child {
+        margin-top: 20px;
+      }
     }
 
-    .link {
+    .cell {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -79,6 +90,7 @@
       width: 100%;
       text-decoration: none;
       text-overflow: clip;
+      cursor: pointer;
       @include font-size(14px, $font-weight-bold, $text-secondary);
     }
   }

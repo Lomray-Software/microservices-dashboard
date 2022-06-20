@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 
 interface IData {
   fields: IField[];
+  key: string;
   entity?: Record<string, any> | null;
 }
 
@@ -18,17 +19,22 @@ interface IOverview {
 /**
  * Print entity fields
  */
-const Overview: FC<IOverview> = ({ data, title }) => (
+const Overview: FC<IOverview> = ({ data, title, children }) => (
   <>
     <h3 className={styles.title}>{title}</h3>
-    {data.map(({ entity, fields }, i) => {
-      const result = fields.map(({ name, title: label }) => ({
-        value: entity?.[name],
-        label: i18n.t(label),
-      }));
+    <div className={React.isValidElement(children) ? styles.content : ''}>
+      {children}
+      <div className={styles.wrapper}>
+        {data.map(({ entity, fields, key }) => {
+          const result = fields.map(({ name, title: label }) => ({
+            value: entity?.[name],
+            label: i18n.t(label),
+          }));
 
-      return <EntityFields key={result[i].label} data={result} />;
-    })}
+          return <EntityFields key={key} data={result} />;
+        })}
+      </div>
+    </div>
   </>
 );
 

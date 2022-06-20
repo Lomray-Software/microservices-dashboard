@@ -13,6 +13,7 @@ import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
 import { userFields, profileFields } from './data';
 import EditProfile from './edit-profile/index.wrapper';
+import IdentityProviders from './identity-providers/index.wrapper';
 import stores from './index.stores';
 import type { StoreProps } from './index.stores';
 
@@ -42,10 +43,16 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
               <Overview
                 title={t('user-page:overview')}
                 data={[
-                  { fields: userFields, entity: user },
-                  { fields: profileFields, entity: user?.profile },
-                ]}
-              />
+                  { fields: userFields, entity: user, key: 'userFields' },
+                  { fields: profileFields, entity: user?.profile, key: 'profileFields' },
+                ]}>
+                <CardUser
+                  profile={user?.profile}
+                  firstName={user?.firstName}
+                  lastName={user?.lastName}
+                  email={user?.email}
+                />
+              </Overview>
             ),
           },
           editProfile: {
@@ -56,14 +63,12 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
             title: i18n.t('user-page:changePassword'),
             Component: <ChangePassword />,
           },
-        }}>
-        <CardUser
-          profile={user?.profile}
-          firstName={user?.firstName}
-          lastName={user?.lastName}
-          email={user?.email}
-        />
-      </Tabs>
+          identityProviders: {
+            title: i18n.t('user-page:identityProviders'),
+            Component: <IdentityProviders />,
+          },
+        }}
+      />
     </div>
   );
 };
