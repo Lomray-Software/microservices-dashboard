@@ -30,7 +30,9 @@ const Overview: FC<IOverview> = ({ data, title, children }) => (
             label: i18n.t(label),
           }));
 
-          return <EntityFields key={fields.join('')} data={result} />;
+          return (
+            <EntityFields key={fields.map(({ title: head }) => head).join('')} data={result} />
+          );
         })}
       </div>
     </div>
