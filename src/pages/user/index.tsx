@@ -7,13 +7,13 @@ import Tabs from '@components/tabs';
 import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
-import IdentityProviders from '@pages/user/identity-providers/index.wrapper';
 import i18n from '@services/localization';
 import UserEntity from '@store/entities/user';
 import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
 import { userFields, profileFields } from './data';
 import EditProfile from './edit-profile/index.wrapper';
+import IdentityProviders from './identity-providers/index.wrapper';
 import stores from './index.stores';
 import type { StoreProps } from './index.stores';
 
