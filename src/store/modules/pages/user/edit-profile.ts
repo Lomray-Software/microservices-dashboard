@@ -18,6 +18,7 @@ export interface IEditProfile {
   firstName: string;
   middleName: string;
   lastName: string;
+  role: string;
   phone: string | null;
   birthDay: string | null;
   gender: string | null;
@@ -63,12 +64,14 @@ class EditUserStore implements IDomain {
     const { firstName, lastName, middleName, phone, profile, username } =
       this.userPageStore.user || {};
     const { birthDay, gender } = profile || {};
+    const { role } = this.userPageStore;
 
     this.initialValues = {
       username: username ?? '',
       firstName: firstName ?? '',
       middleName: middleName ?? '',
       lastName: lastName ?? '',
+      role: role ?? '',
       phone: phone || null,
       birthDay: birthDay || null,
       gender: gender || null,
@@ -96,17 +99,22 @@ class EditUserStore implements IDomain {
 
     const userFields = pick(fields, map(userValue, 'name'));
     const profileFields = pick(fields, map(profileValue, 'name'));
+    const userRole = this.initialValues.role === values.role ? undefined : values.role;
 
-    const [userError, profileError] = await Promise.all([
+    const [userError, profileError, removeUserRoleError, createUserRoleError] = await Promise.all([
       this.userPageStore.updateUser(userFields),
       this.userPageStore.updateProfile(profileFields),
+      this.userPageStore.removeUserRole(userRole),
+      this.userPageStore.createUserRole(userRole),
     ]);
 
     // handle errors
-    if (userError || profileError) {
+    if (userError || profileError || removeUserRoleError || createUserRoleError) {
       return formatValidationError<IEditProfile, IUser & IProfile>([
         userError as IBaseException,
         profileError as IBaseException,
+        removeUserRoleError as IBaseException,
+        createUserRoleError as IBaseException,
       ]);
     }
 

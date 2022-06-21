@@ -31,4 +31,10 @@
   .containerSelect {
     @include font-size(14px, $font-weight-light, $text-primary);
   }
+
+  .wrapperErrorMessage {
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+  }
 }

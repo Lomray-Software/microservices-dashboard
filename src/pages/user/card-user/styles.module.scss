@@ -42,5 +42,14 @@
       font-size: 16px;
     }
   }
+
+  .role {
+    text-align: center;
+    @include font-size(20px, $font-weight-medium, $select-color);
+
+    @include media-breakpoint-down(lg) {
+      font-size: 16px;
+    }
+  }
 }
 

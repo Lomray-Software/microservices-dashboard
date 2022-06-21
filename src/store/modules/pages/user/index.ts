@@ -16,6 +16,11 @@ class UserPageStore implements IDomain {
   public user: IUser | null = null;
 
   /**
+   * User role
+   */
+  public role = '';
+
+  /**
    * @private
    */
   private api: IConstructorParams['endpoints'];
@@ -28,9 +33,12 @@ class UserPageStore implements IDomain {
 
     makeObservable(this, {
       user: observable,
+      role: observable,
       setUser: action.bound,
       getUser: action.bound,
       setProfile: action.bound,
+      setRole: action.bound,
+      getUserRole: action.bound,
     });
   }
 
@@ -39,6 +47,17 @@ class UserPageStore implements IDomain {
    */
   public setUser(user: IUser): void {
     this.user = user;
+  }
+
+  /**
+   * Set user role
+   */
+  public setRole(role: string): void {
+    if (!role) {
+      return;
+    }
+
+    this.role = role;
   }
 
   /**
@@ -57,6 +76,21 @@ class UserPageStore implements IDomain {
     }
 
     this.setUser(result.entity);
+  }
+
+  /**
+   * Get user role
+   */
+  public async getUserRole(id: string): Promise<void> {
+    const { result, error } = await this.api.authorization.userRole.view({
+      userId: id,
+    });
+
+    if (error || !result?.roles) {
+      return;
+    }
+
+    this.setRole(result.roles[0]);
   }
 
   /**
@@ -122,6 +156,48 @@ class UserPageStore implements IDomain {
 
     if (result?.entity) {
       this.setProfile(result.entity);
+    }
+
+    return error;
+  }
+
+  /**
+   * Remove user role
+   */
+  public async removeUserRole(role?: string): Promise<IBaseException | undefined> {
+    if (!role) {
+      return;
+    }
+
+    const { error } = await this.api.authorization.userRole.remove(
+      {
+        query: {
+          where: { userId: this.user?.id },
+        },
+      },
+      { shouldShowErrors: false },
+    );
+
+    return error;
+  }
+
+  /**
+   * Create user role
+   */
+  public async createUserRole(role?: string): Promise<IBaseException | undefined> {
+    if (!role) {
+      return;
+    }
+
+    const { result, error } = await this.api.authorization.userRole.create(
+      {
+        fields: { roleAlias: role, userId: this.user?.id },
+      },
+      { shouldShowErrors: false },
+    );
+
+    if (result?.entity) {
+      this.setRole(result.entity.roleAlias);
     }
 
     return error;

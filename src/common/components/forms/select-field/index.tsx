@@ -46,7 +46,9 @@ const SelectField: FC<ISelectField> = ({ name, options, title, isInline = false 
               placeholder={placeholder?.label}
               className={styles.containerSelect}
             />
-            <ErrorMessage name={name} />
+            <div className={styles.wrapperErrorMessage}>
+              <ErrorMessage name={name} />
+            </div>
           </div>
         );
       }}
