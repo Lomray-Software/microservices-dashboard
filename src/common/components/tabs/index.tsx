@@ -1,4 +1,3 @@
-import * as queryString from 'querystring';
 import type { FC, ReactElement } from 'react';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -17,28 +16,31 @@ interface ITabs {
 
 const Tabs: FC<ITabs> = ({ tabs }) => {
   const history = useHistory();
-  const { pathname, search } = useLocation();
+  const { search } = useLocation();
 
-  const name = new URLSearchParams(search).get('tab');
-  const active = name || Object.keys(tabs)[0];
+  const active = new URLSearchParams(search).get('tab') || Object.keys(tabs)[0];
+  const { Component } = tabs?.[active] ?? tabs[Object.keys(tabs)[0]];
 
-  const { Component } = tabs[active];
+  /**
+   * Select tab
+   */
+  const onSetActiveTab = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const activeTab = e.currentTarget.dataset.id;
+    const query = activeTab && `?tab=${activeTab}`;
 
-  const onSetActiveItem = (tab: string) => {
-    const query = queryString.stringify({ tab });
-
-    history.replace({ pathname, search: query });
+    history.replace({ search: query, state: { silent: true } });
   };
 
   return (
     <section className={styles.body}>
       <div className={styles.tabs}>
-        {Object.keys(tabs).map((tab) => (
+        {Object.keys(tabs).map((tab, i) => (
           <button
             key={tab}
+            data-id={i > 0 ? tab : ''}
             className={combineCss(styles.tab, active === tab ? styles.selected : '')}
             type="button"
-            onClick={onSetActiveItem.bind(null, tab)}>
+            onClick={onSetActiveTab}>
             {tabs[tab].title}
           </button>
         ))}
