@@ -1,11 +1,11 @@
 import type { IField } from '@components/forms/fields';
-import i18n from '@services/localization';
+import type { ISelectOptions } from '@components/forms/select-field';
 
-const genderOptions = [
-  { value: 'male', label: i18n.t('users-page:male') },
-  { value: 'female', label: i18n.t('users-page:female') },
-  { value: 'notKnown', label: i18n.t('users-page:notKnown') },
-  { value: 'notSpecified', label: i18n.t('users-page:notSpecified') },
+const genderOptions: ISelectOptions[] = [
+  { value: 'male', label: 'users-page:male' },
+  { value: 'female', label: 'users-page:female' },
+  { value: 'notKnown', label: 'users-page:notKnown' },
+  { value: 'notSpecified', label: 'users-page:notSpecified' },
 ];
 
 const profileFields: IField[] = [

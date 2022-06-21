@@ -1,6 +1,6 @@
 import map from 'lodash.map';
 import pick from 'lodash.pick';
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
 import shallowDiff from '@helpers/shallow-diff';
@@ -49,15 +49,9 @@ class EditUserStore implements IDomain {
   private userPageStore: ClassReturnType<typeof UserPageStore>;
 
   /**
-   * @private
-   */
-  private api: IConstructorParams['endpoints'];
-
-  /**
    * @constructor
    */
-  constructor({ storeManager, endpoints }: IConstructorParams) {
-    this.api = endpoints;
+  constructor({ storeManager }: IConstructorParams) {
     this.userPageStore = storeManager.getStore(UserPageStore);
 
     const { firstName, lastName, middleName, phone, profile, username } =
@@ -75,8 +69,6 @@ class EditUserStore implements IDomain {
     };
 
     makeObservable(this, {
-      initialValues: observable,
-      save: action.bound,
       setError: action.bound,
     });
   }
@@ -91,7 +83,7 @@ class EditUserStore implements IDomain {
   /**
    * Save user fields
    */
-  public async save(values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> {
+  public save = async (values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> => {
     const fields = shallowDiff(values, this.initialValues);
 
     const userFields = pick(fields, map(userValue, 'name'));
@@ -111,7 +103,7 @@ class EditUserStore implements IDomain {
     }
 
     return true;
-  }
+  };
 }
 
 export default EditUserStore;

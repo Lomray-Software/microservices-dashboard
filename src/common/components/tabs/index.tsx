@@ -27,7 +27,7 @@ const Tabs: FC<ITabs> = ({ tabs }) => {
   const onSetActiveItem = (tab: string) => {
     const query = queryString.stringify({ tab });
 
-    history.push({ pathname, search: query });
+    history.replace({ pathname, search: query });
   };
 
   return (
