@@ -8,7 +8,7 @@ import Fields from '@components/forms/fields';
 import SubmitButton from '@components/forms/submit-button';
 import { handleStateForm } from '@helpers/handle-state-form';
 import type { IEditProfile } from '@store/modules/pages/user/edit-profile';
-import { userFields, profileFields, roleField } from '../data';
+import { userFields, profileFields } from '../data';
 import type { StoreProps } from './index.stores';
 import validationSchema from './validation-schema';
 import styles from './styles.module.scss';
@@ -33,7 +33,7 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
       <h3 className={styles.title}>{t('user-page:editProfile')}</h3>
       <Formik initialValues={initialValues} onSubmit={onSave} validationSchema={validationSchema}>
         <Form className={styles.form}>
-          <Fields fields={[...userFields, ...profileFields, roleField]} isInline />
+          <Fields fields={[...userFields, ...profileFields]} isInline />
           <ErrorMessage>{error}</ErrorMessage>
           <SubmitButton hasLoader isInitialDisabled>
             {t('user-page:buttonEditProfile')}

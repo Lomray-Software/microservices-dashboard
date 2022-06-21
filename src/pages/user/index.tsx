@@ -23,7 +23,7 @@ type Props = StoreProps;
  * Users list page
  * @constructor
  */
-const User: SSRComponent<Props> = ({ userPage: { user, role } }) => {
+const User: SSRComponent<Props> = ({ userPage: { user } }) => {
   const { t } = useTranslation(['user-page', 'users-page', 'menu']);
 
   return (
@@ -51,7 +51,7 @@ const User: SSRComponent<Props> = ({ userPage: { user, role } }) => {
                   firstName={user?.firstName}
                   lastName={user?.lastName}
                   email={user?.email}
-                  userRole={role}
+                  userRole={user?.role}
                 />
               </Overview>
             ),
@@ -74,12 +74,12 @@ const User: SSRComponent<Props> = ({ userPage: { user, role } }) => {
   );
 };
 
-User.getInitialProps = InitialProps(async ({ userPage: { getUser, getUserRole } }, { match }) => {
+User.getInitialProps = InitialProps(async ({ userPage: { getUser } }, { match }) => {
   const {
     params: { id },
   } = match;
 
-  await Promise.all([getUser(id), getUserRole(id)]);
+  await getUser(id);
 }, stores);
 
 export default User;

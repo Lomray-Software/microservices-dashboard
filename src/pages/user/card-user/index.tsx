@@ -9,7 +9,7 @@ interface ICardUser {
   firstName?: IUser['firstName'];
   lastName?: IUser['lastName'];
   email?: IUser['email'];
-  userRole?: string;
+  userRole?: IUser['role'];
 }
 
 const CardUser: FC<ICardUser> = ({ profile, firstName, lastName, email, userRole }) => (

@@ -31,13 +31,12 @@ const userFields: IField[] = [
   { name: 'middleName', title: 'users-page:middleName' },
   { name: 'lastName', title: 'users-page:lastName' },
   { name: 'phone', type: 'phone', title: 'users-page:phone' },
+  {
+    name: 'role',
+    title: 'user-page:role',
+    options: roleOptions,
+    type: 'select',
+  },
 ];
 
-const roleField: IField = {
-  name: 'role',
-  title: 'user-page:role',
-  options: roleOptions,
-  type: 'select',
-};
-
-export { userFields, profileFields, roleField };
+export { userFields, profileFields };

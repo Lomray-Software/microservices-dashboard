@@ -1,3 +1,4 @@
+import type { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import type IProfile from './profile';
 
 /**
@@ -16,6 +17,7 @@ interface IUser {
   deletedAt: string;
   username: string;
   profile: IProfile;
+  role: Role;
 }
 
 export default IUser;

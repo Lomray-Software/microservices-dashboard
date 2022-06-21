@@ -7,6 +7,7 @@ import shallowDiff from '@helpers/shallow-diff';
 import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import { profileFields as profileValue, userFields as userValue } from '@pages/user/data';
+import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
@@ -61,17 +62,16 @@ class EditUserStore implements IDomain {
     this.api = endpoints;
     this.userPageStore = storeManager.getStore(UserPageStore);
 
-    const { firstName, lastName, middleName, phone, profile, username } =
+    const { firstName, lastName, middleName, phone, profile, username, role } =
       this.userPageStore.user || {};
     const { birthDay, gender } = profile || {};
-    const { role } = this.userPageStore;
 
     this.initialValues = {
       username: username ?? '',
       firstName: firstName ?? '',
       middleName: middleName ?? '',
       lastName: lastName ?? '',
-      role: role ?? '',
+      role: role ?? Role.user,
       phone: phone || null,
       birthDay: birthDay || null,
       gender: gender || null,
@@ -99,22 +99,24 @@ class EditUserStore implements IDomain {
 
     const userFields = pick(fields, map(userValue, 'name'));
     const profileFields = pick(fields, map(profileValue, 'name'));
-    const userRole = this.initialValues.role === values.role ? undefined : values.role;
+    const userRole = pick(userFields, 'role');
 
-    const [userError, profileError, removeUserRoleError, createUserRoleError] = await Promise.all([
+    if (userFields.role) {
+      delete userFields.role;
+    }
+
+    const [userError, profileError, updateUserRoleError] = await Promise.all([
       this.userPageStore.updateUser(userFields),
       this.userPageStore.updateProfile(profileFields),
-      this.userPageStore.removeUserRole(userRole),
-      this.userPageStore.createUserRole(userRole),
+      this.userPageStore.updateUserRole(userRole?.role),
     ]);
 
     // handle errors
-    if (userError || profileError || removeUserRoleError || createUserRoleError) {
+    if (userError || profileError || updateUserRoleError) {
       return formatValidationError<IEditProfile, IUser & IProfile>([
         userError as IBaseException,
         profileError as IBaseException,
-        removeUserRoleError as IBaseException,
-        createUserRoleError as IBaseException,
+        updateUserRoleError as IBaseException,
       ]);
     }
 
