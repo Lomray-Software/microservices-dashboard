@@ -1,7 +1,7 @@
 import map from 'lodash.map';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
-import { action, makeObservable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
 import shallowDiff from '@helpers/shallow-diff';
@@ -73,6 +73,7 @@ class EditUserStore implements IDomain {
     };
 
     makeObservable(this, {
+      error: observable,
       setError: action.bound,
     });
   }
@@ -88,6 +89,8 @@ class EditUserStore implements IDomain {
    * Save user fields
    */
   public save = async (values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> => {
+    this.setError(null);
+
     const fields = shallowDiff(values, this.initialValues);
 
     const { role } = pick(fields, map(userValue, 'name'));

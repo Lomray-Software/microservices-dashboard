@@ -157,7 +157,7 @@ class UserPageStore implements IDomain {
       return;
     }
 
-    const { error: removeError } = await this.api.authorization.userRole.remove(
+    await this.api.authorization.userRole.remove(
       {
         query: {
           where: { userId: this.user?.id },
@@ -165,10 +165,6 @@ class UserPageStore implements IDomain {
       },
       { shouldShowErrors: false },
     );
-
-    if (removeError) {
-      return removeError;
-    }
 
     const { result, error } = await this.api.authorization.userRole.create(
       {
