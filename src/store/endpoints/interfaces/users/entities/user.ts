@@ -17,7 +17,7 @@ interface IUser {
   deletedAt: string;
   username: string;
   profile: IProfile;
-  role: Role;
+  role?: Role;
 }
 
 export default IUser;

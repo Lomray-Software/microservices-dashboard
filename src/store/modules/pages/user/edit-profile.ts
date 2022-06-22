@@ -1,4 +1,5 @@
 import map from 'lodash.map';
+import omit from 'lodash.omit';
 import pick from 'lodash.pick';
 import { action, makeObservable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
@@ -89,18 +90,14 @@ class EditUserStore implements IDomain {
   public save = async (values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> => {
     const fields = shallowDiff(values, this.initialValues);
 
-    const userFields = pick(fields, map(userValue, 'name'));
+    const { role } = pick(fields, map(userValue, 'name'));
+    const userFields = pick(omit(fields, ['role']), map(userValue, 'name'));
     const profileFields = pick(fields, map(profileValue, 'name'));
-    const userRole = pick(userFields, 'role');
-
-    if (userFields.role) {
-      delete userFields.role;
-    }
 
     const [userError, profileError, updateUserRoleError] = await Promise.all([
       this.userPageStore.updateUser(userFields),
       this.userPageStore.updateProfile(profileFields),
-      this.userPageStore.updateUserRole(userRole?.role),
+      this.userPageStore.updateUserRole(role),
     ]);
 
     // handle errors
