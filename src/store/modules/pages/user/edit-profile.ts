@@ -57,7 +57,7 @@ class EditUserStore implements IDomain {
   constructor({ storeManager }: IConstructorParams) {
     this.userPageStore = storeManager.getStore(UserPageStore);
 
-    this.setInnitValues();
+    this.setInitValues();
 
     makeObservable(this, {
       error: observable,
@@ -77,7 +77,7 @@ class EditUserStore implements IDomain {
    */
   public save = async (values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> => {
     this.setError(null);
-    this.setInnitValues();
+    this.setInitValues();
 
     const fields = shallowDiff(values, this.initialValues);
 
@@ -104,9 +104,9 @@ class EditUserStore implements IDomain {
   };
 
   /**
-   * Update innit values
+   * Update init values
    */
-  public setInnitValues(): void {
+  public setInitValues(): void {
     const { firstName, lastName, middleName, phone, profile, username, role } =
       this.userPageStore.user || {};
     const { birthDay, gender } = profile || {};
