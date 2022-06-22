@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-type ObjectLiteral = Record<string | symbol, any>;
+type ObjectLiteral = Record<string | symbol | number, any>;
 
 export enum IJsonQueryJunction {
   and = 'and',
@@ -28,6 +28,11 @@ export enum IJsonQueryOperator {
   lessOrEqual = '<=',
 }
 
+export enum IJsonQueryFieldType {
+  text = 'text',
+}
+
+type ToObject<T> = T extends readonly any[] ? T[0] : T;
 type FilterValue = string | number | null;
 type NonEmptyArray<T> = [T, ...T[]];
 type Without<T, TU> = {
@@ -50,29 +55,32 @@ type IJsonQueryOrderField = {
   nulls?: keyof typeof IJsonQueryOrderNulls;
 };
 
-type FilterLess = { [IJsonQueryOperator.less]: FilterValue };
-type FilterLessOrEqual = { [IJsonQueryOperator.lessOrEqual]: FilterValue };
-type FilterGreater = { [IJsonQueryOperator.greater]: FilterValue };
-type FilterGreaterOrEqual = { [IJsonQueryOperator.greaterOrEqual]: FilterValue };
+type FilterOptions = { type?: IJsonQueryFieldType };
+
+type FilterLess = { [IJsonQueryOperator.less]: FilterValue } & FilterOptions;
+type FilterLessOrEqual = { [IJsonQueryOperator.lessOrEqual]: FilterValue } & FilterOptions;
+type FilterGreater = { [IJsonQueryOperator.greater]: FilterValue } & FilterOptions;
+type FilterGreaterOrEqual = { [IJsonQueryOperator.greaterOrEqual]: FilterValue } & FilterOptions;
 
 export type FilterCondition = XOR_MULTIPLE<
   [
     {
       [IJsonQueryOperator.notEqual]: FilterValue;
-    },
+    } & FilterOptions,
     {
       [IJsonQueryOperator.between]: [FilterValue, FilterValue];
       isIncludes?: boolean;
-    },
+    } & FilterOptions,
     {
       [IJsonQueryOperator.like]: string;
-    },
+      insensitive?: boolean;
+    } & FilterOptions,
     {
       [IJsonQueryOperator.in]: NonEmptyArray<FilterValue>;
-    },
+    } & FilterOptions,
     {
       [IJsonQueryOperator.notIn]: NonEmptyArray<FilterValue>;
-    },
+    } & FilterOptions,
     XOR_MULTIPLE<
       [
         FilterLess,
@@ -85,8 +93,20 @@ export type FilterCondition = XOR_MULTIPLE<
   ]
 >;
 
+export type WithRelationFields<
+  TE extends ObjectLiteral,
+  TP extends string | number | symbol,
+> = ToObject<TE[TP]> extends ObjectLiteral
+  ? // @ts-ignore
+    keyof { [PF in keyof ToObject<TE[TP]> as `${TP}.${PF}`]: string }
+  : never;
+
 export type FilterFields<TEntity = ObjectLiteral> = {
-  [field in keyof TEntity]: string | number | null | FilterCondition;
+  [P in keyof TEntity as WithRelationFields<TEntity, P> | P]:
+    | string
+    | number
+    | null
+    | FilterCondition;
 };
 
 export type IJsonQueryWhere<TEntity = ObjectLiteral> =
@@ -108,7 +128,7 @@ export interface IJsonQuery<TEntity = ObjectLiteral> {
   };
   page?: number;
   pageSize?: number;
-  relations?: string[] | IJsonQueryRelation[];
+  relations?: (string | IJsonQueryRelation)[];
   where?: IJsonQueryWhere<TEntity>;
 }
 

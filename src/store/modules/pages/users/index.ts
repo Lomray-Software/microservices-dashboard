@@ -3,7 +3,7 @@ import { action, makeObservable, observable, reaction } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
 import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
-import { IJsonQueryOperator } from '@store/endpoints/interfaces/common/query';
+import { IJsonQueryFieldType, IJsonQueryOperator } from '@store/endpoints/interfaces/common/query';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';
 
@@ -165,7 +165,13 @@ class UsersPageStore implements IDomain {
    */
   public setWhere(name: string, value: string): void {
     this.setPage(1);
-    this.where = { [name]: { [IJsonQueryOperator.like]: `%${value}%` } };
+    this.where = {
+      [name]: {
+        [IJsonQueryOperator.like]: `%${value}%`,
+        insensitive: true,
+        ...(name === 'id' ? { type: IJsonQueryFieldType.text } : {}),
+      },
+    };
   }
 }
 
