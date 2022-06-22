@@ -20,10 +20,14 @@ const EditProfile: FC<StoreProps> = ({ userEdit: { save, initialValues, setError
    * Save user & profile
    */
   const onSave: FormikConfig<IEditProfile>['onSubmit'] = useCallback(
-    async (values, { setErrors }) => {
-      const result = await save(validationSchema().cast(values) as IEditProfile);
+    async (values, formikHelpers) => {
+      const castValues = validationSchema().cast(values) as IEditProfile;
+      const result = await save(castValues);
 
-      handleStateForm(result, setErrors, setError);
+      handleStateForm(result, castValues, {
+        setError,
+        ...formikHelpers,
+      });
     },
     [save, setError],
   );

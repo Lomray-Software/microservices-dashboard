@@ -1,6 +1,5 @@
 import type { IField } from '@components/forms/fields';
 import type { ISelectOptions } from '@components/forms/select-field';
-import i18n from '@services/localization';
 import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 
 const genderOptions: ISelectOptions[] = [
@@ -11,9 +10,9 @@ const genderOptions: ISelectOptions[] = [
 ];
 
 const roleOptions = [
-  { value: Role.admin, label: i18n.t('user-page:admin') },
-  { value: Role.user, label: i18n.t('user-page:user') },
-  { value: Role.guest, label: i18n.t('user-page:guest') },
+  { value: Role.admin, label: 'user-page:admin' },
+  { value: Role.user, label: 'user-page:user' },
+  { value: Role.guest, label: 'user-page:guest' },
 ];
 
 const profileFields: IField[] = [
