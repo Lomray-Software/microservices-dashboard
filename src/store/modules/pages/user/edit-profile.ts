@@ -57,20 +57,7 @@ class EditUserStore implements IDomain {
   constructor({ storeManager }: IConstructorParams) {
     this.userPageStore = storeManager.getStore(UserPageStore);
 
-    const { firstName, lastName, middleName, phone, profile, username, role } =
-      this.userPageStore.user || {};
-    const { birthDay, gender } = profile || {};
-
-    this.initialValues = {
-      username: username ?? '',
-      firstName: firstName ?? '',
-      middleName: middleName ?? '',
-      lastName: lastName ?? '',
-      role: role ?? Role.user,
-      phone: phone || null,
-      birthDay: birthDay || null,
-      gender: gender || null,
-    };
+    this.setInitValues();
 
     makeObservable(this, {
       error: observable,
@@ -90,6 +77,7 @@ class EditUserStore implements IDomain {
    */
   public save = async (values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> => {
     this.setError(null);
+    this.setInitValues();
 
     const fields = shallowDiff(values, this.initialValues);
 
@@ -114,6 +102,27 @@ class EditUserStore implements IDomain {
 
     return true;
   };
+
+  /**
+   * Update init values
+   */
+  public setInitValues(): void {
+    const { firstName, lastName, middleName, phone, profile, username, role } =
+      this.userPageStore.user || {};
+    const { birthDay, gender } = profile || {};
+
+    this.initialValues = {
+      ...this.initialValues,
+      username: username ?? '',
+      firstName: firstName ?? '',
+      middleName: middleName ?? '',
+      lastName: lastName ?? '',
+      role: role ?? Role.user,
+      phone: phone || null,
+      birthDay: birthDay || null,
+      gender: gender || null,
+    };
+  }
 }
 
 export default EditUserStore;
