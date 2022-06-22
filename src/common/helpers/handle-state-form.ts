@@ -1,3 +1,4 @@
+import type { FormikHelpers } from 'formik/dist/types';
 import i18n from 'i18next';
 import { Store } from 'react-notifications-component';
 import ucfirst from '@helpers/ucfirst';
@@ -48,9 +49,15 @@ const formatValidationError = <TFormValue, TResValues>(
  */
 const handleStateForm = <TFormValue>(
   result: IValidationErrors<TFormValue> | boolean,
-  setErrors: (errors: Partial<TFormValue>) => void,
-  setError: (message?: string | null) => void,
+  values: TFormValue,
+  helpers: {
+    setError: (message?: string | null) => void;
+    setErrors: (errors: Partial<TFormValue>) => void;
+    resetForm: FormikHelpers<TFormValue>['resetForm'];
+  },
 ): void => {
+  const { resetForm, setErrors, setError } = helpers;
+
   if (typeof result === 'boolean') {
     Store.addNotification({
       title: translation.t('translation:titleNotification'),
@@ -70,6 +77,8 @@ const handleStateForm = <TFormValue>(
         delay: 0,
       },
     });
+
+    resetForm({ values });
 
     return;
   }

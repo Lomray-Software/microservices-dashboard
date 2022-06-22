@@ -1,11 +1,18 @@
 import type { IField } from '@components/forms/fields';
 import type { ISelectOptions } from '@components/forms/select-field';
+import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 
 const genderOptions: ISelectOptions[] = [
   { value: 'male', label: 'users-page:male' },
   { value: 'female', label: 'users-page:female' },
   { value: 'notKnown', label: 'users-page:notKnown' },
   { value: 'notSpecified', label: 'users-page:notSpecified' },
+];
+
+const roleOptions = [
+  { value: Role.admin, label: 'user-page:admin' },
+  { value: Role.user, label: 'user-page:user' },
+  { value: Role.guest, label: 'user-page:guest' },
 ];
 
 const profileFields: IField[] = [
@@ -24,6 +31,12 @@ const userFields: IField[] = [
   { name: 'middleName', title: 'users-page:middleName' },
   { name: 'lastName', title: 'users-page:lastName' },
   { name: 'phone', type: 'phone', title: 'users-page:phone' },
+  {
+    name: 'role',
+    title: 'user-page:role',
+    options: roleOptions,
+    type: 'select',
+  },
 ];
 
 export { userFields, profileFields };

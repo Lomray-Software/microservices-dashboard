@@ -9,9 +9,10 @@ interface ICardUser {
   firstName?: IUser['firstName'];
   lastName?: IUser['lastName'];
   email?: IUser['email'];
+  userRole?: IUser['role'];
 }
 
-const CardUser: FC<ICardUser> = ({ profile, firstName, lastName, email }) => (
+const CardUser: FC<ICardUser> = ({ profile, firstName, lastName, email, userRole }) => (
   <div className={styles.user}>
     <div className={styles.wrapperImage}>
       <img className={styles.img} src={User.getAvatar(profile)} alt="user-avatar" />
@@ -21,6 +22,7 @@ const CardUser: FC<ICardUser> = ({ profile, firstName, lastName, email }) => (
       <span>{lastName}</span>
     </p>
     <span className={styles.email}>{email}</span>
+    <span className={styles.role}>{userRole}</span>
   </div>
 );
 

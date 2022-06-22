@@ -1,6 +1,7 @@
 import isEmpty from 'lodash.isempty';
 import { action, makeObservable, observable } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
+import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
@@ -31,6 +32,8 @@ class UserPageStore implements IDomain {
       setUser: action.bound,
       getUser: action.bound,
       setProfile: action.bound,
+      getUserRole: action.bound,
+      updateUserRole: action.bound,
     });
   }
 
@@ -39,6 +42,21 @@ class UserPageStore implements IDomain {
    */
   public setUser(user: IUser): void {
     this.user = user;
+  }
+
+  /**
+   * Get user role
+   */
+  public async getUserRole(id: string): Promise<Role> {
+    const { result, error } = await this.api.authorization.userRole.view({
+      userId: id,
+    });
+
+    if (error || !result?.roles) {
+      return Role.user;
+    }
+
+    return result?.roles?.[0] ?? Role.user;
   }
 
   /**
@@ -56,7 +74,11 @@ class UserPageStore implements IDomain {
       return;
     }
 
-    this.setUser(result.entity);
+    const { entity } = result;
+
+    entity.role = await this.getUserRole(id);
+
+    this.setUser(entity);
   }
 
   /**
@@ -122,6 +144,41 @@ class UserPageStore implements IDomain {
 
     if (result?.entity) {
       this.setProfile(result.entity);
+    }
+
+    return error;
+  }
+
+  /**
+   * Update user role
+   */
+  public async updateUserRole(role?: Role): Promise<IBaseException | undefined> {
+    if (!role) {
+      return;
+    }
+
+    const { error: removeError } = await this.api.authorization.userRole.remove(
+      {
+        query: {
+          where: { userId: this.user?.id },
+        },
+      },
+      { shouldShowErrors: false },
+    );
+
+    if (removeError) {
+      return removeError;
+    }
+
+    const { result, error } = await this.api.authorization.userRole.create(
+      {
+        fields: { roleAlias: role, userId: this.user?.id },
+      },
+      { shouldShowErrors: false },
+    );
+
+    if (this.user) {
+      this.user.role = result?.entity.roleAlias || Role.user;
     }
 
     return error;

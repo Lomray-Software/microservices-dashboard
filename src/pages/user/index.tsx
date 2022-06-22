@@ -51,6 +51,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
                   firstName={user?.firstName}
                   lastName={user?.lastName}
                   email={user?.email}
+                  userRole={user?.role}
                 />
               </Overview>
             ),

@@ -17,5 +17,9 @@
   "createdAt": "Created At",
   "updatedAt": "Updated At",
   "params": "Params",
-  "uid": "Uid"
+  "uid": "Uid",
+  "role": "Role",
+  "admin": "Admin",
+  "guest": "Guest",
+  "user": "User"
 }
