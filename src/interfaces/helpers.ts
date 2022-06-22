@@ -25,3 +25,5 @@ export type ClassReturnType<T> = T extends new (...args: any) => infer R ? R : n
 export type StoresType<TStores> = {
   [keys in keyof TStores]: ClassReturnType<TStores[keys]>;
 };
+
+export type TCallback = () => void;

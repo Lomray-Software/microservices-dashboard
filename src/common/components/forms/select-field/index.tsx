@@ -4,6 +4,8 @@ import type { FC } from 'react';
 import React from 'react';
 import Select from 'react-select';
 import combineCss from '@helpers/combine-css';
+import i18n from '@services/localization';
+import type { TranslationDictionary } from '@services/localization';
 import ErrorMessage from '../error-message';
 import Label from '../label';
 import colourStyles from './styles';
@@ -11,7 +13,7 @@ import styles from './styles.module.scss';
 
 export interface ISelectOptions {
   value: string | number;
-  label: string;
+  label: string | TranslationDictionary;
 }
 
 interface ISelectField {
@@ -31,7 +33,22 @@ const SelectField: FC<ISelectField> = ({ name, options, title, isInline = false 
     {title && <span className={styles.description}>{title}</span>}
     <DefaultField name={name}>
       {({ field: { value }, form: { setFieldValue }, meta: { initialValue } }: FieldProps) => {
-        const placeholder = options?.find((option) => option.value === value);
+        const { translatedOptions, placeholder } =
+          options?.reduce(
+            (res, option) => {
+              res.translatedOptions.push({
+                ...option,
+                label: i18n.t(option.label as TranslationDictionary),
+              });
+
+              if (option.value === value) {
+                res.placeholder = i18n.t(option.label as TranslationDictionary);
+              }
+
+              return res;
+            },
+            { translatedOptions: [] as ISelectOptions[], placeholder: '' },
+          ) ?? {};
 
         return (
           <div className={styles.wrapperInput}>
@@ -39,11 +56,12 @@ const SelectField: FC<ISelectField> = ({ name, options, title, isInline = false 
               styles={colourStyles}
               isClearable
               isSearchable={false}
-              options={options}
+              options={translatedOptions}
               onChange={(option) => setFieldValue(name, option.value)}
               value={value ?? initialValue ?? ''}
               name={name}
-              placeholder={placeholder?.label}
+              instanceId={name}
+              placeholder={placeholder}
               className={styles.containerSelect}
             />
             <div className={styles.wrapperErrorMessage}>
