@@ -39,7 +39,7 @@ const Pagination: FC<IPagination> = ({
       <Button iconPath={mdiChevronDoubleLeft} isDisabled={1 === page} onClick={onStartPage} />
       <Button iconPath={mdiChevronLeft} isDisabled={1 === page} onClick={onPreviousPage} />
       <ReactPaginate
-        forcePage={page - 1}
+        forcePage={page}
         className={styles.itemPagination}
         nextLabel={null}
         previousLabel={null}
