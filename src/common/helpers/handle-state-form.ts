@@ -78,8 +78,6 @@ const handleStateForm = <TFormValue>(
       },
     });
 
-    console.log(values);
-
     resetForm({ values });
 
     return;
