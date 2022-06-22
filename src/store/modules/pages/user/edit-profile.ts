@@ -89,6 +89,8 @@ class EditUserStore implements IDomain {
    * Save user fields
    */
   public save = async (values: IEditProfile): Promise<true | IValidationErrors<IEditProfile>> => {
+    this.setError(null);
+
     const fields = shallowDiff(values, this.initialValues);
 
     const { role } = pick(fields, map(userValue, 'name'));
@@ -109,8 +111,6 @@ class EditUserStore implements IDomain {
         updateUserRoleError as IBaseException,
       ]);
     }
-
-    this.setError(null);
 
     return true;
   };
