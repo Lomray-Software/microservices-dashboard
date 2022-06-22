@@ -27,7 +27,7 @@ const IdentityProviders: FC<StoreProps> = ({
     removeIdentity,
   },
 }) => {
-  const { t } = useTranslation('user-page');
+  const { t } = useTranslation(['translation', 'user-page']);
 
   useEffect(() => {
     void getIdentities();
@@ -39,22 +39,22 @@ const IdentityProviders: FC<StoreProps> = ({
   const columns: Column<IIdentityProvider>[] = useMemo(
     () => [
       {
-        Header: t('provider'),
+        Header: t('user-page:provider'),
         accessor: 'provider',
       },
       {
-        Header: t('identifier'),
+        Header: t('user-page:identifier'),
         accessor: 'identifier',
       },
       {
-        Header: t('type'),
+        Header: t('user-page:type'),
         accessor: 'type',
       },
       {
         id: 'remove',
         width: 50,
         maxWidth: 50,
-        Header: () => null,
+        Header: () => t('translation:columnActions'),
         disableSortBy: true,
         disableFilters: true,
         Cell: ({ row }: { row: Row<IIdentityProvider> }) => (
@@ -73,7 +73,7 @@ const IdentityProviders: FC<StoreProps> = ({
     (id) => (
       <div className={styles.expandContainer}>
         <Overview
-          title={`${t('params')}:`}
+          title={`${t('user-page:params')}:`}
           data={[
             { fields: fieldsIdentity, entity: identityProvides[id], key: 'fieldsIdentity' },
             {

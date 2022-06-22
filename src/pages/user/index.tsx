@@ -8,14 +8,15 @@ import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
 import i18n from '@services/localization';
+import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import UserEntity from '@store/entities/user';
 import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
-import { userFields, profileFields } from './data';
+import { profileFields, userFields } from './data';
 import EditProfile from './edit-profile/index.wrapper';
 import IdentityProviders from './identity-providers/index.wrapper';
-import stores from './index.stores';
 import type { StoreProps } from './index.stores';
+import stores from './index.stores';
 
 type Props = StoreProps;
 
@@ -51,7 +52,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
                   firstName={user?.firstName}
                   lastName={user?.lastName}
                   email={user?.email}
-                  userRole={user?.role}
+                  userRole={t(`user-page:${user?.role || Role.user}`)}
                 />
               </Overview>
             ),
