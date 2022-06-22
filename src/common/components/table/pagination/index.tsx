@@ -33,27 +33,28 @@ const Pagination: FC<IPagination> = ({
   onLastPage,
   onChangePageSize,
   onNextPage,
-}) => (
-  <div className={styles.pagination}>
-    <div className={styles.buttons}>
-      <Button iconPath={mdiChevronDoubleLeft} isDisabled={1 === page} onClick={onStartPage} />
-      <Button iconPath={mdiChevronLeft} isDisabled={1 === page} onClick={onPreviousPage} />
-      <ReactPaginate
-        forcePage={page}
-        className={styles.itemPagination}
-        nextLabel={null}
-        previousLabel={null}
-        breakLabel="..."
-        pageRangeDisplayed={size}
-        pageCount={count}
-        activeClassName={styles.itemPaginationActive}
-        onPageChange={({ selected }) => handlePagination(selected)}
-      />
-      <Button iconPath={mdiChevronRight} isDisabled={count <= page} onClick={onNextPage} />
-      <Button iconPath={mdiChevronDoubleRight} isDisabled={count <= page} onClick={onLastPage} />
+}) =>
+  count > 1 ? (
+    <div className={styles.pagination}>
+      <div className={styles.buttons}>
+        <Button iconPath={mdiChevronDoubleLeft} isDisabled={1 === page} onClick={onStartPage} />
+        <Button iconPath={mdiChevronLeft} isDisabled={1 === page} onClick={onPreviousPage} />
+        <ReactPaginate
+          forcePage={page}
+          className={styles.itemPagination}
+          nextLabel={null}
+          previousLabel={null}
+          breakLabel="..."
+          pageRangeDisplayed={size}
+          pageCount={count}
+          activeClassName={styles.itemPaginationActive}
+          onPageChange={({ selected }) => handlePagination(selected)}
+        />
+        <Button iconPath={mdiChevronRight} isDisabled={count <= page} onClick={onNextPage} />
+        <Button iconPath={mdiChevronDoubleRight} isDisabled={count <= page} onClick={onLastPage} />
+      </div>
+      <Select pageSize={size} setPageSize={onChangePageSize} />
     </div>
-    <Select pageSize={size} setPageSize={onChangePageSize} />
-  </div>
-);
+  ) : null;
 
 export default Pagination;
