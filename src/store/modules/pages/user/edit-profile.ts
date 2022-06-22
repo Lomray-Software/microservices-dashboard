@@ -103,6 +103,9 @@ class EditUserStore implements IDomain {
     return true;
   };
 
+  /**
+   * Update innit values
+   */
   public setInnitValues(): void {
     const { firstName, lastName, middleName, phone, profile, username, role } =
       this.userPageStore.user || {};
