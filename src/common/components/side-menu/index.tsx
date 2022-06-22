@@ -19,11 +19,19 @@ interface ISideMenu {
 /**
  * Side menu
  */
-const SideMenu: FC<ISideMenu & StoreProps> = ({ appStore: { hasSidebar }, isMobile }) => {
+const SideMenu: FC<ISideMenu & StoreProps> = ({
+  appStore: { hasSidebar },
+  userStore: { isAuth },
+  isMobile,
+}) => {
   const { t } = useTranslation(['menu']);
   const { pathname } = useLocation();
 
   const activeMenuItem = getActiveMenu(pathname);
+
+  if (!isAuth) {
+    return null;
+  }
 
   return (
     <nav

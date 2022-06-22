@@ -5,6 +5,7 @@ import type { match as MatchType } from 'react-router-dom';
 import Layout from '@components/layout';
 import { IS_PWA, IS_SPA } from '@constants/index';
 import type { IAppContext } from '@context/app';
+import Manager from '@store/manager';
 
 type AsyncRouteComponentType = ReturnType<typeof asyncComponent>;
 
@@ -32,7 +33,7 @@ const initSPA = (() => {
       // trigger getInitialProps for fetch app data from backend
       hasSPAInit = true;
       // @ts-ignore
-      const ctx = { match, history, location };
+      const ctx = { match, history, location, storeManager: Manager.instance };
       const fetchApi = async () => {
         // @ts-ignore
         const result = await component.getInitialProps?.(ctx);

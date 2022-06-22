@@ -55,12 +55,19 @@ class Manager {
   private readonly endpoints: IManagerParams['endpoints'];
 
   /**
+   * NODE: Only for SPA
+   * @see initSPA
+   */
+  public static instance: Manager;
+
+  /**
    * @constructor
    */
   constructor({ endpoints, initState, initServerState }: IManagerParams) {
     this.initState = initState || {};
     this.initServerState = initServerState || {};
     this.endpoints = endpoints;
+    Manager.instance = this;
 
     this.endpoints.apiClient.setStoreManager(this);
   }

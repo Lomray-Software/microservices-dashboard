@@ -13,8 +13,15 @@ import combineCss from '@helpers/combine-css';
 import User from './user/index.wrapper';
 import styles from './styles.module.scss';
 
-const Header: FC<StoreProps> = ({ appStore: { toggleSidebar, hasSidebar } }) => {
+const Header: FC<StoreProps> = ({
+  appStore: { toggleSidebar, hasSidebar },
+  userStore: { isAuth },
+}) => {
   const { t } = useTranslation('translation');
+
+  if (!isAuth) {
+    return null;
+  }
 
   return (
     <header className={styles.header}>

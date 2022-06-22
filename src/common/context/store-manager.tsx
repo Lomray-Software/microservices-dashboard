@@ -17,4 +17,4 @@ const StoreManagerProvider: FC<{ storeManager: Manager }> = ({ children, storeMa
 
 const useStoreManagerContext = (): Manager => useContext(StoreManagerContext);
 
-export { StoreManagerProvider, useStoreManagerContext };
+export { StoreManagerProvider, StoreManagerContext, useStoreManagerContext };
