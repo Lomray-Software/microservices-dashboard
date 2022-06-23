@@ -101,18 +101,21 @@ export type WithRelationFields<
     keyof { [PF in keyof ToObject<TE[TP]> as `${TP}.${PF}`]: string }
   : never;
 
+// Get entity keys and keys with relations
+export type TEntityFields<TEntity> = keyof {
+  [P in keyof TEntity as WithRelationFields<TEntity, P> | P]: any;
+};
+
+export type TFieldCondition = string | number | null | FilterCondition;
+
 export type FilterFields<TEntity = ObjectLiteral> = {
-  [P in keyof TEntity as WithRelationFields<TEntity, P> | P]:
-    | string
-    | number
-    | null
-    | FilterCondition;
+  [field in TEntityFields<TEntity>]: TFieldCondition;
 };
 
 export type IJsonQueryWhere<TEntity = ObjectLiteral> =
   | {
-      [IJsonQueryJunction.and]?: NonEmptyArray<IJsonQueryWhere<TEntity>>;
-      [IJsonQueryJunction.or]?: NonEmptyArray<IJsonQueryWhere<TEntity>>;
+      [IJsonQueryJunction.and]?: IJsonQueryWhere<TEntity>[];
+      [IJsonQueryJunction.or]?: IJsonQueryWhere<TEntity>[];
     }
   | FilterFields<Partial<TEntity>>;
 

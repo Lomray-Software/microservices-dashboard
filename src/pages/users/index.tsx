@@ -8,6 +8,7 @@ import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import makeRoute from '@helpers/make-route';
 import type { SSRComponent } from '@interfaces/ssr-component';
+import { IJsonQueryFieldType } from '@store/endpoints/interfaces/common/query';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
@@ -20,15 +21,13 @@ type Props = StoreProps;
  */
 const Users: SSRComponent<Props> = ({
   pageStore: {
-    users,
-    setPageSize,
-    pageSize,
-    setPage,
-    setWhere,
-    count,
-    page,
-    setSortBy,
+    entities,
+    tableState: { page, pageSize, totalCount },
     addSubscribe,
+    setPage,
+    setPageSize,
+    setOrderBy,
+    setFilter,
   },
 }) => {
   const { t } = useTranslation(['users-page', 'menu']);
@@ -44,6 +43,9 @@ const Users: SSRComponent<Props> = ({
       {
         Header: 'Id',
         accessor: 'id',
+        filterParams: {
+          castType: IJsonQueryFieldType.text,
+        },
       },
       {
         Header: t('users-page:firstName'),
@@ -87,14 +89,14 @@ const Users: SSRComponent<Props> = ({
       </Breadcrumbs>
       <Table<IUser>
         columns={columns}
-        data={users}
+        data={entities}
         pageSize={pageSize}
         setPageSize={setPageSize}
         setPage={setPage}
-        onFilter={setWhere}
-        onSortBy={setSortBy}
+        onFilter={setFilter}
+        onSortBy={setOrderBy}
         page={page}
-        count={count}
+        count={totalCount}
         onRoute={makeRoute(ROUTES.USERS)}
       />
     </div>

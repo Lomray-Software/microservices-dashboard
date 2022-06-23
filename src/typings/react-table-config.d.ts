@@ -47,11 +47,14 @@ import type {
   UseSortByInstanceProps,
   UseSortByOptions,
   UseSortByState,
+  UseTableHeaderGroupProps,
 } from 'react-table';
+import type { IJsonQueryFieldType } from '@store/endpoints/interfaces/common/query';
 
 declare module 'react-table' {
   // take this file as-is, or comment out the sections that don't apply to your plugin configuration
 
+  // @ts-ignore
   export interface TableOptions<TD extends Record<string, unknown>>
     extends UseExpandedOptions<TD>,
       UseFiltersOptions<TD>,
@@ -67,12 +70,14 @@ declare module 'react-table' {
       // feature set, this is a safe default.
       Record<string, any> {}
 
+  // @ts-ignore
   export interface Hooks<TD extends Record<string, unknown> = Record<string, unknown>>
     extends UseExpandedHooks<TD>,
       UseGroupByHooks<TD>,
       UseRowSelectHooks<TD>,
       UseSortByHooks<TD> {}
 
+  // @ts-ignore
   export interface TableInstance<TD extends Record<string, unknown> = Record<string, unknown>>
     extends UseColumnOrderInstanceProps<TD>,
       UseExpandedInstanceProps<TD>,
@@ -84,6 +89,7 @@ declare module 'react-table' {
       UseRowStateInstanceProps<TD>,
       UseSortByInstanceProps<TD> {}
 
+  // @ts-ignore
   export interface TableState<TD extends Record<string, unknown> = Record<string, unknown>>
     extends UseColumnOrderState<TD>,
       UseExpandedState<TD>,
@@ -96,6 +102,7 @@ declare module 'react-table' {
       UseRowStateState<TD>,
       UseSortByState<TD> {}
 
+  // @ts-ignore
   export interface ColumnInterface<TD extends Record<string, unknown> = Record<string, unknown>>
     extends UseFiltersColumnOptions<TD>,
       UseGlobalFiltersColumnOptions<TD>,
@@ -103,19 +110,32 @@ declare module 'react-table' {
       UseResizeColumnsColumnOptions<TD>,
       UseSortByColumnOptions<TD> {}
 
+  // @ts-ignore
   export interface ColumnInstance<TD extends Record<string, unknown> = Record<string, unknown>>
     extends UseFiltersColumnProps<TD>,
       UseGroupByColumnProps<TD>,
       UseResizeColumnsColumnProps<TD>,
       UseSortByColumnProps<TD> {}
 
+  // @ts-ignore
   export interface Cell<TD extends Record<string, unknown> = Record<string, unknown>>
     extends UseGroupByCellProps<TD>,
       UseRowStateCellProps<TD> {}
 
+  // @ts-ignore
   export interface Row<TD extends Record<string, unknown> = Record<string, unknown>>
     extends UseExpandedRowProps<TD>,
       UseGroupByRowProps<TD>,
       UseRowSelectRowProps<TD>,
       UseRowStateRowProps<TD> {}
+
+  // @ts-ignore
+  export interface HeaderGroup<D extends Record<string, any>>
+    extends ColumnInstance<D>,
+      UseTableHeaderGroupProps<D> {
+    filterParams?: {
+      type?: 'text' | 'number';
+      castType?: IJsonQueryFieldType;
+    };
+  }
 }

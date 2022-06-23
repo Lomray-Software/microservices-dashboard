@@ -1,6 +1,6 @@
 interface IList<TEntity> {
   list: TEntity[];
-  count?: number;
+  count: number;
 }
 
 export default IList;

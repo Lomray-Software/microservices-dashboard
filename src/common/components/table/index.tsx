@@ -139,7 +139,11 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                         {!column.disableSortBy && <SortBy id={column.id} setOrderBy={onSortBy} />}
                       </div>
                       {!column.disableFilters && (
-                        <DefaultFilter onFilter={onFilter} name={column.id} />
+                        <DefaultFilter
+                          onFilter={onFilter}
+                          name={column.id}
+                          extraParams={column?.filterParams}
+                        />
                       )}
                     </div>
                   );
