@@ -1,7 +1,9 @@
+import type { IRelation } from '@store/endpoints/interfaces/common/query';
+
 /**
  * User profile
  */
-interface IProfile {
+interface IProfile extends IRelation {
   userId: string;
   gender: string;
   photo: string;

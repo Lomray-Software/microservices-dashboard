@@ -93,10 +93,17 @@ export type FilterCondition = XOR_MULTIPLE<
   ]
 >;
 
+/**
+ * Extends relations from this interface
+ */
+export interface IRelation {
+  isRelation?: boolean;
+}
+
 export type WithRelationFields<
   TE extends ObjectLiteral,
   TP extends string | number | symbol,
-> = ToObject<TE[TP]> extends ObjectLiteral
+> = ToObject<TE[TP]> extends IRelation
   ? // @ts-ignore
     keyof { [PF in keyof ToObject<TE[TP]> as `${TP}.${PF}`]: string }
   : never;
