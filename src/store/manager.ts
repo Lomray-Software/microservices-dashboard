@@ -97,7 +97,7 @@ class Manager {
       const initState = this.initServerState[key];
 
       // this need for @see this.toJSON
-      store['serializedKey'] = store.name;
+      store['serializedKey'] = key;
 
       if (initState) {
         Object.assign(newStore, initState);

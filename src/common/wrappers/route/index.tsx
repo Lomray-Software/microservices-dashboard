@@ -30,6 +30,9 @@ const asyncRouteComponent = (
   // attach app context
   AsyncRouteComponent.contextType = AppContext;
 
+  // for pass context when application first loaded, only for SPA
+  AsyncRouteComponent.prototype.spa = {};
+
   /** only ssg mode **/
   // const defaultStaticInitialProps = AsyncRouteComponent.getStaticInitialProps;
   //
@@ -46,7 +49,10 @@ const asyncRouteComponent = (
       location,
       match,
       component: AsyncRouteComponent,
-      setState: this.context.setState,
+      setState: (appContext) => {
+        this.context.setState(appContext);
+        this.spa.context = appContext;
+      },
     });
 
     // detect pass context from getInitialProps
@@ -58,9 +64,11 @@ const asyncRouteComponent = (
   };
 
   AsyncRouteComponent.prototype.componentWillUnmount = function () {
+    const appContext = this.props?.context?.app ?? this?.spa?.context;
+
     // detect pass context from getInitialProps and reset to initial state
-    if (this.props?.context?.app) {
-      const restoredContext = pick(initState, Object.keys(this.props?.context?.app));
+    if (appContext) {
+      const restoredContext = pick(initState, Object.keys(appContext));
 
       this.context.setState(restoredContext);
     }

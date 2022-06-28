@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx';
-import serializedStore from '@common/helpers/serialized-store';
+import { serializedStore } from '@common/helpers/serialized-store';
 import type { IDomain } from '@interfaces/store-type';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';

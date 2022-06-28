@@ -21,7 +21,29 @@ type TSerialized = {
 
 export type TSerializedStore<TSt> = TSt & TSerialized;
 
-const keys = new Map();
+const storesObj = new Map();
+
+/**
+ * Save serialized stores in local storage
+ */
+const saveStoresState = () => {
+  localStorage.setItem(Manager.localStorageKey, JSON.stringify(Object.fromEntries(storesObj)));
+};
+
+/**
+ * Return stores state from local storage
+ */
+const getStoresState = (): Record<string, any> => {
+  try {
+    return JSON.parse(localStorage.getItem(Manager.localStorageKey) || '{}') as Record<string, any>;
+  } catch (e) {
+    return {};
+  }
+};
+
+/**
+ * Restore store state from initial state
+ */
 const wakeup: TSerialized['wakeup'] = (store, { initState, initServerState }) => {
   if (initServerState) {
     Object.assign(store, initServerState);
@@ -29,6 +51,10 @@ const wakeup: TSerialized['wakeup'] = (store, { initState, initServerState }) =>
     Object.assign(store, initState);
   }
 };
+
+/**
+ * Listen store changes
+ */
 const onChangeListener: TSerialized['addOnChangeListener'] = (store, key) => {
   if (IS_SERVER || (!IS_SPA && IS_PROD)) {
     return;
@@ -37,7 +63,8 @@ const onChangeListener: TSerialized['addOnChangeListener'] = (store, key) => {
   reaction(
     () => (store['toJSON']?.() as Record<string, any>) ?? toJS(store),
     () => {
-      localStorage.setItem(key, JSON.stringify(Manager.getObservableProps(store)));
+      storesObj.set(key, Manager.getObservableProps(store));
+      saveStoresState();
     },
   );
 };
@@ -46,11 +73,11 @@ const onChangeListener: TSerialized['addOnChangeListener'] = (store, key) => {
  * Make store serializable
  */
 const serializedStore = <TSt extends TStore>(store: TSt, key: string): TSt => {
-  if (keys.has(key) && keys.get(key) === store) {
+  if (storesObj.has(key)) {
     throw new Error(`Duplicate serializable store key: ${key}`);
   }
 
-  keys.set(key, store);
+  storesObj.set(key, {});
 
   store['serializedKey'] = key;
 
@@ -65,4 +92,4 @@ const serializedStore = <TSt extends TStore>(store: TSt, key: string): TSt => {
   return store;
 };
 
-export default serializedStore;
+export { serializedStore, getStoresState };
