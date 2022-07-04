@@ -127,7 +127,7 @@ class ApiClient {
       return;
     }
 
-    cookies.set(ACCESS_TOKEN_KEY, token);
+    cookies.set(ACCESS_TOKEN_KEY, token, { path: '/' });
   }
 
   /**
@@ -272,6 +272,8 @@ class ApiClient {
       errMessage = i18n.t('translation:noInternetError');
     }
 
+    console.info(e);
+
     return {
       status: response?.status ?? 0,
       code: 0,
@@ -312,7 +314,7 @@ class ApiClient {
           return this.sendRequest(method, params, options);
         }
 
-        if (shouldShowErrors) {
+        if (shouldShowErrors && IS_CLIENT) {
           Store.addNotification({
             title: i18n.t('translation:errorTitle'),
             message: data.error.message,
