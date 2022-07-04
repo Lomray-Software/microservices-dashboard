@@ -22,6 +22,10 @@ import { APP_NAME, BACKGROUND_COLOR, IS_PWA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import { iosIcons, manifestPath } from '@server/config';
 
+/**
+ * @see Manager.toJSON
+ * @constructor
+ */
 function StoreData() {
   const { storeManager } = React.useContext(__AfterContext);
 
