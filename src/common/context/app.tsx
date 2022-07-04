@@ -70,7 +70,10 @@ const useAppContext = (): IAppContext => useContext(AppContext);
 const initAppContext = (() => {
   let hasInitContext = false;
 
-  return (setState: (state: Record<string, any>) => void, context?: Record<string, any>) => {
+  return (
+    setState: (state: Record<string, any>) => void,
+    context?: { app: Partial<IAppContext> },
+  ) => {
     if (!hasInitContext && context?.app) {
       hasInitContext = true;
       setState(context.app);

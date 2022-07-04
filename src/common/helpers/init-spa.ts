@@ -32,11 +32,11 @@ const initSPA = (() => {
     if ((IS_SPA || IS_PWA) && !hasSPAInit) {
       // trigger getInitialProps for fetch app data from backend
       hasSPAInit = true;
-      // @ts-ignore
       const ctx = { match, history, location, storeManager: Manager.instance };
       const fetchApi = async () => {
-        // @ts-ignore
-        const result = await component.getInitialProps?.(ctx);
+        const result: { context?: { app?: Partial<IAppContext> } } | undefined =
+          // @ts-ignore
+          await component.getInitialProps?.(ctx);
 
         // detect pass context from getInitialProps and reset to initial state
         if (result?.context?.app) {

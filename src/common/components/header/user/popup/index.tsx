@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 
 interface IPopup {
   isOpen: boolean;
-  signOut: () => void;
+  signOut: () => Promise<void> | void;
   userId?: string;
 }
 

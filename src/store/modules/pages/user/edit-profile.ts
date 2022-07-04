@@ -81,7 +81,7 @@ class EditUserStore implements IDomain {
 
     const fields = shallowDiff(values, this.initialValues);
 
-    const { role } = pick(fields, map(userValue, 'name'));
+    const { role } = pick(fields, map(userValue, 'name')) as { role?: Role };
     const userFields = pick(omit(fields, ['role']), map(userValue, 'name'));
     const profileFields = pick(fields, map(profileValue, 'name'));
 

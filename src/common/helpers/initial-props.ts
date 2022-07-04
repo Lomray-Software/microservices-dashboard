@@ -1,5 +1,6 @@
 import type { InitialData, Ctx } from '@jaredpalmer/after';
 import type { StoresType } from '@interfaces/helpers';
+import type { IConstructableStore } from '@store/manager';
 
 type InitialPropsReturnParams = { statusCode?: number } & InitialData;
 type InitialPropsReturn = Promise<void> | void | InitialPropsReturnParams;
@@ -15,8 +16,9 @@ const InitialProps =
   ) =>
   (ctx: Ctx<TMatch>): InitialPropsReturn => {
     const { storeManager } = ctx;
+    const map = Object.entries(storesMap) as [string, IConstructableStore][];
 
-    return handler(storeManager.getMapStores(Object.entries(storesMap)) as StoresType<TP>, ctx);
+    return handler(storeManager.getMapStores(map) as StoresType<TP>, ctx);
   };
 
 export default InitialProps;

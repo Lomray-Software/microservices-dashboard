@@ -84,7 +84,7 @@ class Manager {
 
     // restore state for store
     if ('wakeup' in newStore && 'serializedKey' in store) {
-      const key = store['serializedKey'];
+      const key = store['serializedKey'] as string;
       const initServerState = this.initServerState[key];
       const initState = this.initState[key];
 

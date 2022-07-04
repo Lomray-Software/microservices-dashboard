@@ -337,7 +337,7 @@ class ApiClient {
       return data;
     } catch (e) {
       return {
-        error: ApiClient.handleInternalError(e),
+        error: ApiClient.handleInternalError(e as AxiosError),
       };
     }
   }

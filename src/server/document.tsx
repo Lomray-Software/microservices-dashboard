@@ -83,7 +83,7 @@ class Document extends Component<DocumentProps> {
       <I18nextProvider i18n={req.i18n}>
         <StoreManagerProvider storeManager={storeManager}>
           <AppProvider initValue={serverContext}>
-            <Layout initialLanguage={initialLanguage}>
+            <Layout initialI18nStore={{}} initialLanguage={initialLanguage}>
               <After {...props} storeManager={storeManager} />
             </Layout>
           </AppProvider>

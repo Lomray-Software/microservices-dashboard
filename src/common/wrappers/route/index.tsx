@@ -6,6 +6,7 @@ import type { ComponentType, ReactElement } from 'react';
 import React, { useContext, useEffect } from 'react';
 import type { match as MatchType } from 'react-router-dom';
 import { IS_SPA } from '@constants/index';
+import type { IAppContext } from '@context/app';
 import { AppContext, initAppContext, initState } from '@context/app';
 import initSPA from '@helpers/init-spa';
 import PageLoading from '@services/page-loading';
@@ -64,7 +65,7 @@ const asyncRouteComponent = (
   };
 
   AsyncRouteComponent.prototype.componentWillUnmount = function () {
-    const appContext = this.props?.context?.app ?? this?.spa?.context;
+    const appContext: Partial<IAppContext> = this.props?.context?.app ?? this?.spa?.context;
 
     // detect pass context from getInitialProps and reset to initial state
     if (appContext) {
@@ -80,12 +81,17 @@ const asyncRouteComponent = (
     const { Component: ComponentFromState } = this.state;
 
     if (ComponentFromState) {
+      const { isLoading, context } = this.props as {
+        isLoading: boolean;
+        context?: { app: Partial<IAppContext> };
+      };
+
       if (IS_SPA) {
-        initAppContext(this.context.setState, this.props?.context);
+        initAppContext(this.context.setState as IAppContext['setState'], context);
       }
 
-      PageLoading.setLoadingState(this.props.isLoading);
-      ScrollRestoration.setLoadingState(this.props.isLoading);
+      PageLoading.setLoadingState(isLoading);
+      ScrollRestoration.setLoadingState(isLoading);
     }
 
     return render.apply(this) as ReactElement | null;

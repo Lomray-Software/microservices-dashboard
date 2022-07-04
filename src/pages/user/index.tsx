@@ -78,7 +78,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
 User.getInitialProps = InitialProps(async ({ userPage: { getUser } }, { match }) => {
   const {
     params: { id },
-  } = match;
+  } = match as { params: { id: string } };
 
   await getUser(id);
 }, stores);
