@@ -134,7 +134,9 @@ interface IJsonQueryRelation {
 export interface IJsonQuery<TEntity = ObjectLiteral> {
   attributes?: (keyof TEntity)[];
   orderBy?: {
-    [field in keyof TEntity]?: keyof typeof IJsonQueryOrder | IJsonQueryOrderField;
+    [P in keyof TEntity as WithRelationFields<TEntity, P> | P]?:
+      | keyof typeof IJsonQueryOrder
+      | IJsonQueryOrderField;
   };
   page?: number;
   pageSize?: number;
