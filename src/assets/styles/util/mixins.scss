@@ -6,22 +6,22 @@
 }
 
 @mixin font-size($font-size, $font-weight, $color) {
+  color: $color;
   font-size: $font-size;
   font-weight: $font-weight;
-  color: $color;
   @include font-family()
 }
 
 @mixin button($width) {
-  position: relative;
-  width: $width;
-  padding: 16px 32px;
-  text-transform: uppercase;
   background-color: $button-login;
-  outline: none;
   border: none;
   border-radius: 4px;
+  outline: none;
+  padding: 16px 32px;
+  position: relative;
+  text-transform: uppercase;
   transition: all 0.3s ease-in;
+  width: $width;
   @include font-size(14px, $font-weight-light, $white);
 
   &:hover {

@@ -1,6 +1,6 @@
 @import 'src/assets/styles/util/vars';
 @import 'src/assets/styles/util/mixins';
-@import "src/assets/styles/util/media-query";
+@import 'src/assets/styles/util/media-query';
 
 .container {
   background-color: $background-primary;
@@ -12,9 +12,9 @@
 }
 
 .table {
+  margin-bottom: 0;
   padding: 20px;
   width: 100%;
-  margin-bottom: 0;
   @include font-size(14px, $font-weight-medium, $text-secondary);
 
   .head {
@@ -25,27 +25,39 @@
     }
 
     .wrapperSort {
+      align-items: center;
       cursor: auto;
       display: flex;
       justify-content: center;
-      align-items: center;
       margin-bottom: 5px;
 
       .wrapperIconSort {
-        width: 15px;
-        height: 15px;
-        display: flex;
-        justify-content: center;
         align-items: center;
+        display: flex;
+        height: 15px;
+        justify-content: center;
+        width: 15px;
       }
     }
   }
 
   .body {
-    .row {
+    .cell {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+      text-decoration: none;
+      text-overflow: clip;
       width: 100%;
+      @include font-size(14px, $font-weight-bold, $text-secondary);
+    }
+
+    .row {
       display: grid;
       transition: all 0.3s ease;
+      width: 100%;
 
       &:hover {
         .cell {
@@ -64,7 +76,7 @@
           border-top: none;
         }
 
-        .cell {
+        .cell { /* stylelint-disable-line no-descending-specificity */
           border-top: 1px solid $black;
         }
 
@@ -80,18 +92,6 @@
       &:first-child {
         margin-top: 20px;
       }
-    }
-
-    .cell {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
-      width: 100%;
-      text-decoration: none;
-      text-overflow: clip;
-      cursor: pointer;
-      @include font-size(14px, $font-weight-bold, $text-secondary);
     }
   }
 }

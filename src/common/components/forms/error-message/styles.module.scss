@@ -3,9 +3,9 @@
 @import 'src/assets/styles/util/media-query';
 
 .errorMessage {
-  position: absolute;
   bottom: -20px;
   left: 12px;
+  position: absolute;
   white-space: nowrap;
   @include font-size(12px, $font-weight-light, $pink);
 }

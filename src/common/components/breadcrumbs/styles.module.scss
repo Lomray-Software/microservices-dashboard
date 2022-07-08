@@ -1,6 +1,6 @@
 @import 'src/assets/styles/util/vars';
 @import 'src/assets/styles/util/mixins';
-@import "src/assets/styles/util/media-query";
+@import 'src/assets/styles/util/media-query';
 
 .list {
   display: flex;
@@ -9,12 +9,12 @@
   top: -45px;
 
   .link {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
-    user-select: none;
     outline: none;
     text-decoration: none;
+    user-select: none;
     @include font-size(14px, $font-weight-bold, $text-muted);
 
     &:after {
@@ -24,14 +24,14 @@
   }
 
   li {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
     padding: 5px;
 
     &:last-child {
-      pointer-events: none;
       border-radius: 8px;
+      pointer-events: none;
 
       & .link {
         @include font-size(14px, $font-weight-bold, $text-primary);

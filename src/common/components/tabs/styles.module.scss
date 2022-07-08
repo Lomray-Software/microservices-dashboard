@@ -3,11 +3,11 @@
 @import 'src/assets/styles/util/media-query';
 
 .body {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
   background-color: $background-primary;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
 
   @include media-breakpoint-down(lg) {
     grid-column-gap: 10px;
@@ -19,14 +19,14 @@
     overflow-x: scroll;
 
     .tab {
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 0.3s ease-in;
-      padding: 8px 16px;
       background-color: transparent;
       border: none;
+      cursor: pointer;
       outline: none;
+      padding: 8px 16px;
       text-decoration: none;
+      transition: all 0.3s ease-in;
+      white-space: nowrap;
       @include font-size(16px, $font-weight-medium, $text-secondary);
 
       &.selected {

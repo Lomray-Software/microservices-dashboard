@@ -11,15 +11,15 @@
   }
 
   &[data-kind='secondary'] {
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid $select-color;
+    border-radius: 0;
+    cursor: pointer;
     display: flex;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background-color: transparent;
     outline: none;
-    border: 1px solid $select-color;
     padding: 6px 12px;
-    border-radius: 0;
 
     &:disabled {
       background-color: $button-disabled;

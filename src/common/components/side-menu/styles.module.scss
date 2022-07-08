@@ -3,14 +3,14 @@
 @import 'src/assets/styles/util/media-query';
 
 .navigation {
-  width: 255px;
-  height: 100vh;
   background-color: $background-primary;
+  height: 100vh;
   transition: width .1s ease-in;
+  width: 255px;
 
   @include media-breakpoint-down(md) {
-    display: none;
     background-color: $nav-second-bg;
+    display: none;
   }
 
   &.close {
@@ -26,13 +26,13 @@
   }
 
   .title {
-    display: flex;
     align-items: center;
+    display: flex;
     height: 70px;
     letter-spacing: 5px;
-    text-transform: uppercase;
-    text-decoration: none;
     padding-left: 20px;
+    text-decoration: none;
+    text-transform: uppercase;
     @include font-size(24px, $font-weight-bold, $white);
 
     @include media-breakpoint-down(md) {
@@ -44,12 +44,12 @@
     transition: all 0.3s ease-in;
 
     .link {
-      display: flex;
       align-items: center;
-      padding: 13px 0 13px 20px;
-      max-width: 225px;
-      border-top-right-radius: 100px;
       border-bottom-right-radius: 100px;
+      border-top-right-radius: 100px;
+      display: flex;
+      max-width: 225px;
+      padding: 13px 0 13px 20px;
       text-decoration: none;
       @include font-size(15px, $font-weight-medium, $text-secondary);
 
@@ -63,14 +63,14 @@
       }
 
       .round {
-        display: flex;
-        justify-content: center;
         align-items: center;
-        width: 30px;
-        height: 30px;
         background-color: rgba(108, 114, 147, .2);
         border-radius: 50%;
+        display: flex;
+        height: 30px;
+        justify-content: center;
         margin-right: 8px;
+        width: 30px;
       }
     }
 
@@ -80,8 +80,8 @@
   }
 
   .list {
-    padding: 30px 0;
     list-style: none;
+    padding: 30px 0;
 
     @include media-breakpoint-down(md) {
       padding: 0;
@@ -89,8 +89,8 @@
 
     &:before {
       content: attr(aria-label);
-      @include font-size(14px, $font-weight-medium, $text-secondary);
       margin-left: 20px;
+      @include font-size(14px, $font-weight-medium, $text-secondary);
     }
   }
 }

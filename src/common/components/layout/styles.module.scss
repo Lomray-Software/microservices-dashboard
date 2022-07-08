@@ -1,21 +1,21 @@
-@import "src/assets/styles/util/media-query";
+@import 'src/assets/styles/util/media-query';
 
 .wrapper {
-  min-height: 100vh;
+  align-items: start;
   display: grid;
+  grid-template-areas: 'nav header'
+                       'nav main'
+                       'footer footer';
   grid-template-columns: min-content 1fr;
   grid-template-rows: 70px min-content;
-  grid-template-areas: "nav header"
-                       "nav main"
-                       "footer footer";
-  align-items: start;
+  min-height: 100vh;
 
 
   @include media-breakpoint-down(md) {
+    grid-template-areas: 'header'
+                         'main'
+                         'footer';
     grid-template-columns: 1fr;
-    grid-template-areas: "header"
-                         "main"
-                         "footer";
   }
 
   @include media-breakpoint-down(xs) {

@@ -4,15 +4,15 @@
 
 
 .container {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   height: 100vh;
+  justify-content: center;
 }
 
 .wrapper {
-  padding: 50px;
   background-color: $background-primary;
+  padding: 50px;
 
   @include media-breakpoint-down(xs) {
     width: 100%;
@@ -20,9 +20,9 @@
 
   .head {
     display: grid;
+    grid-row-gap: 32px;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, min-content);
-    grid-row-gap: 32px;
 
     .title {
       @include font-size(32px, $font-weight-bold, $white);
@@ -32,8 +32,8 @@
 
     .description {
       display: grid;
-      grid-template-rows: repeat(2, min-content);
       grid-row-gap: 8px;
+      grid-template-rows: repeat(2, min-content);
 
       .welcomeMessage {
         @include font-size(18px, $font-weight-medium, $white);
@@ -46,11 +46,11 @@
   }
 
   .form {
-    position: relative;
     display: grid;
     grid-template-columns: 405px;
     grid-template-rows: repeat(3, min-content);
     padding-top: 24px;
+    position: relative;
 
     @include media-breakpoint-down(xs) {
       grid-template-columns: 100%;

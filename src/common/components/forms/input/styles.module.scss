@@ -3,11 +3,11 @@
 @import 'src/assets/styles/util/media-query';
 
 .input {
-  width: 100%;
-  padding: 15px 12px;
   background-color: transparent;
   border: 1px solid $darkslategray;
+  padding: 15px 12px;
   transition: all .2s;
+  width: 100%;
   @include font-size(14px, $font-weight-light, $text-primary);
 
   &::placeholder {
@@ -23,13 +23,12 @@
 
   &:-webkit-autofill,
   &:-webkit-autofill:focus {
+    background-color: transparent !important;
     -webkit-box-shadow: 0 0 0 50px #191c24 inset;
     -webkit-text-fill-color: $input-placeholder-color;
   }
 
-  &:-webkit-autofill,
   &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
     background-color: transparent !important;
   }

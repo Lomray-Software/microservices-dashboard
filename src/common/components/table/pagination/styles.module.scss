@@ -2,22 +2,22 @@
 @import 'src/assets/styles/util/mixins';
 
 .pagination {
+  align-items: start;
   display: grid;
   grid-template-columns: 1fr 60px;
   justify-content: space-between;
-  align-items: start;
   padding: 15px 15px 35px 15px;
 
   .buttons {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
     justify-self: center;
   }
 
   .itemPagination {
-    display: flex;
     cursor: pointer;
+    display: flex;
 
     & > li {
       border: 1px solid $select-color;

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $text-primary: #ffffff;
 $text-secondary: #6c7293;
 
@@ -87,7 +89,7 @@ $popover-arrow-outer-color: $popover-border-color;
 $input-bg: #2A3038;
 $input-border-radius: 2px;
 $input-border-color: $border-color;
-$input-placeholder-color: lighten($input-bg, 15%);
+$input-placeholder-color: color.adjust($input-bg, $lightness: 15%);
 $input-line-height: 1;
 $input-border-active: #2F6036;
 $button-login: #017dd2;
@@ -108,7 +110,7 @@ $dropdown-item-hover-color: $white;
 $dropdown-border-color: $border-color;
 $dropdown-divider-bg: $border-color;
 $dropdown-link-color: $body-color;
-$dropdown-link-hover-bg: darken($card-bg, 3%);
+$dropdown-link-hover-bg: color.adjust($card-bg, $lightness: -3%);
 $dropdown-header-color: $body-color;
 $dropdown-menu-box-shadow: none;
 
@@ -142,7 +144,7 @@ $border-width: 1px;
 // default styles
 $breadcrumb-bg: transparent;
 $breadcrumb-border-color: $border-color;
-$breadcrumb-divider: "/";
+$breadcrumb-divider: '/';
 
 // custom styles
 $breadcrumb-custom-padding-y: 0;
@@ -198,7 +200,7 @@ $nav-tabs-link-bg: $content-bg;
 $nav-tabs-link-color: $body-color;
 $nav-tabs-link-hover-border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-border-color;
 $nav-tabs-link-active-color: $body-color;
-$nav-tabs-link-active-bg: darken($content-bg, 5%);
+$nav-tabs-link-active-bg: color.adjust($content-bg, $lightness: -5%);
 $nav-tabs-link-active-border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-link-active-bg;
 $nav-pills-custom-bg: #8489ab;
 $text-gray: gray;

@@ -4,20 +4,20 @@
 
 .user {
   display: grid;
-  grid-template-rows: 120px repeat(3, min-content);
   grid-row-gap: 10px;
   grid-template-columns: 1fr;
+  grid-template-rows: 120px repeat(3, min-content);
 
   .wrapperImage {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
 
     .img {
-      width: 120px;
+      border-radius: 50%;
       height: 120px;
       object-fit: contain;
-      border-radius: 50%;
+      width: 120px;
     }
   }
 

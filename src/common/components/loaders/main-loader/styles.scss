@@ -1,62 +1,62 @@
 #cube-loader {
-  min-height: 50vh;
   align-items: center;
   display: flex;
   height: 100%;
+  min-height: 50vh;
   width: 100%;
 
   & .caption {
     margin: 0 auto;
   }
 
-  .cube-loader {
-    width: 73px;
+  .cube-loader { /* stylelint-disable-line selector-class-pattern */
     height: 73px;
     margin: 0 auto;
     position: relative;
     transform: rotateZ(45deg);
+    width: 73px;
 
     & .cube {
+      float: left;
+      height: 50%;
       position: relative;
       transform: rotateZ(90deg) scale(1.1);
       width: 50%;
-      height: 50%;
-      float: left;
     }
 
     & .cube:before {
-      content: "";
+      animation: cube-loader 2.76s infinite linear both;
+      background-color: red;
+      content: '';
+      height: 100%;
+      left: 0;
       position: absolute;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: red;
-      animation: cube-loader 2.76s infinite linear both;
       transform-origin: 100% 100%;
+      width: 100%;
     }
 
-    & .loader-2 {
+    & .loader-2 { /* stylelint-disable-line selector-class-pattern */
       transform: scale(1.1) rotateZ(90deg);
     }
 
-    & .loader-3 {
+    & .loader-3 { /* stylelint-disable-line selector-class-pattern */
       transform: scale(1.1) rotateZ(180deg);
     }
 
-    & .loader-4 {
+    & .loader-4 { /* stylelint-disable-line selector-class-pattern */
       transform: scale(1.1) rotateZ(270deg);
     }
 
-    & .loader-2:before {
+    & .loader-2:before { /* stylelint-disable-line selector-class-pattern */
       animation-delay: 0.35s;
     }
 
-    & .loader-3:before {
+    & .loader-3:before { /* stylelint-disable-line selector-class-pattern */
       animation-delay: 0.69s;
     }
 
-    & .loader-4:before {
+    & .loader-4:before { /* stylelint-disable-line selector-class-pattern */
       animation-delay: 1.04s;
     }
   }
@@ -70,17 +70,17 @@
 
 @keyframes cube-loader {
   0%, 10% {
-    transform: perspective(136px) rotateX(-180deg);
     opacity: 0;
+    transform: perspective(136px) rotateX(-180deg);
   }
 
   25%, 75% {
-    transform: perspective(136px) rotateX(0deg);
     opacity: 1;
+    transform: perspective(136px) rotateX(0deg);
   }
 
   90%, 100% {
-    transform: perspective(136px) rotateY(180deg);
     opacity: 0;
+    transform: perspective(136px) rotateY(180deg);
   }
 }

@@ -1,18 +1,18 @@
 @import 'src/assets/styles/util/vars';
 @import 'src/assets/styles/util/mixins';
-@import "src/assets/styles/util/media-query";
+@import 'src/assets/styles/util/media-query';
 
 .header {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 40px 1fr 51px min-content;
-  grid-column-gap: 16px;
   align-items: center;
   background-color: $background-primary;
+  display: grid;
+  grid-column-gap: 16px;
+  grid-template-columns: 40px 1fr 51px min-content;
+  height: 100%;
   padding-left: 15px;
   padding-right: 15px;
+  position: relative;
+  width: 100%;
 
   @include media-breakpoint-down(md) {
     grid-template-columns: 40px min-content 1fr 51px min-content;
@@ -24,34 +24,34 @@
 
   .button {
     align-self: center;
-    justify-self: center;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 15px;
-    height: 15px;
-    outline: none;
     background-color: transparent;
     border: none;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 15px;
+    justify-content: space-around;
+    justify-self: center;
+    outline: none;
+    position: relative;
+    width: 15px;
 
     @include media-breakpoint-down(md) {
       display: none;
     }
 
     .line {
-      width: 100%;
-      height: 2px;
-      border-radius: 8px;
       background-color: $text-secondary;
+      border-radius: 8px;
+      height: 2px;
+      width: 100%;
     }
   }
 
   .logo {
     display: none;
-    text-transform: uppercase;
     text-decoration: none;
+    text-transform: uppercase;
     @include font-size(24px, $font-weight-bold, $white);
 
     @include media-breakpoint-down(md) {
@@ -63,11 +63,11 @@
     width: 100%;
 
     .input {
-      width: 100%;
-      padding: 13px 20px 11px;
+      background-color: transparent;
       border: 1px solid $border-color;
       border-radius: 6px;
-      background-color: transparent;
+      padding: 13px 20px 11px;
+      width: 100%;
       @include font-size(14px, $font-weight-bold, $white);
 
       &:focus {
@@ -85,24 +85,24 @@
   }
 
   .notification {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     height: 35px;
+    justify-content: center;
 
     @include media-breakpoint-down(xs) {
-      grid-row: 2/3;
       grid-column-end: 4;
+      grid-row: 2/3;
       justify-self: end;
     }
   }
 
   .navigationButton {
-    cursor: pointer;
     background-color: transparent;
     border: none;
-    outline: none;
+    cursor: pointer;
     display: none;
+    outline: none;
 
     @include media-breakpoint-down(md) {
       display: flex;
@@ -117,20 +117,20 @@
 
   .wrapperNavigation {
     display: none;
+    left: 0;
     opacity: 0;
     position: absolute;
     top: 70px;
-    left: 0;
-    transition: all 0.3s ease-in-out;
     transform: translateX(-200%);
+    transition: all 0.3s ease-in-out;
 
     @include media-breakpoint-down(md) {
       display: block;
 
       &.wrapperNavigationOpen {
-        z-index: 100;
         opacity: 1;
         transform: translateX(0%);
+        z-index: 100;
       }
     }
 

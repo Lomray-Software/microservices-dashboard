@@ -3,9 +3,9 @@
 @import 'src/assets/styles/util/media-query';
 
 .container {
-  position: relative;
   display: grid;
   grid-template-columns: 1fr;
+  position: relative;
 
   &.containerLine {
     grid-template-columns: minmax(100px, 200px) 1fr;
@@ -30,8 +30,8 @@
   }
 
   .wrapperErrorMessage {
-    min-height: 30px;
-    display: flex;
     align-items: center;
+    display: flex;
+    min-height: 30px;
   }
 }

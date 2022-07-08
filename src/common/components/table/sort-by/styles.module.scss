@@ -1,17 +1,17 @@
 @import 'src/assets/styles/util/vars';
 
 .button {
-  background: transparent;
-  outline: none;
-  border: none;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  margin-left: 5px;
-  transition: all .3s ease;
+  background: transparent;
+  border: none;
   cursor: pointer;
+  display: flex;
+  height: 20px;
+  justify-content: center;
+  margin-left: 5px;
+  outline: none;
+  transition: all .3s ease;
+  width: 20px;
 
   &:hover {
     border: 1px solid $select-color;
