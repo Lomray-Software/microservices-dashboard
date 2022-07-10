@@ -1,3 +1,4 @@
+import { JQFieldType } from '@lomray/microservices-types';
 import { mdiDelete } from '@mdi/js';
 import Icon from '@mdi/react';
 import type { FC } from 'react';
@@ -7,7 +8,6 @@ import type { Column, Row } from 'react-table';
 import ButtonPrimary from '@components/button-primary';
 import Overview from '@components/overview';
 import Table from '@components/table';
-import { IJsonQueryFieldType } from '@store/endpoints/interfaces/common/query';
 import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
 import { fieldsIdentity, fieldsIdentityParams } from './fields';
 import type { StoreProps } from './index.stores';
@@ -41,7 +41,7 @@ const IdentityProviders: FC<StoreProps> = ({
         Header: t('user-page:provider'),
         accessor: 'provider',
         filterParams: {
-          castType: IJsonQueryFieldType.text,
+          castType: JQFieldType.text,
         },
       },
       {

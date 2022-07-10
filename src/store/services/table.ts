@@ -1,16 +1,17 @@
+import type {
+  IJsonQuery,
+  IJsonQueryWhere,
+  TEntityFields,
+  TFieldCondition,
+} from '@lomray/microservices-types';
+import { JQJunction, JQOperator } from '@lomray/microservices-types';
 import type { IReactionDisposer } from 'mobx';
 import { action, makeObservable, observable, reaction } from 'mobx';
 import type { HeaderGroup } from 'react-table';
 import i18n from '@services/localization';
-import type {
-  IJsonQuery,
-  TEntityFields,
-  TFieldCondition,
-} from '@store/endpoints/interfaces/common/query';
-import { IJsonQueryJunction, IJsonQueryOperator } from '@store/endpoints/interfaces/common/query';
 
 export type IRequestReturn<TEntity> =
-  | { count: number; list: TEntity[]; page: number }
+  | { count?: number; list: TEntity[]; page: number }
   | string
   | undefined;
 
@@ -204,7 +205,7 @@ class TableStore<TEntity> {
       const { list, count, page } = result;
 
       this.setPage(page);
-      this.setTotalCount(count);
+      this.setTotalCount(count ?? list.length);
       this.setEntities(list, page > 1);
 
       return result;
@@ -268,7 +269,7 @@ class TableStore<TEntity> {
     const { castType } = extraParams;
 
     return {
-      [IJsonQueryOperator.like]: `%${value}%`,
+      [JQOperator.like]: `%${value}%`,
       insensitive: true,
       ...(castType ? { type: castType } : {}),
     };
@@ -292,7 +293,7 @@ class TableStore<TEntity> {
     );
 
     this.setPage(1);
-    this.tableState.where = { [IJsonQueryJunction.and]: conditions };
+    this.tableState.where = { [JQJunction.and]: conditions } as IJsonQueryWhere<TEntity>;
   }
 }
 

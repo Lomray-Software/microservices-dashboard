@@ -1,10 +1,10 @@
+import type { IJsonQuery } from '@lomray/microservices-types';
 import type { ReactElement } from 'react';
 import React, { useCallback, useMemo } from 'react';
 import type { TableOptions } from 'react-table';
 import { usePagination, useTable, useExpanded } from 'react-table';
 import Link from '@components/link';
 import combineCss from '@helpers/combine-css';
-import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
 import DefaultFilter from './default-filter';
 import Pagination from './pagination';
 import SortBy from './sort-by';

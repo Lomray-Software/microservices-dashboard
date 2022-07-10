@@ -1,3 +1,4 @@
+import type { IBaseException } from '@lomray/microservices-types';
 import map from 'lodash.map';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
@@ -9,7 +10,6 @@ import type { ClassReturnType } from '@interfaces/helpers';
 import type { IDomain } from '@interfaces/store-type';
 import { profileFields as profileValue, userFields as userValue } from '@pages/user/data';
 import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
-import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';

@@ -1,9 +1,9 @@
+import type { IBaseException } from '@lomray/microservices-types';
 import type { FormikHelpers } from 'formik/dist/types';
 import i18n from 'i18next';
 import { Store } from 'react-notifications-component';
 import ucfirst from '@helpers/ucfirst';
 import translation from '@services/localization';
-import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 
 export interface IValidationErrors<TFormValue> {
   fields?: Partial<TFormValue>;

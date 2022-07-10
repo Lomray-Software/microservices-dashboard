@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import type { IQuery, IView, IRemove, IList, IUpdate, ICreate } from '@lomray/microservices-types';
 import type { IApiClientReqOptions } from '@services/api-client';
 import type ApiClient from '@services/api-client';
 import type ICookiesRemoveOutput from '@store/endpoints/interfaces/authentication/methods/cookies/remove';
@@ -12,12 +12,6 @@ import type {
   IUserRoleViewInput,
   IUserRoleViewOutput,
 } from '@store/endpoints/interfaces/authorization/methods/user-role/view';
-import type ICreate from '@store/endpoints/interfaces/common/create';
-import type IList from '@store/endpoints/interfaces/common/list';
-import type { IQuery } from '@store/endpoints/interfaces/common/query';
-import type IRemove from '@store/endpoints/interfaces/common/remove';
-import type IUpdate from '@store/endpoints/interfaces/common/update';
-import type IView from '@store/endpoints/interfaces/common/view';
 import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';

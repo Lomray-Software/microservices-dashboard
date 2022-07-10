@@ -1,8 +1,8 @@
+import type { IBaseException } from '@lomray/microservices-types';
 import isEmpty from 'lodash.isempty';
 import { action, makeObservable, observable } from 'mobx';
 import type { IDomain } from '@interfaces/store-type';
 import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
-import type { IBaseException } from '@store/endpoints/interfaces/common/microservice';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { IConstructorParams } from '@store/manager';

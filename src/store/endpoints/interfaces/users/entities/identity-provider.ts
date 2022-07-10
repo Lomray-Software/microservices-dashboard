@@ -1,3 +1,5 @@
+import type { IEntity } from '@lomray/microservices-types';
+
 enum IdProvider {
   FIREBASE = 'firebase',
 }
@@ -5,7 +7,7 @@ enum IdProvider {
 /**
  * Identity providers
  */
-interface IIdentityProvider {
+interface IIdentityProvider extends IEntity {
   userId: string;
   provider: IdProvider;
   identifier: string;

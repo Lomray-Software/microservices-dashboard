@@ -1,9 +1,9 @@
-import type { IRelation } from '@store/endpoints/interfaces/common/query';
+import type { IEntity } from '@lomray/microservices-types';
 
 /**
  * User profile
  */
-interface IProfile extends IRelation {
+interface IProfile extends IEntity {
   userId: string;
   gender: string;
   photo: string;

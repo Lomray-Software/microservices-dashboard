@@ -1,3 +1,4 @@
+import { JQFieldType } from '@lomray/microservices-types';
 import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +9,6 @@ import ROUTES from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import makeRoute from '@helpers/make-route';
 import type { SSRComponent } from '@interfaces/ssr-component';
-import { IJsonQueryFieldType } from '@store/endpoints/interfaces/common/query';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
@@ -44,7 +44,7 @@ const Users: SSRComponent<Props> = ({
         Header: 'Id',
         accessor: 'id',
         filterParams: {
-          castType: IJsonQueryFieldType.text,
+          castType: JQFieldType.text,
         },
       },
       {

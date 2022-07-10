@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import type { JQFieldType } from '@lomray/microservices-types';
 import type {
   UseColumnOrderInstanceProps,
   UseColumnOrderState,
@@ -49,7 +50,6 @@ import type {
   UseSortByState,
   UseTableHeaderGroupProps,
 } from 'react-table';
-import type { IJsonQueryFieldType } from '@store/endpoints/interfaces/common/query';
 
 declare module 'react-table' {
   // take this file as-is, or comment out the sections that don't apply to your plugin configuration
@@ -135,7 +135,7 @@ declare module 'react-table' {
       UseTableHeaderGroupProps<D> {
     filterParams?: {
       type?: 'text' | 'number';
-      castType?: IJsonQueryFieldType;
+      castType?: JQFieldType;
     };
   }
 }

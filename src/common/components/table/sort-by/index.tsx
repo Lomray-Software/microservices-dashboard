@@ -1,23 +1,23 @@
+import type { IJsonQuery } from '@lomray/microservices-types';
+import { JQOrder } from '@lomray/microservices-types';
 import { mdiSortAscending, mdiSortDescending, mdiSort } from '@mdi/js';
 import Icon from '@mdi/react';
 import isEmpty from 'lodash.isempty';
 import type { FC } from 'react';
 import React, { useCallback, useState } from 'react';
-import type { IJsonQuery } from '@store/endpoints/interfaces/common/query';
-import { IJsonQueryOrder } from '@store/endpoints/interfaces/common/query';
 import styles from './styles.module.scss';
 
 export interface ISortBy {
   id: string;
   setOrderBy: (sortBy: IJsonQuery<Record<string, any>>['orderBy']) => void;
-  initValue?: IJsonQueryOrder;
+  initValue?: JQOrder;
 }
 
 const COLOR_ICON = '#6c7293';
 
 const setOrder = (
   id: string,
-  value: IJsonQueryOrder | undefined,
+  value: JQOrder | undefined,
   handleChange: (sortBy: IJsonQuery<Record<string, any>>['orderBy']) => void,
 ): void => {
   const orderBy = {};
@@ -42,29 +42,29 @@ const setOrder = (
 };
 
 const item = {
-  [IJsonQueryOrder.ASC]: <Icon path={mdiSortDescending} size={1} color={COLOR_ICON} />,
-  [IJsonQueryOrder.DESC]: <Icon path={mdiSortAscending} size={1} color={COLOR_ICON} />,
+  [JQOrder.ASC]: <Icon path={mdiSortDescending} size={1} color={COLOR_ICON} />,
+  [JQOrder.DESC]: <Icon path={mdiSortAscending} size={1} color={COLOR_ICON} />,
 };
 
 const SortBy: FC<ISortBy> = ({ id, initValue, setOrderBy }) => {
   const [value, setValue] = useState(initValue);
 
   const onPress = useCallback(() => {
-    let nextOrder: IJsonQueryOrder | undefined;
+    let nextOrder: JQOrder | undefined;
 
     switch (value) {
-      case IJsonQueryOrder.ASC:
-        nextOrder = IJsonQueryOrder.DESC;
+      case JQOrder.ASC:
+        nextOrder = JQOrder.DESC;
 
         break;
 
-      case IJsonQueryOrder.DESC:
+      case JQOrder.DESC:
         nextOrder = undefined;
 
         break;
 
       case undefined:
-        nextOrder = IJsonQueryOrder.ASC;
+        nextOrder = JQOrder.ASC;
 
         break;
     }
