@@ -69,14 +69,4 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
   );
 };
 
-Login.getInitialProps = () => ({
-  context: {
-    app: {
-      hasHeader: false,
-      hasFooter: false,
-      hasSideMenu: false,
-    },
-  },
-});
-
 export default Login;

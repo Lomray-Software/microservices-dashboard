@@ -1,5 +1,3 @@
-import type { History } from 'history';
-
 /**
  * Manually scroll restoration
  */
@@ -87,18 +85,11 @@ class ScrollRestoration {
   /**
    * Add history push/pop listeners
    */
-  addListeners(history: History): () => void {
+  addListeners(pathname: string): () => void {
     this.enableManualScroll();
 
     // Update current url
-    this.currentPathname = history.location.pathname;
-
-    const unsubscribeHistoryListener = history.listen(({ pathname: newPathName }) => {
-      this.visitedUrl.set(this.currentPathname, this.getScrollPage());
-
-      // Update current url
-      this.currentPathname = newPathName;
-    });
+    this.currentPathname = pathname;
 
     const detectNavigationType = () => (this.isClickNavigation = true);
 
@@ -106,9 +97,18 @@ class ScrollRestoration {
 
     return () => {
       this.disableManualScroll();
-      unsubscribeHistoryListener();
       document.body.removeEventListener('click', detectNavigationType, true);
     };
+  }
+
+  /**
+   * Url changed
+   */
+  handleNavigate(pathname: string): void {
+    this.visitedUrl.set(this.currentPathname, this.getScrollPage());
+
+    // Update current url
+    this.currentPathname = pathname;
   }
 }
 

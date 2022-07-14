@@ -9,10 +9,7 @@ interface IAppContext {
   cookies: Cookies;
   isWebpSupport: boolean;
   domain: string;
-  hasHeader: boolean;
-  hasFooter: boolean;
   hasLoadingBar: boolean;
-  hasSideMenu: boolean;
 }
 
 const initState = {
@@ -26,9 +23,6 @@ const initState = {
       }`
     : '',
   hasLoadingBar: true,
-  hasHeader: true,
-  hasFooter: true,
-  hasSideMenu: true,
 };
 
 /**
@@ -43,11 +37,9 @@ const AppContext = React.createContext(initState);
 const AppProvider: FC<{ initValue?: Partial<IAppContext> }> = ({ children, initValue = {} }) => {
   const [state, setState] = useState({ ...initState, ...initValue });
 
-  const updateState = useCallback(
-    (newState: Parameters<IAppContext['setState']>[0]) =>
-      setState((prevState) => ({ ...prevState, ...newState })),
-    [],
-  );
+  const updateState = useCallback((newState: Parameters<IAppContext['setState']>[0]) => {
+    setState((prevState) => ({ ...prevState, ...newState }));
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -62,23 +54,4 @@ const AppProvider: FC<{ initValue?: Partial<IAppContext> }> = ({ children, initV
 
 const useAppContext = (): IAppContext => useContext(AppContext);
 
-/**
- * SSR & SPA
- * Init App context
- * Only once init context app returned from getInitialProps
- */
-const initAppContext = (() => {
-  let hasInitContext = false;
-
-  return (
-    setState: (state: Record<string, any>) => void,
-    context?: { app: Partial<IAppContext> },
-  ) => {
-    if (!hasInitContext && context?.app) {
-      hasInitContext = true;
-      setState(context.app);
-    }
-  };
-})();
-
-export { AppContext, AppProvider, useAppContext, IAppContext, initState, initAppContext };
+export { AppContext, AppProvider, useAppContext, IAppContext, initState };

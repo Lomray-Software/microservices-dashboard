@@ -28,7 +28,7 @@ const withStore = <T extends Record<string, any>, TS extends Record<string, ICon
   };
 
   hoistNonReactStatics(Element, Component);
-  Element.displayName = `${Component.displayName || Component.name}Store`;
+  Element.displayName = `Mobx(${Component.displayName || Component.name})`;
 
   return Element;
 };

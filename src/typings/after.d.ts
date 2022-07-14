@@ -3,7 +3,7 @@ import type { CtxBase } from '@lomray/after';
 import type { IAppContext } from '@context/app';
 import type Manager from '@store/manager';
 
-declare module '@jaredpalmer/after' {
+declare module '@lomray/after' {
   export interface InitialData {
     context?: {
       app: Partial<Omit<IAppContext, 'setState' | 'cookies'>>;
@@ -22,6 +22,7 @@ declare module '@jaredpalmer/after' {
     storeManager: Manager;
   }
 
+  // @ts-ignore
   export interface Ctx<P> extends CtxBase {
     storeManager: Manager;
   }

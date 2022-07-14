@@ -29,7 +29,7 @@ const Breadcrumbs: FC<IBreadcrumbs> & { Item: typeof BreadcrumbItem } = ({ child
 
   return (
     <ul className={styles.list}>
-      <BreadcrumbItem to={ROUTES.HOME} title={t('home')} />
+      <BreadcrumbItem to={ROUTES.HOME.URL} title={t('home')} />
       {items}
     </ul>
   );

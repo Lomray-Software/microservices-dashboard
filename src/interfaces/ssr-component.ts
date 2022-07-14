@@ -1,5 +1,4 @@
-import type { Ctx, CtxStatic, DocumentgetInitialProps, InitialData } from '@jaredpalmer/after';
-import type { Resource } from 'i18next';
+import type { Ctx, CtxStatic, DocumentgetInitialProps, InitialData } from '@lomray/after';
 import type { FC, ReactNode } from 'react';
 
 /**
@@ -13,8 +12,6 @@ export type SSRComponent<TP = Record<string, any>> = FC<TP & InitialData> & {
 /**
  * Type for layout
  */
-export type SSRLayoutComponent<TP = Record<string, any>> = FC<
-  TP & { children?: ReactNode; initialI18nStore: Resource; initialLanguage: string }
-> & {
+export type SSRLayoutComponent<TP = Record<string, any>> = FC<TP & { children?: ReactNode }> & {
   getInitialProps?: (props: DocumentgetInitialProps) => any;
 };

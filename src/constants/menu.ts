@@ -6,8 +6,11 @@ import ROUTES from '@constants/routes';
  * Automatically works with:
  */
 const MENU = {
-  [ROUTES.HOME]: { titleKey: 'home', icon: { src: mdiChessRook, color: 'orange' } },
-  [ROUTES.USERS]: { titleKey: 'users', icon: { src: mdiAccountCowboyHatOutline, color: 'green' } },
+  [ROUTES.HOME.URL]: { titleKey: 'home', icon: { src: mdiChessRook, color: 'orange' } },
+  [ROUTES.USERS.URL]: {
+    titleKey: 'users',
+    icon: { src: mdiAccountCowboyHatOutline, color: 'green' },
+  },
 } as const;
 
 export type TMenuLinks = keyof typeof MENU;

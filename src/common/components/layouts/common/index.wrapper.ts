@@ -1,5 +1,5 @@
 import withStore from '@wrappers/with-store';
 import stores from './index.stores';
-import Users from './index';
+import Common from './index';
 
-export default withStore(Users, stores);
+export default withStore(Common, stores);

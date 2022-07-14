@@ -8,7 +8,7 @@ import type { StoreProps } from '@components/header/index.stores';
 import Link from '@components/link';
 import SideMenu from '@components/side-menu/index.wrapper';
 import { APP_SHORT_NAME } from '@constants/index';
-import ROUTES from '@constants/routes';
+import ROUTE from '@constants/routes';
 import combineCss from '@helpers/combine-css';
 import User from './user/index.wrapper';
 import styles from './styles.module.scss';
@@ -31,7 +31,7 @@ const Header: FC<StoreProps> = ({
           <span className={styles.line} key={i} />
         ))}
       </button>
-      <Link to={ROUTES.HOME} className={styles.logo}>
+      <Link to={ROUTE.HOME.URL} className={styles.logo}>
         {APP_SHORT_NAME[0]}
       </Link>
       <button className={styles.navigationButton} type="button" onClick={toggleSidebar}>

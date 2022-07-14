@@ -1,16 +1,9 @@
-import type { AsyncRouteableComponent } from '@jaredpalmer/after';
-import { asyncComponent } from '@jaredpalmer/after';
+import type { AsyncRouteProps } from '@lomray/after';
+import { asyncComponent } from '@lomray/after';
 import React from 'react';
-import type { RouteProps } from 'react-router';
 import Loader from '@components/loaders/main-loader';
-import ROUTES from '@constants/routes';
-import NotFound from '@pages/not-found';
-import { asyncRouteComponent, routeComponent } from '@wrappers/route';
-
-type AsyncRouteComponent = ReturnType<typeof asyncComponent>;
-type Route = Omit<RouteProps, 'component'> & {
-  component: AsyncRouteComponent | AsyncRouteableComponent;
-};
+import ROUTE from '@constants/routes';
+import buildRoutes from '@helpers/build-routes';
 
 const asyncRouteProps = {
   Placeholder: () => <Loader />,
@@ -20,51 +13,53 @@ const asyncRouteProps = {
  * For add public links:
  * @see TMenuLinks
  */
-const routes = [
+const routes = buildRoutes([
   {
-    path: ROUTES.HOME,
-    exact: true,
-    component: asyncComponent({
-      loader: () => import('@pages/home/index.wrapper'),
+    path: '/',
+    element: asyncComponent({
+      loader: () => import('@components/layouts/user/index.wrapper'),
       ...asyncRouteProps,
     }),
+    children: [
+      {
+        path: ROUTE.HOME.URL,
+        element: asyncComponent({
+          loader: () => import('@pages/home/index.wrapper'),
+          ...asyncRouteProps,
+        }),
+      },
+      {
+        path: ROUTE.USERS.URL,
+        element: asyncComponent({
+          loader: () => import('@pages/users/index.wrapper'),
+          ...asyncRouteProps,
+        }),
+      },
+      {
+        path: ROUTE.USER.URL,
+        element: asyncComponent({
+          loader: () => import('@pages/user/index.wrapper'),
+          ...asyncRouteProps,
+        }),
+      },
+    ],
   },
   {
-    path: ROUTES.USERS,
-    exact: true,
-    component: asyncComponent({
-      loader: () => import('@pages/users/index.wrapper'),
-      ...asyncRouteProps,
-    }),
-  },
-  {
-    path: `${ROUTES.USERS}/:id`,
-    exact: true,
-    component: asyncComponent({
-      loader: () => import('@pages/user/index.wrapper'),
-      ...asyncRouteProps,
-    }),
-  },
-  {
-    path: ROUTES.SIGN_IN,
-    exact: true,
-    component: asyncComponent({
+    path: ROUTE.SIGN_IN.URL,
+    isOnlyGuest: true,
+    element: asyncComponent({
       loader: () => import('@pages/login/index.wrapper'),
       ...asyncRouteProps,
     }),
   },
   {
-    component: NotFound,
+    path: ROUTE.NOT_FOUND.URL,
+    isPublic: true,
+    element: asyncComponent({
+      loader: () => import('@pages/not-found'),
+      ...asyncRouteProps,
+    }),
   },
-];
+]);
 
-routes.forEach((route: Route) => {
-  if (route.component.hasOwnProperty('getInitialProps')) {
-    // Attach async component wrapper
-    route.component = asyncRouteComponent(route.component as AsyncRouteComponent);
-  } else {
-    route.component = routeComponent(route.component);
-  }
-});
-
-export default routes;
+export default routes as AsyncRouteProps[];

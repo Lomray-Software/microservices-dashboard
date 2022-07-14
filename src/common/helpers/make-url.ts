@@ -1,11 +1,16 @@
-/**
- * combining url fom array of strings
- */
-const makeUrl = (parts: string[]): string => normalizeUrl(parts.join('/'));
+import { generatePath } from 'react-router';
+import ROUTE from '@constants/routes';
+import type { IParams, RouteKeys } from '@interfaces/i-route';
 
 /**
- * removing doubling '/' and from the end of the url
+ * Build full url with params
+ *
+ * E.g.: makeURL('EVENTS_POST', { postId: '123' });
  */
-const normalizeUrl = (url: string): string => url.replace(/([^:]\/)\/+/g, '$1').replace(/\/+$/, '');
+const makeURL = <TKey extends RouteKeys>(routeKey: TKey, params?: IParams<TKey>): string => {
+  const path = ROUTE[routeKey].URL;
 
-export { makeUrl, normalizeUrl };
+  return generatePath(path, params);
+};
+
+export default makeURL;

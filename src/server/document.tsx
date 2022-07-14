@@ -4,7 +4,7 @@ import type {
   DocumentgetInitialProps,
   DocumentProps,
   RenderPageResult,
-} from '@jaredpalmer/after';
+} from '@lomray/after';
 import {
   AfterData,
   AfterRoot,
@@ -12,12 +12,12 @@ import {
   AfterStyles,
   SerializeData,
   __AfterContext,
-} from '@jaredpalmer/after';
+} from '@lomray/after';
 import type { ReactElement } from 'react';
 import React, { Component } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { StoreManagerProvider } from '@common/context/store-manager';
-import Layout from '@components/layout';
+import CommonLayout from '@components/layouts/common/index.wrapper';
 import { APP_NAME, BACKGROUND_COLOR, IS_PWA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import { iosIcons, manifestPath } from '@server/config';
@@ -70,8 +70,8 @@ class Document extends Component<DocumentProps> {
       };
     }
 
-    if (typeof Layout['getInitialProps'] === 'function') {
-      await Layout['getInitialProps'](ctx);
+    if (typeof CommonLayout['getInitialProps'] === 'function') {
+      await CommonLayout['getInitialProps'](ctx);
     }
 
     const serverContext = {
@@ -87,9 +87,9 @@ class Document extends Component<DocumentProps> {
       <I18nextProvider i18n={req.i18n}>
         <StoreManagerProvider storeManager={storeManager}>
           <AppProvider initValue={serverContext}>
-            <Layout initialI18nStore={{}} initialLanguage={initialLanguage}>
+            <CommonLayout initialI18nStore={{}} initialLanguage={initialLanguage}>
               <After {...props} storeManager={storeManager} />
-            </Layout>
+            </CommonLayout>
           </AppProvider>
         </StoreManagerProvider>
       </I18nextProvider>

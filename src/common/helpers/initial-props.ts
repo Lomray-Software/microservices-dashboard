@@ -1,4 +1,4 @@
-import type { InitialData, Ctx } from '@jaredpalmer/after';
+import type { InitialData, Ctx } from '@lomray/after';
 import type { StoresType } from '@interfaces/helpers';
 import type { IConstructableStore } from '@store/manager';
 

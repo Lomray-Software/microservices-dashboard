@@ -1,9 +1,9 @@
 /* eslint-disable unicorn/filename-case */
-import { renderStatic } from '@jaredpalmer/after';
+import { renderStatic } from '@lomray/after';
 import type { Request, Response } from 'express';
 import cookiesMiddleware from 'universal-cookie-express';
 import { SITE_DOMAIN } from '@constants/index';
-import ROUTES from '@constants/routes';
+import ROUTE from '@constants/routes';
 import { getRenderProps } from '@server/config';
 import { applySSGTranslation } from '@server/translation';
 import ApiClient from '@services/api-client';
@@ -54,5 +54,5 @@ export const render: TRender = async (req, res) => {
   res.json({ html, data: { ...(data ?? {}) } });
 };
 
-export const routes = (): string[] => [...Object.values(ROUTES), '/404'];
+export const routes = (): string[] => [...Object.values(ROUTE).map(({ URL }) => URL), '/404'];
 // export const routes = (): string[] => ['/', '/404'];

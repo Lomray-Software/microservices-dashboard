@@ -10,7 +10,7 @@ export interface IBreadcrumbItem {
 
 const BreadcrumbItem: FC<IBreadcrumbItem> = ({ to, title }) => (
   <li>
-    <Link className={styles.link} to={to} href={to}>
+    <Link className={styles.link} to={to}>
       {title}
     </Link>
   </li>

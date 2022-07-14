@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import Link from '@components/link';
 import { APP_SHORT_NAME } from '@constants/index';
 import MENU from '@constants/menu';
-import ROUTES from '@constants/routes';
+import ROUTE from '@constants/routes';
 import combineCss from '@helpers/combine-css';
 import getActiveMenu from '@helpers/get-active-menu';
 import type { StoreProps } from './index.stores';
@@ -40,7 +40,7 @@ const SideMenu: FC<ISideMenu & StoreProps> = ({
         hasSidebar ? styles.close : '',
         isMobile ? styles.mobile : '',
       )}>
-      <Link to={ROUTES.HOME} className={styles.title}>
+      <Link to={ROUTE.HOME.URL} className={styles.title}>
         {!hasSidebar ? APP_SHORT_NAME : APP_SHORT_NAME[0]}
       </Link>
       <ul className={styles.list} aria-label={!hasSidebar ? t('menu:navTitle') : ''}>

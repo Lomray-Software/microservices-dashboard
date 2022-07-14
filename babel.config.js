@@ -3,7 +3,7 @@ module.exports = {
     'razzle/babel',
   ],
   plugins: [
-    'after',
+    '@lomray/babel-plugin-after',
     'inline-react-svg',
     '@babel/plugin-proposal-class-properties',
     [

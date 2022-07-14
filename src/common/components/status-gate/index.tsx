@@ -1,6 +1,6 @@
+import { StaticContext } from '@lomray/after';
 import type { FC } from 'react';
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React, { useContext } from 'react';
 
 interface IStatusGate {
   code: number;
@@ -9,20 +9,16 @@ interface IStatusGate {
 /**
  * Status gate
  * @constructor
- *
- * @see https://reactrouter.com/web/guides/server-rendering/404-401-or-any-other-status
- * @see https://github.com/jaredpalmer/after.js/#dynamic-404-and-redirects
  */
-const StatusGate: FC<IStatusGate> = ({ code, children }) => (
-  <Route
-    render={({ staticContext }) => {
-      if (staticContext) {
-        staticContext.statusCode = code;
-      }
+const StatusGate: FC<IStatusGate> = ({ code, children }) => {
+  const context = useContext(StaticContext);
 
-      return children;
-    }}
-  />
-);
+  if (context) {
+    context.statusCode = code;
+  }
+
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{children}</>;
+};
 
 export default StatusGate;

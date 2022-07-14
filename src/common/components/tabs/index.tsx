@@ -1,6 +1,6 @@
 import type { FC, ReactElement } from 'react';
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import combineCss from '@helpers/combine-css';
 import styles from './styles.module.scss';
 
@@ -15,7 +15,7 @@ interface ITabs {
 }
 
 const Tabs: FC<ITabs> = ({ tabs }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
 
   const active = new URLSearchParams(search).get('tab') || Object.keys(tabs)[0];
@@ -28,7 +28,7 @@ const Tabs: FC<ITabs> = ({ tabs }) => {
     const activeTab = e.currentTarget.dataset.id;
     const query = activeTab && `?tab=${activeTab}`;
 
-    history.replace({ search: query, state: { silent: true } });
+    navigate({ search: query }, { state: { silent: true }, replace: true });
   };
 
   return (

@@ -6,7 +6,7 @@ interface ILoader {
   isWhite?: boolean;
 }
 
-const Loader: FC<ILoader> = ({ isWhite }) => (
+const Loader: FC<ILoader> = ({ isWhite = true }) => (
   <div id="cube-loader" className={isWhite ? 'white' : ''}>
     <div className="caption">
       <div className="cube-loader">

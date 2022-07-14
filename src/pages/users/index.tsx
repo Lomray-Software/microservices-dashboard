@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import type { Column } from 'react-table';
 import Breadcrumbs from '@components/breadcrumbs';
 import Table from '@components/table';
-import ROUTES from '@constants/routes';
+import ROUTE from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
-import makeRoute from '@helpers/make-route';
+import makeURL from '@helpers/make-url';
 import type { SSRComponent } from '@interfaces/ssr-component';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { StoreProps } from './index.stores';
@@ -85,7 +85,7 @@ const Users: SSRComponent<Props> = ({
         <title>{t('users-page:pageTitle')}</title>
       </Helmet>
       <Breadcrumbs>
-        <Breadcrumbs.Item to={ROUTES.USERS} title={t('menu:users')} />
+        <Breadcrumbs.Item to={ROUTE.USERS.URL} title={t('menu:users')} />
       </Breadcrumbs>
       <Table<IUser>
         columns={columns}
@@ -97,7 +97,7 @@ const Users: SSRComponent<Props> = ({
         onSortBy={setOrderBy}
         page={page}
         count={totalCount}
-        onRoute={makeRoute(ROUTES.USERS)}
+        onRoute={(id) => makeURL('USER', { id })}
       />
     </div>
   );

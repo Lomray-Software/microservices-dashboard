@@ -1,10 +1,11 @@
+import loadable from '@loadable/component';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import Breadcrumbs from '@components/breadcrumbs';
 import Overview from '@components/overview';
 import Tabs from '@components/tabs';
-import ROUTES from '@constants/routes';
+import ROUTE from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
 import i18n from '@services/localization';
@@ -14,9 +15,10 @@ import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
 import { profileFields, userFields } from './data';
 import EditProfile from './edit-profile/index.wrapper';
-import IdentityProviders from './identity-providers/index.wrapper';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
+
+const IdentityProviders = loadable(() => import('./identity-providers/index.wrapper'));
 
 type Props = StoreProps;
 
@@ -33,8 +35,8 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
         <title>{t('user-page:pageTitle')}</title>
       </Helmet>
       <Breadcrumbs>
-        <Breadcrumbs.Item to={ROUTES.USERS} title={t('menu:users')} />
-        <Breadcrumbs.Item to={ROUTES.USERS} title={UserEntity.getName(user)} />
+        <Breadcrumbs.Item to={ROUTE.USERS.URL} title={t('menu:users')} />
+        <Breadcrumbs.Item to={ROUTE.USERS.URL} title={UserEntity.getName(user)} />
       </Breadcrumbs>
       <Tabs
         tabs={{
@@ -78,7 +80,11 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
 User.getInitialProps = InitialProps(async ({ userPage: { getUser } }, { match }) => {
   const {
     params: { id },
-  } = match as { params: { id: string } };
+  } = match;
+
+  if (!id) {
+    return;
+  }
 
   await getUser(id);
 }, stores);

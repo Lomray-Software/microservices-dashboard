@@ -1,4 +1,4 @@
-import { render } from '@jaredpalmer/after';
+import { render } from '@lomray/after';
 import express from 'express';
 import { enableStaticRendering } from 'mobx-react-lite';
 import cookiesMiddleware from 'universal-cookie-express';

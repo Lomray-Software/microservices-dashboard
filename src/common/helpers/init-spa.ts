@@ -1,13 +1,8 @@
-import type { asyncComponent } from '@lomray/after';
-import type { History, Location } from 'history';
-import type { ComponentType } from 'react';
-import type { match as MatchType } from 'react-router-dom';
-import Layout from '@components/layout';
+import { matchRoutes } from 'react-router-dom';
+import CommonLayout from '@components/layouts/common/index.wrapper';
 import { IS_PWA, IS_SPA } from '@constants/index';
-import type { IAppContext } from '@context/app';
 import Manager from '@store/manager';
-
-type AsyncRouteComponentType = ReturnType<typeof asyncComponent>;
+import routes from '../../routes';
 
 /**
  * Init SPA app
@@ -16,35 +11,32 @@ type AsyncRouteComponentType = ReturnType<typeof asyncComponent>;
 const initSPA = (() => {
   let hasSPAInit = false;
 
-  return ({
-    history,
-    location,
-    match,
-    component,
-    setState,
-  }: {
-    match: MatchType;
-    history: History;
-    location: Location;
-    component: ComponentType | AsyncRouteComponentType;
-    setState: IAppContext['setState'];
-  }) => {
+  return () => {
     if ((IS_SPA || IS_PWA) && !hasSPAInit) {
       // trigger getInitialProps for fetch app data from backend
       hasSPAInit = true;
-      const ctx = { match, history, location, storeManager: Manager.instance };
-      const fetchApi = async () => {
-        const result: { context?: { app?: Partial<IAppContext> } } | undefined =
-          // @ts-ignore
-          await component.getInitialProps?.(ctx);
+      const { pathname } = location;
+      const matchedRoutes = matchRoutes(routes, pathname);
+      const ctx = {
+        match: matchedRoutes?.[matchedRoutes.length - 1] || null,
+        storeManager: Manager.instance,
+      };
+      const fetchApi = () => {
+        const promises = matchedRoutes?.map((match) => {
+          const {
+            route: { element },
+          } = match;
 
-        // detect pass context from getInitialProps and reset to initial state
-        if (result?.context?.app) {
-          setState(result.context.app);
-        }
+          if (!element || !element['getInitialProps']) {
+            return;
+          }
+
+          // @ts-ignore
+          return element.getInitialProps(ctx) as Record<string, any>;
+        });
 
         // @ts-ignore
-        Layout.getInitialProps?.({ ...ctx, data: { initialData: result } });
+        return Promise.all([...(promises || []), CommonLayout.getInitialProps?.({ ...ctx })]);
       };
 
       if (IS_PWA === 2 && 'serviceWorker' in navigator && !localStorage.getItem('initSW')) {

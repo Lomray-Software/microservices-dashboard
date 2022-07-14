@@ -1,8 +1,8 @@
-import { After, getSerializedData, ensureReady } from '@jaredpalmer/after';
+import { After, getSerializedData, ensureReady } from '@lomray/after';
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import Layout from '@components/layout';
+import CommonLayout from '@components/layouts/common/index.wrapper';
 import { IS_PROD, IS_PWA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import { StoreManagerProvider } from '@context/store-manager';
@@ -28,14 +28,14 @@ void ensureReady(routes).then((data) =>
     <BrowserRouter>
       <StoreManagerProvider storeManager={storeManager}>
         <AppProvider initValue={data.initialData?.context?.app ?? {}}>
-          <Layout initialI18nStore={initialI18nStore} initialLanguage={initialLanguage}>
+          <CommonLayout initialI18nStore={initialI18nStore} initialLanguage={initialLanguage}>
             <After
               data={data}
               routes={routes}
               storeManager={storeManager}
               transitionBehavior="blocking"
             />
-          </Layout>
+          </CommonLayout>
         </AppProvider>
       </StoreManagerProvider>
     </BrowserRouter>,

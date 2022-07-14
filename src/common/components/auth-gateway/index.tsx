@@ -1,17 +1,16 @@
+import { Redirect } from '@lomray/after';
 import type { FC, ReactElement } from 'react';
 import React from 'react';
-import type { RouteComponentProps } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-import ROUTES from '@constants/routes';
+import ROUTE from '@constants/routes';
 import type { StoreProps } from './index.stores';
 
 interface IAuthGateway {
   children: ReactElement;
   isOnlyGuest?: boolean;
-  isLoading?: boolean;
+  location: Location;
 }
 
-type Props = IAuthGateway & StoreProps & RouteComponentProps;
+type Props = IAuthGateway & StoreProps;
 
 /**
  * Component for implementation secure feature.
@@ -19,10 +18,10 @@ type Props = IAuthGateway & StoreProps & RouteComponentProps;
  */
 const AuthGateway: FC<Props> = ({
   userStore: { isAuth },
+  appStore: { isLoading },
   children,
   location,
   isOnlyGuest = false,
-  isLoading = false,
 }) => {
   const { pathname, search } = location;
   const searchParams = new URLSearchParams(search);
@@ -32,7 +31,7 @@ const AuthGateway: FC<Props> = ({
    */
   if (isOnlyGuest) {
     if (isAuth && !isLoading) {
-      return <Redirect to={decodeURI(searchParams.get('from') || ROUTES.HOME)} />;
+      return <Redirect to={decodeURI(searchParams.get('from') || ROUTE.HOME.URL)} />;
     }
 
     return children;
@@ -43,7 +42,10 @@ const AuthGateway: FC<Props> = ({
    */
   if (!isAuth) {
     return (
-      (!isLoading && <Redirect to={`${ROUTES.SIGN_IN}?from=${encodeURI(pathname)}`} />) || null
+      (!isLoading && (
+        <Redirect to={`${ROUTE.SIGN_IN.URL}?from=${encodeURI(pathname || ROUTE.HOME.URL)}`} />
+      )) ||
+      null
     );
   }
 

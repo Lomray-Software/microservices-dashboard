@@ -93,7 +93,7 @@
     @include media-breakpoint-down(xs) {
       grid-column-end: 4;
       grid-row: 2/3;
-      justify-self: end;
+      justify-self: flex-end;
     }
   }
 
@@ -106,7 +106,7 @@
 
     @include media-breakpoint-down(md) {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
     }
 
     @include media-breakpoint-down(xs) {
