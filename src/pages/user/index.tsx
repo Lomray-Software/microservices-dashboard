@@ -35,7 +35,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
       </Helmet>
       <Breadcrumbs>
         <Breadcrumbs.Item to={ROUTE.USERS.URL} title={t('menu:users')} />
-        <Breadcrumbs.Item to={ROUTE.USERS.URL} title={UserEntity.getName(user)} />
+        <Breadcrumbs.Item title={UserEntity.getName(user)} />
       </Breadcrumbs>
       <Tabs
         tabs={{
