@@ -1,8 +1,8 @@
-import type { FC } from 'react';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { IS_CLIENT } from '@constants/index';
 import canUseWebP from '@helpers/can-use-webp';
+import type { FCC } from '@interfaces/fc-with-children';
 
 interface IAppContext {
   setState: (state: Partial<Omit<IAppContext, 'setState'>>) => void;
@@ -30,11 +30,15 @@ const initState = {
  */
 const AppContext = React.createContext(initState);
 
+interface IAppProvider {
+  initValue?: Partial<IAppContext>;
+}
+
 /**
  * Global application context provider
  * @constructor
  */
-const AppProvider: FC<{ initValue?: Partial<IAppContext> }> = ({ children, initValue = {} }) => {
+const AppProvider: FCC<IAppProvider> = ({ children, initValue = {} }) => {
   const [state, setState] = useState({ ...initState, ...initValue });
 
   const updateState = useCallback((newState: Parameters<IAppContext['setState']>[0]) => {

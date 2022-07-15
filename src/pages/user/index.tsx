@@ -1,5 +1,4 @@
-import loadable from '@loadable/component';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import Breadcrumbs from '@components/breadcrumbs';
@@ -18,7 +17,7 @@ import EditProfile from './edit-profile/index.wrapper';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
 
-const IdentityProviders = loadable(() => import('./identity-providers/index.wrapper'));
+const IdentityProviders = React.lazy(() => import('./identity-providers/index.wrapper'));
 
 type Props = StoreProps;
 
@@ -69,7 +68,11 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
           },
           identityProviders: {
             title: i18n.t('user-page:identityProviders'),
-            Component: <IdentityProviders />,
+            Component: (
+              <Suspense>
+                <IdentityProviders />
+              </Suspense>
+            ),
           },
         }}
       />

@@ -1,6 +1,6 @@
 import { StaticContext } from '@lomray/after';
-import type { FC } from 'react';
 import React, { useContext } from 'react';
+import type { FCC } from '@interfaces/fc-with-children';
 
 interface IStatusGate {
   code: number;
@@ -10,7 +10,7 @@ interface IStatusGate {
  * Status gate
  * @constructor
  */
-const StatusGate: FC<IStatusGate> = ({ code, children }) => {
+const StatusGate: FCC<IStatusGate> = ({ code, children }) => {
   const context = useContext(StaticContext);
 
   if (context) {

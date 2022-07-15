@@ -1,6 +1,6 @@
 import { After, getSerializedData, ensureReady } from '@lomray/after';
 import React from 'react';
-import { hydrate } from 'react-dom';
+import { hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import CommonLayout from '@components/layouts/common/index.wrapper';
 import { IS_PROD, IS_PWA } from '@constants/index';
@@ -24,7 +24,8 @@ const endpoints = new Endpoints(new ApiClient());
 const storeManager = new Manager({ initState, initServerState, endpoints });
 
 void ensureReady(routes).then((data) =>
-  hydrate(
+  hydrateRoot(
+    document.getElementById('root')!,
     <BrowserRouter>
       <StoreManagerProvider storeManager={storeManager}>
         <AppProvider initValue={data.initialData?.context?.app ?? {}}>
@@ -39,7 +40,6 @@ void ensureReady(routes).then((data) =>
         </AppProvider>
       </StoreManagerProvider>
     </BrowserRouter>,
-    document.getElementById('root'),
   ),
 );
 

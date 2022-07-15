@@ -1,4 +1,4 @@
-import type { AsyncRouteProps } from '@lomray/after';
+import type { AsyncRouteableComponent, AsyncRouteProps } from '@lomray/after';
 import type { ComponentType } from 'react';
 import type { IRoute } from '@interfaces/i-route';
 import { asyncRouteComponent, routeComponent } from '@wrappers/route';
@@ -11,7 +11,7 @@ const buildRoutes = (baseRoutes?: IRoute[], parentPath?: string): AsyncRouteProp
   baseRoutes?.map((route) => {
     const { isPublic = false, isOnlyGuest = false, element, children, path, ...rest } = route;
 
-    let wrappedElement;
+    let wrappedElement: AsyncRouteableComponent;
 
     if (element.hasOwnProperty('getChunkName')) {
       // Attach async component wrapper

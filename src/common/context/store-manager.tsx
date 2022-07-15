@@ -1,6 +1,10 @@
-import type { FC } from 'react';
 import React, { useContext } from 'react';
+import type { FCC } from '@interfaces/fc-with-children';
 import type Manager from '@store/manager';
+
+interface IStoreManagerProvider {
+  storeManager: Manager;
+}
 
 /**
  * Mobx store manager context
@@ -11,7 +15,7 @@ const StoreManagerContext = React.createContext<Manager>({} as Manager);
  * Mobx store manager provider
  * @constructor
  */
-const StoreManagerProvider: FC<{ storeManager: Manager }> = ({ children, storeManager }) => (
+const StoreManagerProvider: FCC<IStoreManagerProvider> = ({ children, storeManager }) => (
   <StoreManagerContext.Provider value={storeManager} children={children} />
 );
 

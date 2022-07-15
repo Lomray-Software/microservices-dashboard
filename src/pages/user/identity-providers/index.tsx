@@ -56,7 +56,7 @@ const IdentityProviders: FC<StoreProps> = ({
         id: 'remove',
         width: 50,
         maxWidth: 50,
-        Header: () => t('translation:columnActions'),
+        Header: t('translation:columnActions'),
         disableSortBy: true,
         disableFilters: true,
         Cell: ({ row }: { row: Row<IIdentityProvider> }) => (

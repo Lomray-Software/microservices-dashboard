@@ -126,6 +126,7 @@ class Document extends Component<DocumentProps> {
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();
 
+    // noinspection HtmlRequiredTitleElement
     return (
       <html lang={initialLanguage} {...htmlAttrs}>
         <head>

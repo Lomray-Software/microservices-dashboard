@@ -1,3 +1,4 @@
+import type { RouteObject } from 'react-router-dom';
 import { matchRoutes } from 'react-router-dom';
 import CommonLayout from '@components/layouts/common/index.wrapper';
 import { IS_PWA, IS_SPA } from '@constants/index';
@@ -16,7 +17,7 @@ const initSPA = (() => {
       // trigger getInitialProps for fetch app data from backend
       hasSPAInit = true;
       const { pathname } = location;
-      const matchedRoutes = matchRoutes(routes, pathname);
+      const matchedRoutes = matchRoutes(routes as RouteObject[], pathname);
       const ctx = {
         match: matchedRoutes?.[matchedRoutes.length - 1] || null,
         storeManager: Manager.instance,

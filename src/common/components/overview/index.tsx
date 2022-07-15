@@ -1,6 +1,6 @@
-import type { FC } from 'react';
 import React from 'react';
 import type { IField } from '@components/forms/fields';
+import type { FCC } from '@interfaces/fc-with-children';
 import i18n from '@services/localization';
 import EntityFields from './entity-fields';
 import styles from './styles.module.scss';
@@ -19,7 +19,7 @@ interface IOverview {
 /**
  * Print entity fields
  */
-const Overview: FC<IOverview> = ({ data, title, children }) => (
+const Overview: FCC<IOverview> = ({ data, title, children }) => (
   <>
     <h3 className={styles.title}>{title}</h3>
     <div className={React.isValidElement(children) ? styles.content : ''}>
