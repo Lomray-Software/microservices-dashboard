@@ -8,6 +8,7 @@ if [ "$BUILD_TYPE" == "spa" ]; then
   cp ./src/index.html ./public/index.html
 fi
 
+rm -rf ./build ./cache
 razzle build --noninteractive --node-env=$NODE_ENV --type=$BUILD_TYPE
 
 # add localization

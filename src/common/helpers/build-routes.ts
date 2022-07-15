@@ -7,7 +7,7 @@ import withAuth from '@wrappers/with-auth';
 /**
  * Apply modifications and return routes for react router dom
  */
-const buildRoutes = (baseRoutes?: IRoute[], parentPath?: string): AsyncRouteProps[] | undefined =>
+const buildRoutes = (baseRoutes?: IRoute[], isChildren = false): AsyncRouteProps[] | undefined =>
   baseRoutes?.map((route) => {
     const { isPublic = false, isOnlyGuest = false, element, children, path, ...rest } = route;
 
@@ -24,10 +24,10 @@ const buildRoutes = (baseRoutes?: IRoute[], parentPath?: string): AsyncRouteProp
 
     return {
       ...rest,
-      path: parentPath && path ? path.replace(parentPath, '') : path,
-      children: buildRoutes(children, path),
+      path,
+      children: buildRoutes(children, true),
       element:
-        (!isPublic || isOnlyGuest) && !parentPath
+        (!isPublic || isOnlyGuest) && !isChildren
           ? withAuth(wrappedElement as ComponentType, isOnlyGuest)
           : wrappedElement,
     };

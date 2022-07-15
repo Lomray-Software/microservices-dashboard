@@ -122,6 +122,7 @@
     "mini-css-extract-plugin": "2.6.1",
     "prettier": "^2.7.1",
     "razzle-dev-utils": "4.2.17",
+    "razzle-plugin-bundle-analyzer": "4.2.17",
     "razzle-plugin-scss": "4.2.17",
     "razzle-plugin-svg-react-component": "^2.0.0",
     "razzle-plugin-typescript": "4.2.17",
@@ -130,7 +131,6 @@
     "stylelint": "^14.9.1",
     "typescript": "^4.7.4",
     "webpack": "5.51.2",
-    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-dev-server": "^3.11.3",
     "webpack-pwa-manifest": "^4.3.0",
     "workbox-webpack-plugin": "^6.5.3"

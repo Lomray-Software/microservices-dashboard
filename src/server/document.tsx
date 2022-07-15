@@ -52,8 +52,7 @@ class Document extends Component<DocumentProps> {
    * - return html to client
    */
   static async getInitialProps(ctx: DocumentgetInitialProps): Promise<RenderPageResult> {
-    const { renderPage, req, data, helmet, storeManager } = ctx;
-    const componentData = data.initialData;
+    const { renderPage, req, helmet, storeManager } = ctx;
     const initialLanguage = req.i18n.language;
 
     /**
@@ -65,7 +64,6 @@ class Document extends Component<DocumentProps> {
         helmet,
         initialLanguage,
         initialI18nStore: {},
-        serverContext: {},
         isOnlyShell: true,
       };
     }
@@ -78,8 +76,6 @@ class Document extends Component<DocumentProps> {
       cookies: req.universalCookies,
       isWebpSupport: req.headers?.accept?.indexOf('image/webp') !== -1,
       domain: `${req.protocol}://${req.get('host') as string}`,
-      // pass app context from component
-      ...(componentData?.context?.app ?? {}),
     };
 
     // @ts-ignore

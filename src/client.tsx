@@ -1,9 +1,11 @@
 import { After, getSerializedData, ensureReady } from '@lomray/after';
+import type { ServerAppState } from '@lomray/after';
+import type { FC } from 'react';
 import React from 'react';
-import { hydrateRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import CommonLayout from '@components/layouts/common/index.wrapper';
-import { IS_PROD, IS_PWA } from '@constants/index';
+import { IS_PROD, IS_PWA, IS_SPA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import { StoreManagerProvider } from '@context/store-manager';
 import { getStoresState } from '@helpers/serialized-store';
@@ -20,28 +22,41 @@ const initialLanguage = getSerializedData('initialLanguage', false);
 const initServerState = getSerializedData('preloadedState', IS_PROD);
 const initState = getStoresState();
 const endpoints = new Endpoints(new ApiClient());
-
 const storeManager = new Manager({ initState, initServerState, endpoints });
 
-void ensureReady(routes).then((data) =>
-  hydrateRoot(
-    document.getElementById('root')!,
-    <BrowserRouter>
-      <StoreManagerProvider storeManager={storeManager}>
-        <AppProvider initValue={data.initialData?.context?.app ?? {}}>
-          <CommonLayout initialI18nStore={initialI18nStore} initialLanguage={initialLanguage}>
-            <After
-              data={data}
-              routes={routes}
-              storeManager={storeManager}
-              transitionBehavior="blocking"
-            />
-          </CommonLayout>
-        </AppProvider>
-      </StoreManagerProvider>
-    </BrowserRouter>,
-  ),
+/**
+ * Application
+ * @constructor
+ */
+const App: FC<{ data: ServerAppState }> = ({ data }) => (
+  <BrowserRouter>
+    <StoreManagerProvider storeManager={storeManager}>
+      <AppProvider>
+        <CommonLayout initialI18nStore={initialI18nStore} initialLanguage={initialLanguage}>
+          <After
+            data={data}
+            routes={routes}
+            storeManager={storeManager}
+            transitionBehavior="blocking"
+          />
+        </CommonLayout>
+      </AppProvider>
+    </StoreManagerProvider>
+  </BrowserRouter>
 );
+
+// Start application
+void ensureReady(routes).then((data) => {
+  const container = document.getElementById('root') as HTMLElement;
+
+  if (IS_SPA) {
+    const root = createRoot(container);
+
+    root.render(<App data={data} />);
+  } else {
+    hydrateRoot(container, <App data={data} />);
+  }
+});
 
 if (module.hot) {
   module.hot.accept();

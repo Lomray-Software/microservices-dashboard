@@ -8,13 +8,25 @@ import MENU from '@constants/menu';
 const getActiveMenu = (pathname: string): TMenuValues => {
   const [, lng, firstPart] = pathname.split('/');
 
-  let key = lng;
+  let url = lng;
 
   if (APP_LANGUAGES.includes(lng)) {
-    key = firstPart;
+    url = firstPart;
   }
 
-  return (MENU?.[`/${key}`] ?? MENU['/']) as TMenuValues;
+  // Direct match
+  if (MENU?.[`/${url}`]) {
+    return MENU?.[`/${url}`] as TMenuValues;
+  }
+
+  // Starts with match
+  for (const path in MENU) {
+    if (url.startsWith(path)) {
+      return MENU[path] as TMenuValues;
+    }
+  }
+
+  return MENU['/'] as TMenuValues;
 };
 
 export default getActiveMenu;

@@ -15,12 +15,14 @@ const asyncRouteProps = {
  */
 const routes = buildRoutes([
   {
+    // layout for logged users
     path: '/',
     element: asyncComponent({
       loader: () => import('@components/layouts/user/index.wrapper'),
       ...asyncRouteProps,
     }),
     children: [
+      // dashboard routes
       {
         path: ROUTE.HOME.URL,
         element: asyncComponent({

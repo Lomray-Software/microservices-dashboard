@@ -35,13 +35,18 @@ module.exports = {
   },
   plugins: [
     'scss',
-    'svg-react-component'
+    'svg-react-component',
+    // {
+    //   name: 'bundle-analyzer',
+    //   options: {
+    //     target: 'web', // or 'node'
+    //     env: 'production', // or 'development'
+    //     bundleAnalyzerConfig: {},
+    //   },
+    // },
   ],
   modifyWebpackConfig(opts) {
     const config = opts.webpackConfig;
-
-    // Uncomment to enable bundle analyser
-    // config.plugins.push(new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)());
 
     // when we are building the client bundle
     if (opts.env.target === "web") {

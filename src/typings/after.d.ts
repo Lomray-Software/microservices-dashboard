@@ -1,15 +1,10 @@
 /* eslint-disable import/prefer-default-export,@typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-interface */
+// noinspection JSUnusedGlobalSymbols
+
 import type { CtxBase } from '@lomray/after';
-import type { IAppContext } from '@context/app';
 import type Manager from '@store/manager';
 
 declare module '@lomray/after' {
-  export interface InitialData {
-    context?: {
-      app: Partial<Omit<IAppContext, 'setState' | 'cookies'>>;
-    };
-  }
-
   export interface AfterpartyProps {
     storeManager: Manager;
   }
@@ -30,7 +25,6 @@ declare module '@lomray/after' {
   export interface RenderPageResult {
     initialI18nStore: any;
     initialLanguage: string;
-    serverContext: Partial<IAppContext>;
     isOnlyShell?: boolean;
   }
 }

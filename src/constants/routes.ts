@@ -6,7 +6,7 @@ const ROUTE = {
     URL: '/users',
   },
   USER: {
-    URL: '/user/:id',
+    URL: '/users/:id',
     PARAMS: { id: '' },
   },
   SIGN_IN: {
