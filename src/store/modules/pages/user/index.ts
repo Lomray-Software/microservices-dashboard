@@ -1,16 +1,16 @@
 import type { IBaseException } from '@lomray/microservices-types';
+import type { IConstructorParams } from '@lomray/react-mobx-manager';
 import isEmpty from 'lodash.isempty';
 import { action, makeObservable, observable } from 'mobx';
-import type { IDomain } from '@interfaces/store-type';
+import type Endpoints from '@store/endpoints';
 import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import type { IConstructorParams } from '@store/manager';
 
 /**
  * User page store
  */
-class UserPageStore implements IDomain {
+class UserPageStore {
   /**
    * User
    */
@@ -19,7 +19,7 @@ class UserPageStore implements IDomain {
   /**
    * @private
    */
-  private api: IConstructorParams['endpoints'];
+  private api: Endpoints;
 
   /**
    * @constructor

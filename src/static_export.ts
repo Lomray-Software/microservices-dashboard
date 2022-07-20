@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/filename-case */
 import { renderStatic } from '@lomray/after';
+import { Manager } from '@lomray/react-mobx-manager';
 import type { Request, Response } from 'express';
 import cookiesMiddleware from 'universal-cookie-express';
 import { SITE_DOMAIN } from '@constants/index';
@@ -8,7 +9,6 @@ import { getRenderProps } from '@server/config';
 import { applySSGTranslation } from '@server/translation';
 import ApiClient from '@services/api-client';
 import Endpoints from '@store/endpoints';
-import Manager from '@store/manager';
 
 type TRender = (req: Request, res: Response) => Promise<void>;
 
@@ -33,7 +33,6 @@ const extendStaticRequest = (req: Request): Request => {
 
 /**
  * NOTE: Please uncomment lines with ssg comment in:
- * @see asyncRouteComponent
  */
 export const render: TRender = async (req, res) => {
   extendStaticRequest(req);
@@ -42,7 +41,7 @@ export const render: TRender = async (req, res) => {
 
   const apiClient = new ApiClient({ headers: req.headers });
   const endpoints = new Endpoints(apiClient);
-  const storeManager = new Manager({ endpoints });
+  const storeManager = new Manager({ storesParams: { endpoints } });
 
   const { html, data } = await renderStatic({
     req,

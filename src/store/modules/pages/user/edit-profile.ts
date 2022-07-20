@@ -1,4 +1,5 @@
 import type { IBaseException } from '@lomray/microservices-types';
+import type { IConstructorParams } from '@lomray/react-mobx-manager';
 import map from 'lodash.map';
 import omit from 'lodash.omit';
 import pick from 'lodash.pick';
@@ -7,12 +8,10 @@ import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
 import shallowDiff from '@helpers/shallow-diff';
 import type { ClassReturnType } from '@interfaces/helpers';
-import type { IDomain } from '@interfaces/store-type';
 import { profileFields as profileValue, userFields as userValue } from '@pages/user/data';
 import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import type { IConstructorParams } from '@store/manager';
 import UserPageStore from './index';
 
 export interface IEditProfile {
@@ -29,12 +28,7 @@ export interface IEditProfile {
 /**
  * Edit profile store
  */
-class EditUserStore implements IDomain {
-  /**
-   * This is not a singleton
-   */
-  static isSingleton = false;
-
+class EditUserStore {
   /**
    * API error
    */
@@ -55,7 +49,7 @@ class EditUserStore implements IDomain {
    * @constructor
    */
   constructor({ storeManager }: IConstructorParams) {
-    this.userPageStore = storeManager.getStore(UserPageStore);
+    this.userPageStore = storeManager.getStore(UserPageStore)!;
 
     this.setInitValues();
 

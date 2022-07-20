@@ -1,5 +1,5 @@
-import withStore from '@wrappers/with-store';
+import { withStores } from '@lomray/react-mobx-manager';
 import stores from './index.stores';
 import ChangePassword from './index';
 
-export default withStore(ChangePassword, stores);
+export default withStores(ChangePassword, stores);

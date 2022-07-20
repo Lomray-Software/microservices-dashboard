@@ -1,10 +1,10 @@
+import type { IConstructorParams } from '@lomray/react-mobx-manager';
 import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
 import type { ClassReturnType } from '@interfaces/helpers';
-import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
-import type { IConstructorParams } from '@store/manager';
+import type Endpoints from '@store/endpoints';
 import UserPageStore from './index';
 
 export interface IChangePassword {
@@ -15,12 +15,7 @@ export interface IChangePassword {
 /**
  * Change password store
  */
-class ChangePasswordStore implements IDomain {
-  /**
-   * This is not a singleton
-   */
-  static isSingleton = false;
-
+class ChangePasswordStore {
   /**
    * API error
    */
@@ -40,14 +35,14 @@ class ChangePasswordStore implements IDomain {
   /**
    * @private
    */
-  private api: IConstructorParams['endpoints'];
+  private api: Endpoints;
 
   /**
    * @constructor
    */
   constructor({ storeManager, endpoints }: IConstructorParams) {
     this.api = endpoints;
-    this.userPageStore = storeManager.getStore(UserPageStore);
+    this.userPageStore = storeManager.getStore(UserPageStore)!;
 
     this.initialValues = {
       newPassword: '',

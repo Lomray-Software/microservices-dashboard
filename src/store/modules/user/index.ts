@@ -1,13 +1,15 @@
+import { Manager } from '@lomray/react-mobx-manager';
+import type { IConstructorParams } from '@lomray/react-mobx-manager';
 import { action, makeObservable, observable } from 'mobx';
-import { serializedStore } from '@common/helpers/serialized-store';
-import type { IDomain } from '@interfaces/store-type';
+import type Endpoints from '@store/endpoints';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import type { IConstructorParams } from '@store/manager';
 
 /**
  * Current user store
  */
-class UserStore implements IDomain {
+class UserStore {
+  static isSingleton = true;
+
   /**
    * Is current user authenticated
    */
@@ -21,7 +23,7 @@ class UserStore implements IDomain {
   /**
    * @private
    */
-  private api: IConstructorParams['endpoints'];
+  private api: Endpoints;
 
   /**
    * @constructor
@@ -70,4 +72,4 @@ class UserStore implements IDomain {
   }
 }
 
-export default serializedStore(UserStore, 'user');
+export default Manager.persistStore(UserStore, 'user');

@@ -1,7 +1,7 @@
 import type { IBaseException } from '@lomray/microservices-types';
 import type { FormikHelpers } from 'formik/dist/types';
 import i18n from 'i18next';
-import { Store } from 'react-notifications-component';
+import { Store } from '@components/notifications';
 import ucfirst from '@helpers/ucfirst';
 import translation from '@services/localization';
 

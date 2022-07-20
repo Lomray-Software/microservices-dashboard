@@ -1,6 +1,5 @@
 import EventManager from '@lomray/event-manager';
 import { action, makeObservable, observable } from 'mobx';
-import type { IDomain } from '@interfaces/store-type';
 import PageLoading from '@services/page-loading';
 import ScrollRestorationService from '@services/scroll-restoration';
 
@@ -11,7 +10,9 @@ interface ILoadingChanged {
 /**
  * App store
  */
-class AppStore implements IDomain {
+class AppStore {
+  static isSingleton = true;
+
   /**
    * State menu navigation's
    */

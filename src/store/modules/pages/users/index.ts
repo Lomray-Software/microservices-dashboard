@@ -1,17 +1,17 @@
-import type { IDomain } from '@interfaces/store-type';
+import type { IConstructorParams } from '@lomray/react-mobx-manager';
+import type Endpoints from '@store/endpoints';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
-import type { IConstructorParams } from '@store/manager';
 import type { IRequestReturn } from '@store/services/table';
 import TableStore from '@store/services/table';
 
 /**
  * Users page store
  */
-class UsersPageStore extends TableStore<IUser> implements IDomain {
+class UsersPageStore extends TableStore<IUser> {
   /**
    * @private
    */
-  private api: IConstructorParams['endpoints'];
+  private api: Endpoints;
 
   /**
    * @constructor

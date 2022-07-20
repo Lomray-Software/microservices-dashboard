@@ -48,6 +48,13 @@ module.exports = {
   modifyWebpackConfig(opts) {
     const config = opts.webpackConfig;
 
+    // config.optimization.splitChunks.chunks = 'all';
+    // config.optimization.splitChunks.cacheGroups.defaultVendors = {
+    //   test: /[\\/]node_modules[\\/]/,
+    //   priority: -10,
+    //   reuseExistingChunk: true,
+    // };
+
     // when we are building the client bundle
     if (opts.env.target === "web") {
       const terserOptions = config.optimization && config.optimization.minimizer && config.optimization.minimizer[0].options.terserOptions;

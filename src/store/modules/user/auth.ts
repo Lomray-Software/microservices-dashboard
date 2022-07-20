@@ -1,17 +1,19 @@
+import type { IConstructorParams } from '@lomray/react-mobx-manager';
 import intersection from 'lodash.intersection';
 import { action, makeObservable, observable } from 'mobx';
 import { ACCESS_USER_ROLES, IS_CLIENT, IS_PROD } from '@constants/index';
 import { withFetching } from '@helpers/with-fetching';
 import type { ClassReturnType } from '@interfaces/helpers';
-import type { IDomain } from '@interfaces/store-type';
 import i18n from '@services/localization';
-import type { IConstructorParams } from '@store/manager';
+import type Endpoints from '@store/endpoints';
 import UserStore from '@store/modules/user';
 
 /**
  * Auth user store
  */
-class Auth implements IDomain {
+class Auth {
+  static isSingleton = true;
+
   /**
    * API error message
    */
@@ -37,14 +39,14 @@ class Auth implements IDomain {
   /**
    * @private
    */
-  private api: IConstructorParams['endpoints'];
+  private api: Endpoints;
 
   /**
    * @constructor
    */
   constructor({ storeManager, endpoints }: IConstructorParams) {
     this.api = endpoints;
-    this.userStore = storeManager.getStore(UserStore);
+    this.userStore = storeManager.getStore(UserStore)!;
 
     this.signIn = withFetching(this.signIn, this);
     this.signOut = withFetching(this.signOut, this);

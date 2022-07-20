@@ -1,7 +1,7 @@
+import type { IConstructorParams } from '@lomray/react-mobx-manager';
 import type { ClassReturnType } from '@interfaces/helpers';
-import type { IDomain } from '@interfaces/store-type';
+import type Endpoints from '@store/endpoints';
 import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
-import type { IConstructorParams } from '@store/manager';
 import type { IRequestReturn } from '@store/services/table';
 import TableStore from '@store/services/table';
 import UserPageStore from './index';
@@ -9,7 +9,7 @@ import UserPageStore from './index';
 /**
  * Identity provider store
  */
-class IdentityProviderStore extends TableStore<IIdentityProvider> implements IDomain {
+class IdentityProviderStore extends TableStore<IIdentityProvider> {
   /**
    * User page store
    * @private
@@ -19,7 +19,7 @@ class IdentityProviderStore extends TableStore<IIdentityProvider> implements IDo
   /**
    * @private
    */
-  private api: IConstructorParams['endpoints'];
+  private api: Endpoints;
 
   /**
    * @constructor
@@ -29,7 +29,7 @@ class IdentityProviderStore extends TableStore<IIdentityProvider> implements IDo
 
     this.getIdentityProviders = this.wrapRequest(this.getIdentityProviders);
     this.api = endpoints;
-    this.userPageStore = storeManager.getStore(UserPageStore);
+    this.userPageStore = storeManager.getStore(UserPageStore)!;
   }
 
   /**

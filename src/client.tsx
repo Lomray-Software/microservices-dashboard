@@ -1,5 +1,6 @@
 import { After, getSerializedData, ensureReady } from '@lomray/after';
 import type { ServerAppState } from '@lomray/after';
+import { Manager, StoreManagerProvider, MobxLocalStorage } from '@lomray/react-mobx-manager';
 import type { FC } from 'react';
 import React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
@@ -7,22 +8,24 @@ import { BrowserRouter } from 'react-router-dom';
 import CommonLayout from '@components/layouts/common/index.wrapper';
 import { IS_PROD, IS_PWA, IS_SPA } from '@constants/index';
 import { AppProvider } from '@context/app';
-import { StoreManagerProvider } from '@context/store-manager';
-import { getStoresState } from '@helpers/serialized-store';
 import ApiClient from '@services/api-client';
 import Endpoints from '@store/endpoints';
-import Manager from '@store/manager';
 import routes from './routes';
 import * as ServiceWorker from './sw-register';
-import 'react-notifications-component/dist/theme.css';
 import './assets/styles/global.scss';
 
 const initialI18nStore = getSerializedData('initialI18nStore');
 const initialLanguage = getSerializedData('initialLanguage', false);
-const initServerState = getSerializedData('preloadedState', IS_PROD);
-const initState = getStoresState();
-const endpoints = new Endpoints(new ApiClient());
-const storeManager = new Manager({ initState, initServerState, endpoints });
+const initState = getSerializedData('preloadedState', IS_PROD);
+const apiClient = new ApiClient();
+const endpoints = new Endpoints(apiClient);
+const storeManager = new Manager({
+  initState,
+  storage: new MobxLocalStorage(),
+  storesParams: { endpoints },
+});
+
+apiClient.setStoreManager(storeManager);
 
 /**
  * Application
@@ -30,7 +33,7 @@ const storeManager = new Manager({ initState, initServerState, endpoints });
  */
 const App: FC<{ data: ServerAppState }> = ({ data }) => (
   <BrowserRouter>
-    <StoreManagerProvider storeManager={storeManager}>
+    <StoreManagerProvider storeManager={storeManager} shouldInit>
       <AppProvider>
         <CommonLayout initialI18nStore={initialI18nStore} initialLanguage={initialLanguage}>
           <After

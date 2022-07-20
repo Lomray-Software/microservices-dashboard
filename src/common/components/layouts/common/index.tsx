@@ -1,20 +1,26 @@
 import type { Resource } from 'i18next';
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { useSSR } from 'react-i18next';
-import { ReactNotifications } from 'react-notifications-component';
 import LoadingBar from '@components/loading-bar';
 import ScrollRestoration from '@components/scroll-restoration';
 import { useAppContext } from '@context/app';
+import initSPA from '@helpers/init-spa';
 import type { SSRLayoutComponent } from '@interfaces/ssr-component';
-import '@services/localization';
 import type { StoreProps } from './index.stores';
+import '@services/localization';
 
-interface ILayout {
+const ReactNotifications = React.lazy(() =>
+  import('@components/notifications').then((module) => ({
+    default: module.ReactNotifications,
+  })),
+);
+
+interface ICommon {
   initialI18nStore: Resource;
   initialLanguage: string;
 }
 
-type Props = ILayout & StoreProps;
+type Props = ICommon & StoreProps;
 
 const Common: SSRLayoutComponent<Props> = ({
   children,
@@ -27,6 +33,13 @@ const Common: SSRLayoutComponent<Props> = ({
   const { hasLoadingBar } = useAppContext();
 
   /**
+   * Initialize spa app
+   */
+  useEffect(() => {
+    initSPA();
+  }, []);
+
+  /**
    * Add app subscribers
    */
   useEffect(() => addSubscribers(), [addSubscribers]);
@@ -34,7 +47,9 @@ const Common: SSRLayoutComponent<Props> = ({
   return (
     <>
       {hasLoadingBar && <LoadingBar />}
-      <ReactNotifications />
+      <Suspense>
+        <ReactNotifications />
+      </Suspense>
       <ScrollRestoration />
       {children}
     </>

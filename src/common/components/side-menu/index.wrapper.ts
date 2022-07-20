@@ -1,5 +1,5 @@
-import withStore from '@wrappers/with-store';
+import { withStores } from '@lomray/react-mobx-manager';
 import stores from './index.stores';
 import SideMenu from './index';
 
-export default withStore(SideMenu, stores);
+export default withStores(SideMenu, stores);

@@ -29,7 +29,7 @@
   "author": "Mikhail Yarmaliuk",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "razzle start",
+    "start": "rm -rf ./build ./cache && razzle start",
     "export": "razzle export",
     "export:shell": "RAZZLE_SHELL_EXPORT=true razzle export",
     "build": "./build.sh",
@@ -50,6 +50,7 @@
     "@lomray/after": "^4.0.0",
     "@lomray/event-manager": "^1.0.0",
     "@lomray/microservices-types": "^1.1.0",
+    "@lomray/react-mobx-manager": "^1.0.0-beta.2",
     "@mdi/js": "^6.6.96",
     "@mdi/react": "^1.6.0",
     "axios": "^0.27.2",

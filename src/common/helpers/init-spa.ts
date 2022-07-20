@@ -1,13 +1,13 @@
+import { Manager } from '@lomray/react-mobx-manager';
 import type { RouteObject } from 'react-router-dom';
 import { matchRoutes } from 'react-router-dom';
 import CommonLayout from '@components/layouts/common/index.wrapper';
 import { IS_PWA, IS_SPA } from '@constants/index';
-import Manager from '@store/manager';
 import routes from '../../routes';
 
 /**
- * Init SPA app
- * Run getInitialProps for cache api (PWA or SSR)
+ *  - Init SPA app
+ *  - Run getInitialProps for cache api (PWA or SSR)
  */
 const initSPA = (() => {
   let hasSPAInit = false;
@@ -20,7 +20,7 @@ const initSPA = (() => {
       const matchedRoutes = matchRoutes(routes as RouteObject[], pathname);
       const ctx = {
         match: matchedRoutes?.[matchedRoutes.length - 1] || null,
-        storeManager: Manager.instance,
+        storeManager: Manager.get(),
       };
       const fetchApi = () => {
         const promises = matchedRoutes?.map((match) => {

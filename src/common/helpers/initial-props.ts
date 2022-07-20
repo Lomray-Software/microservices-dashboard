@@ -1,6 +1,6 @@
 import type { InitialData, Ctx } from '@lomray/after';
+import type { TStoreDefinition } from '@lomray/react-mobx-manager';
 import type { StoresType } from '@interfaces/helpers';
-import type { IConstructableStore } from '@store/manager';
 
 type InitialPropsReturnParams = { statusCode?: number } & InitialData;
 type InitialPropsReturn = Promise<void> | void | InitialPropsReturnParams;
@@ -16,9 +16,9 @@ const InitialProps =
   ) =>
   (ctx: Ctx<TMatch>): InitialPropsReturn => {
     const { storeManager } = ctx;
-    const map = Object.entries(storesMap) as [string, IConstructableStore][];
+    const map = Object.entries(storesMap) as [string, TStoreDefinition][];
 
-    return handler(storeManager.getMapStores(map) as StoresType<TP>, ctx);
+    return handler(storeManager.createStores(map) as StoresType<TP>, ctx);
   };
 
 export default InitialProps;

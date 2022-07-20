@@ -1,8 +1,8 @@
+import type { Manager } from '@lomray/react-mobx-manager';
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { JwtPayload } from 'jwt-decode';
 import JwtDecode from 'jwt-decode';
-import { Store } from 'react-notifications-component';
 import Cookies from 'universal-cookie';
 import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_PROD, IS_SERVER } from '@constants/index';
 import waitFor from '@helpers/wait-for';
@@ -10,8 +10,10 @@ import type { IBaseException, IMicroserviceResponse } from '@interfaces/microser
 import i18n from '@services/localization';
 import type Endpoints from '@store/endpoints';
 import { TokenCreateReturnType } from '@store/endpoints/interfaces/authentication/methods/token/renew';
-import type Manager from '@store/manager';
 import AuthStore from '@store/modules/user/auth';
+
+// exclude from client.js
+const Notification = import('@components/notifications');
 
 export const ACCESS_TOKEN_KEY = 'jwt-access';
 
@@ -229,7 +231,7 @@ class ApiClient {
     }
 
     if (IS_SERVER) {
-      const authStore = this.storeManager.getStore(AuthStore);
+      const authStore = this.storeManager.getStore(AuthStore)!;
 
       // Pass flag to client side for update auth tokens & user
       authStore.setShouldRefresh(true);
@@ -252,7 +254,7 @@ class ApiClient {
     }
 
     // Failed to renew tokens - clear user store
-    await this.disableRenewAuthTokens(() => this.storeManager.getStore(AuthStore).signOut());
+    await this.disableRenewAuthTokens(() => this.storeManager.getStore(AuthStore)!.signOut());
 
     return false;
   }
@@ -315,7 +317,7 @@ class ApiClient {
         }
 
         if (shouldShowErrors && IS_CLIENT) {
-          Store.addNotification({
+          (await Notification).Store.addNotification({
             title: i18n.t('translation:errorTitle'),
             message: data.error.message,
             type: 'danger',

@@ -1,4 +1,5 @@
 import { render } from '@lomray/after';
+import { Manager } from '@lomray/react-mobx-manager';
 import express from 'express';
 import { enableStaticRendering } from 'mobx-react-lite';
 import cookiesMiddleware from 'universal-cookie-express';
@@ -8,7 +9,6 @@ import resolveAppPath from '@server/tools/resolve-app-path';
 import { initServerTranslation } from '@server/translation';
 import ApiClient from '@services/api-client';
 import Endpoints from '@store/endpoints';
-import Manager from '@store/manager';
 
 const publicPath =
   // true - 'razzle start' only (for development /public) in other cases we need /build/public
@@ -36,7 +36,13 @@ void (async () => {
         try {
           const apiClient = new ApiClient({ headers: req.headers });
           const endpoints = new Endpoints(apiClient);
-          const storeManager = new Manager({ endpoints });
+          const storeManager = new Manager({
+            options: { shouldDisablePersist: true },
+            storesParams: { endpoints },
+          });
+
+          await storeManager.init();
+          apiClient.setStoreManager(storeManager);
 
           const html = await render({
             req,

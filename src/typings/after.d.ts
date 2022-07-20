@@ -2,7 +2,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import type { CtxBase } from '@lomray/after';
-import type Manager from '@store/manager';
+import type { Manager } from '@lomray/react-mobx-manager';
 
 declare module '@lomray/after' {
   export interface AfterpartyProps {

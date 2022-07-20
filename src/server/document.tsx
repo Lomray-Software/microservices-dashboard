@@ -13,10 +13,10 @@ import {
   SerializeData,
   __AfterContext,
 } from '@lomray/after';
+import { StoreManagerProvider } from '@lomray/react-mobx-manager';
 import type { ReactElement } from 'react';
 import React, { Component } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { StoreManagerProvider } from '@common/context/store-manager';
 import CommonLayout from '@components/layouts/common/index.wrapper';
 import { APP_NAME, BACKGROUND_COLOR, IS_PWA } from '@constants/index';
 import { AppProvider } from '@context/app';

@@ -1,5 +1,5 @@
-import withStore from '@wrappers/with-store';
+import { withStores } from '@lomray/react-mobx-manager';
 import stores from './index.stores';
 import Common from './index';
 
-export default withStore(Common, stores);
+export default withStores(Common, stores);
