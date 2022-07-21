@@ -1,5 +1,5 @@
 import type { FC, ReactElement } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import combineCss from '@helpers/combine-css';
 import styles from './styles.module.scss';
@@ -18,8 +18,14 @@ const Tabs: FC<ITabs> = ({ tabs }) => {
   const navigate = useNavigate();
   const { search } = useLocation();
 
-  const active = new URLSearchParams(search).get('tab') || Object.keys(tabs)[0];
-  const { Component } = tabs?.[active] ?? tabs[Object.keys(tabs)[0]];
+  const [active, setActive] = useState<string | undefined>(
+    new URLSearchParams(search).get('tab') || Object.keys(tabs)[0],
+  );
+
+  /**
+   * Active component for current tab
+   */
+  const { Component } = tabs?.[active || ''] ?? tabs[Object.keys(tabs)[0]];
 
   /**
    * Select tab
@@ -28,6 +34,7 @@ const Tabs: FC<ITabs> = ({ tabs }) => {
     const activeTab = e.currentTarget.dataset.id;
     const query = activeTab && `?tab=${activeTab}`;
 
+    setActive(activeTab);
     navigate({ search: query }, { state: { silent: true }, replace: true });
   };
 
