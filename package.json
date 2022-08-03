@@ -50,7 +50,7 @@
     "@lomray/after": "^4.0.0",
     "@lomray/event-manager": "^1.0.0",
     "@lomray/microservices-types": "^1.1.0",
-    "@lomray/react-mobx-manager": "^1.0.0-beta.2",
+    "@lomray/react-mobx-manager": "^1.0.0-beta.5",
     "@mdi/js": "^6.6.96",
     "@mdi/react": "^1.6.0",
     "axios": "^0.27.2",

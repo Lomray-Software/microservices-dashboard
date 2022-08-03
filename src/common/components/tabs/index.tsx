@@ -34,7 +34,7 @@ const Tabs: FC<ITabs> = ({ tabs }) => {
     const activeTab = e.currentTarget.dataset.id;
     const query = activeTab && `?tab=${activeTab}`;
 
-    setActive(activeTab);
+    setActive(activeTab || Object.keys(tabs)[0]);
     navigate({ search: query }, { state: { silent: true }, replace: true });
   };
 
