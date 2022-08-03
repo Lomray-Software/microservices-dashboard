@@ -61,10 +61,6 @@ void ensureReady(routes).then((data) => {
   }
 });
 
-if (module.hot) {
-  module.hot.accept();
-}
-
 if (IS_PWA && IS_PROD) {
   ServiceWorker.register();
 } else {

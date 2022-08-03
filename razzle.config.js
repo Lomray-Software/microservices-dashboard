@@ -27,6 +27,7 @@ const localesManifests = glob.sync(`${__dirname}/src/assets/locales/*/*.json`).m
  */
 module.exports = {
   options: {
+    enableReactRefresh: true,
     enableSourceMaps: !IS_PROD,
     staticExport: {
       parallel: 1,
