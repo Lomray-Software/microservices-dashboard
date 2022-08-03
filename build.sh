@@ -12,8 +12,10 @@ rm -rf ./build ./cache
 razzle build --noninteractive --node-env=$NODE_ENV --type=$BUILD_TYPE
 
 # add localization
-cp -R ./src/assets/locales ./build/public
-rm ./build/public/locales/namespaces.ts
+if [[ -d "./src/assets/locales" ]]; then
+  cp -R ./src/assets/locales ./build/public
+  rm ./build/public/locales/namespaces.ts
+fi
 
 # if SPA, cleanup
 if [ "$BUILD_TYPE" == "spa" ]; then
