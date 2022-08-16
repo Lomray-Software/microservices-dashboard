@@ -85,6 +85,11 @@ class ApiClient {
    * @private
    */
   private getHeaders(): Record<string, any> | undefined {
+    // do not pass this to axios
+    if (this.headers?.host) {
+      delete this.headers.host;
+    }
+
     // add authentication token only for development (if cookie not pass with request)
     if (!IS_PROD && IS_CLIENT) {
       const token: string | undefined = new Cookies().get(ACCESS_TOKEN_KEY);
