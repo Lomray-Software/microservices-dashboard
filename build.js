@@ -24,8 +24,8 @@ if (BUILD_TYPE === 'spa') {
 }
 
 // cleanup
-runSync(() => fs.rmSync('./build', { recursive: true, force: true }));
-runSync(() => fs.rmSync('./cache', { recursive: true, force: true }));
+// runSync(() => fs.rmSync('./build', { recursive: true, force: true }));
+// runSync(() => fs.rmSync('./cache', { recursive: true, force: true }));
 
 require('child_process').execSync(
   `razzle build --noninteractive --node-env=${NODE_ENV} --type=${BUILD_TYPE}`,

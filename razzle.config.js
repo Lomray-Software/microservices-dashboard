@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -34,39 +36,50 @@ module.exports = {
     //   },
     // },
   ],
-  modifyWebpackConfig(opts) {
-    const config = opts.webpackConfig;
-
-    // config.optimization.splitChunks.chunks = 'all';
-    // config.optimization.splitChunks.cacheGroups.defaultVendors = {
-    //   test: /[\\/]node_modules[\\/]/,
-    //   priority: -10,
-    //   reuseExistingChunk: true,
-    // };
-
+  /**
+   * @param env
+   * @param webpackConfig
+   * @param {Record<any, Record>} webpackObject
+   */
+  modifyWebpackConfig({ env, webpackConfig, webpackObject }) {
     // when we are building the client bundle
-    if (opts.env.target === "web") {
-      const terserOptions = config.optimization && config.optimization.minimizer && config.optimization.minimizer[0].options.terserOptions;
+    if (env.target === 'web') {
+      // Remove aggressive merge plugin (prevent combine pages to the same chunk)
+      const aggressiveMergePlugin = webpackConfig.plugins.findIndex(
+        plugin => plugin instanceof webpackObject.optimize.AggressiveMergingPlugin
+      );
+      webpackConfig.plugins.splice(aggressiveMergePlugin, 1);
+
+      // webpackConfig.optimization.minimize = false;
+      webpackConfig.optimization.splitChunks = {
+        chunks: 'async',
+        minSize: 20000,
+        minRemainingSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        enforceSizeThreshold: 50000,
+      };
+
+      const terserOptions = webpackConfig.optimization && webpackConfig.optimization.minimizer && webpackConfig.optimization.minimizer[0].options.terserOptions;
 
       // disable call console.log from production build
       if (terserOptions && IS_PROD) {
         terserOptions.compress.pure_funcs = ['console.log'];
-        config.optimization.minimizer[0].options.terserOptions = terserOptions;
+        webpackConfig.optimization.minimizer[0].options.terserOptions = terserOptions;
       }
 
       // replace env BUILD_TYPE in src
-      config.plugins.forEach((plugin) => {
-        if (plugin.constructor.name === 'DefinePlugin') {
-          plugin.definitions['process.env.BUILD_TYPE'] = `'${BUILD_TYPE}'`;
-        }
-      });
+      const instanceOfDefinePlugin = webpackConfig.plugins.find(
+        plugin => plugin instanceof webpackObject.DefinePlugin
+      );
+      instanceOfDefinePlugin.definitions['process.env.BUILD_TYPE'] = `'${BUILD_TYPE}'`;
 
       // disable css mini extract plugin order warnings (because we use SCSS modules)
       if (IS_PROD) {
-        const instanceOfMiniCssExtractPlugin = config.plugins.find(
+        const instanceOfMiniCssExtractPlugin = webpackConfig.plugins.find(
           plugin => plugin instanceof MiniCssExtractPlugin
         );
-
         instanceOfMiniCssExtractPlugin.options.ignoreOrder = true;
       }
 
@@ -85,7 +98,7 @@ module.exports = {
           })(),
         }));
 
-        config.plugins.push(new WebpackPwaManifest({
+        webpackConfig.plugins.push(new WebpackPwaManifest({
           name: process.env.RAZZLE_APP_NAME,
           short_name: process.env.RAZZLE_APP_SHORT_NAME,
           description: process.env.RAZZLE_APP_DESCRIPTION,
@@ -117,7 +130,7 @@ module.exports = {
           ]
         }));
 
-        config.plugins.push(new InjectManifest({
+        webpackConfig.plugins.push(new InjectManifest({
           swSrc: path.resolve('src/sw.ts'),
           exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /\.xml$/],
           additionalManifestEntries: [
@@ -137,6 +150,6 @@ module.exports = {
       }
     }
 
-    return config;
+    return webpackConfig;
   },
 };
