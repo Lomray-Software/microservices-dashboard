@@ -1,4 +1,4 @@
-import debounce from 'lodash.debounce';
+import _ from 'lodash';
 import type { ChangeEvent, FC } from 'react';
 import React, { useMemo } from 'react';
 import type { HeaderGroup } from 'react-table';
@@ -13,7 +13,7 @@ interface IDefaultFilter {
 const DefaultFilter: FC<IDefaultFilter> = ({ onFilter, name, extraParams }): JSX.Element => {
   const debounceFilter = useMemo(
     () =>
-      debounce(
+      _.debounce(
         (e: ChangeEvent<HTMLInputElement>) => onFilter(name, e.target.value, extraParams),
         500,
       ),

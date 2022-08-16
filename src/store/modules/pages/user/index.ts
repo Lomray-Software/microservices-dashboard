@@ -1,6 +1,6 @@
 import type { IBaseException } from '@lomray/microservices-types';
 import type { IConstructorParams } from '@lomray/react-mobx-manager';
-import isEmpty from 'lodash.isempty';
+import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 import type Endpoints from '@store/endpoints';
 import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
@@ -96,7 +96,7 @@ class UserPageStore {
    * Update user
    */
   public async updateUser(fields: Partial<IUser>): Promise<IBaseException | undefined> {
-    if (isEmpty(fields)) {
+    if (_.isEmpty(fields)) {
       return;
     }
 
@@ -124,7 +124,7 @@ class UserPageStore {
    * Update user profile
    */
   public async updateProfile(fields: Partial<IProfile>): Promise<IBaseException | undefined> {
-    if (isEmpty(fields)) {
+    if (_.isEmpty(fields)) {
       return;
     }
 

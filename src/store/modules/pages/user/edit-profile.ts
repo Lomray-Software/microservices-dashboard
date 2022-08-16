@@ -1,8 +1,6 @@
 import type { IBaseException } from '@lomray/microservices-types';
 import type { IConstructorParams } from '@lomray/react-mobx-manager';
-import map from 'lodash.map';
-import omit from 'lodash.omit';
-import pick from 'lodash.pick';
+import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
@@ -75,9 +73,9 @@ class EditUserStore {
 
     const fields = shallowDiff(values, this.initialValues);
 
-    const { role } = pick(fields, map(userValue, 'name')) as { role?: Role };
-    const userFields = pick(omit(fields, ['role']), map(userValue, 'name'));
-    const profileFields = pick(fields, map(profileValue, 'name'));
+    const { role } = _.pick(fields, _.map(userValue, 'name')) as { role?: Role };
+    const userFields = _.pick(_.omit(fields, ['role']), _.map(userValue, 'name'));
+    const profileFields = _.pick(fields, _.map(profileValue, 'name'));
 
     const [userError, profileError, updateUserRoleError] = await Promise.all([
       this.userPageStore.updateUser(userFields),

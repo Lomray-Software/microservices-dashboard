@@ -1,5 +1,5 @@
 import type { IConstructorParams } from '@lomray/react-mobx-manager';
-import intersection from 'lodash.intersection';
+import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 import { ACCESS_USER_ROLES, IS_CLIENT, IS_PROD } from '@constants/index';
 import { withFetching } from '@helpers/with-fetching';
@@ -132,7 +132,7 @@ class Auth {
     // Get user roles
     const { roles } = this.api.apiClient.getRefreshTokenPayload(tokens.refresh);
 
-    if (!roles || intersection(ACCESS_USER_ROLES, roles).length === 0) {
+    if (!roles || _.intersection(ACCESS_USER_ROLES, roles).length === 0) {
       this.setError(i18n.t('accessDenied'));
 
       return;

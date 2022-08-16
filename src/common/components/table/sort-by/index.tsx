@@ -2,7 +2,7 @@ import type { IJsonQuery } from '@lomray/microservices-types';
 import { JQOrder } from '@lomray/microservices-types';
 import { mdiSortAscending, mdiSortDescending, mdiSort } from '@mdi/js';
 import Icon from '@mdi/react';
-import isEmpty from 'lodash.isempty';
+import _ from 'lodash';
 import type { FC } from 'react';
 import React, { useCallback, useState } from 'react';
 import styles from './styles.module.scss';
@@ -22,7 +22,7 @@ const setOrder = (
 ): void => {
   const orderBy = {};
 
-  if (isEmpty(orderBy)) {
+  if (_.isEmpty(orderBy)) {
     orderBy[id] = value;
 
     return handleChange(orderBy);
