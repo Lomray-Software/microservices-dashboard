@@ -33,7 +33,6 @@
     "baseUrl": "./src",
     "paths": {
       "@assets/*": ["./assets/*"],
-      "@common/*": ["./common/*"],
       "@wrappers/*": ["./common/wrappers/*"],
       "@forms/*": ["./common/forms/*"],
       "@helpers/*": ["./common/helpers/*"],

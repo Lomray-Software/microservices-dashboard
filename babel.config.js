@@ -20,7 +20,6 @@ module.exports = {
         ],
         alias: {
           '@assets': './src/assets',
-          '@common/*': './src/common',
           '@wrappers/*': './src/common/wrappers',
           '@forms/*': './src/common/forms',
           '@helpers/*': './src/common/helpers',

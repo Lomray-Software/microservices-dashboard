@@ -4,6 +4,7 @@ import { action, makeObservable, observable } from 'mobx';
 import { ACCESS_USER_ROLES, IS_CLIENT, IS_PROD } from '@constants/index';
 import { withFetching } from '@helpers/with-fetching';
 import type { ClassReturnType } from '@interfaces/helpers';
+import ApiClient from '@services/api-client';
 import i18n from '@services/localization';
 import type Endpoints from '@store/endpoints';
 import UserStore from '@store/modules/user';
@@ -130,7 +131,7 @@ class Auth {
     const { user, tokens } = result || {};
 
     // Get user roles
-    const { roles } = this.api.apiClient.getRefreshTokenPayload(tokens.refresh);
+    const roles = ApiClient.getRefreshTokenPayload(tokens.refresh)?.roles;
 
     if (!roles || _.intersection(ACCESS_USER_ROLES, roles).length === 0) {
       this.setError(i18n.t('accessDenied'));

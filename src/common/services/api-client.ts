@@ -161,7 +161,7 @@ class ApiClient {
   /**
    * Get refresh token payload
    */
-  public getRefreshTokenPayload(newToken?: string): IJwtPayload {
+  public static getRefreshTokenPayload(newToken?: string): IJwtPayload {
     const token = newToken ?? ApiClient.getRefreshToken();
 
     if (token) {
