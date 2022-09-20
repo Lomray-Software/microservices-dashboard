@@ -152,6 +152,7 @@ module.exports = {
 
       terserOptions.compress.pure_funcs = ['console.log'];
       terserOptions.keep_classnames = true;
+      terserOptions.keep_fnames = true;
     }
 
     return webpackConfig;
