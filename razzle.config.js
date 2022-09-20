@@ -42,6 +42,9 @@ module.exports = {
    * @param {Record<any, Record>} webpackObject
    */
   modifyWebpackConfig({ env, webpackConfig, webpackObject }) {
+
+    console.log('NODE_ENV:  => ', IS_PROD, process.env.NODE_ENV)
+
     // when we are building the client bundle
     if (env.target === 'web') {
       // Remove aggressive merge plugin (prevent combine pages to the same chunk)
