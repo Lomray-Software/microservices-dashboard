@@ -23,6 +23,7 @@ const storeManager = new Manager({
   initState,
   storage: new MobxLocalStorage(),
   storesParams: { endpoints },
+  options: { isSSR: true },
 });
 
 apiClient.setStoreManager(storeManager);

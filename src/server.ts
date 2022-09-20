@@ -37,7 +37,7 @@ void (async () => {
           const apiClient = new ApiClient({ headers: req.headers });
           const endpoints = new Endpoints(apiClient);
           const storeManager = new Manager({
-            options: { shouldDisablePersist: true },
+            options: { shouldDisablePersist: true, isSSR: true },
             storesParams: { endpoints },
           });
 
