@@ -1,4 +1,4 @@
-import type { StoresType } from '@interfaces/helpers';
+import type { StoresType } from '@lomray/react-mobx-manager';
 import UserStore from '@store/modules/user';
 import AuthStore from '@store/modules/user/auth';
 

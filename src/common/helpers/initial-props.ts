@@ -1,6 +1,5 @@
 import type { InitialData, Ctx } from '@lomray/after';
-import type { TStoreDefinition } from '@lomray/react-mobx-manager';
-import type { StoresType } from '@interfaces/helpers';
+import type { TStoreDefinition, StoresType } from '@lomray/react-mobx-manager';
 
 type InitialPropsReturnParams = { statusCode?: number } & InitialData;
 type InitialPropsReturn = Promise<void> | void | InitialPropsReturnParams;

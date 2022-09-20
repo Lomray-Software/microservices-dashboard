@@ -1,5 +1,4 @@
-import type { IConstructorParams } from '@lomray/react-mobx-manager';
-import type { ClassReturnType } from '@interfaces/helpers';
+import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import type Endpoints from '@store/endpoints';
 import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
 import type { IRequestReturn } from '@store/services/table';

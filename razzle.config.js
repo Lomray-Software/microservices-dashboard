@@ -61,14 +61,6 @@ module.exports = {
         enforceSizeThreshold: 50000,
       };
 
-      const terserOptions = webpackConfig.optimization && webpackConfig.optimization.minimizer && webpackConfig.optimization.minimizer[0].options.terserOptions;
-
-      // disable call console.log from production build
-      if (terserOptions && IS_PROD) {
-        terserOptions.compress.pure_funcs = ['console.log'];
-        webpackConfig.optimization.minimizer[0].options.terserOptions = terserOptions;
-      }
-
       // replace env BUILD_TYPE in src
       const instanceOfDefinePlugin = webpackConfig.plugins.find(
         plugin => plugin instanceof webpackObject.DefinePlugin
@@ -148,6 +140,18 @@ module.exports = {
           maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
         }));
       }
+    }
+
+    const terserOptions = webpackConfig.optimization && webpackConfig.optimization.minimizer && webpackConfig.optimization.minimizer[0].options.terserOptions;
+
+    // disable call console.log from production build
+    if (terserOptions && IS_PROD) {
+      if (!terserOptions.compress) {
+        terserOptions.compress = {};
+      }
+
+      terserOptions.compress.pure_funcs = ['console.log'];
+      terserOptions.keep_classnames = true;
     }
 
     return webpackConfig;

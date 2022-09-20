@@ -1,4 +1,4 @@
-import type { StoresType } from '@interfaces/helpers';
+import type { StoresType } from '@lomray/react-mobx-manager';
 import ChangePasswordStore from '@store/modules/pages/user/change-password';
 
 const stores = {

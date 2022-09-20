@@ -1,8 +1,7 @@
-import type { IConstructorParams } from '@lomray/react-mobx-manager';
+import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
-import type { ClassReturnType } from '@interfaces/helpers';
 import i18n from '@services/localization';
 import type Endpoints from '@store/endpoints';
 import UserPageStore from './index';

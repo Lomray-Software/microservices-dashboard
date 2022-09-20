@@ -14,16 +14,4 @@ export type ReplacePropertiesReturnType<TP, TNewType = Promise<void> | void> = {
   [key in keyof TP]: ReplaceReturnType<TP[key], TNewType>;
 };
 
-/**
- * Convert class type to class constructor
- */
-export type ClassReturnType<T> = T extends new (...args: any) => infer R ? R : never;
-
-/**
- * Stores map to type
- */
-export type StoresType<TStores> = {
-  [keys in keyof TStores]: ClassReturnType<TStores[keys]>;
-};
-
 export type TCallback = () => void;
