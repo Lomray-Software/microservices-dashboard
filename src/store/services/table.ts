@@ -160,6 +160,7 @@ class TableStore<TEntity> {
    */
   public setPageSize(count: number): void {
     this.tableState.pageSize = count;
+    this.setPage(1);
   }
 
   /**
@@ -188,7 +189,7 @@ class TableStore<TEntity> {
       this.setError(null);
       this.setFetching(true);
 
-      const result = await callback(pageVal);
+      const result = await callback(pageVal ?? this.tableState.page);
 
       this.setFetching(false);
 
@@ -206,7 +207,7 @@ class TableStore<TEntity> {
 
       this.setPage(page);
       this.setTotalCount(count ?? list.length);
-      this.setEntities(list, page > 1);
+      this.setEntities(list);
 
       return result;
     };
@@ -258,7 +259,7 @@ class TableStore<TEntity> {
    * @protected
    */
   protected getFieldFilter(
-    name: TTableFilters<TEntity>['name'],
+    _name: TTableFilters<TEntity>['name'],
     value: TTableFilters<TEntity>['value'],
     extraParams: TTableFilters<TEntity>['extraParams'] = {},
   ): TFieldCondition {

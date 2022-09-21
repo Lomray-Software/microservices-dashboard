@@ -22,32 +22,25 @@ interface ITable<TEntity extends Record<string, any>> extends TableOptions<TEnti
   expandComponent?: (id: string) => ReactElement;
 }
 
-const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX.Element => {
-  const {
-    columns,
-    data,
-    pageSize,
-    page: storePage,
-    count,
-    onFilter,
-    setPageSize: setStorePageSize,
-    onSortBy,
-    setPage,
-    onRoute,
-    expandComponent,
-  } = props;
-
-  const pageCount = Math.ceil(count / pageSize);
-
+const Table = <TEntity extends Record<string, any>>({
+  columns,
+  data,
+  pageSize,
+  page: storePage,
+  count,
+  onFilter,
+  setPageSize: setStorePageSize,
+  onSortBy,
+  setPage,
+  onRoute,
+  expandComponent,
+}: ITable<TEntity>) => {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
     page,
-    gotoPage,
-    nextPage,
-    previousPage,
     setPageSize,
     toggleRowExpanded,
     state: { expanded },
@@ -77,6 +70,11 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     [headerGroups],
   );
 
+  const gridStyle = useMemo(
+    () => ({ gridTemplateColumns: templatesForColumns }),
+    [templatesForColumns],
+  );
+
   const onChangePageSize = useCallback(
     (size: number) => {
       setStorePageSize(size);
@@ -86,34 +84,6 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
     [setPage, setPageSize, setStorePageSize],
   );
 
-  const onPaginationChange = useCallback(
-    (sheet: number) => {
-      setPage(sheet + 1);
-      gotoPage(sheet);
-    },
-    [gotoPage, setPage],
-  );
-
-  const onStartPage = () => {
-    gotoPage(1);
-    setPage(1);
-  };
-
-  const onLastPage = () => {
-    gotoPage(pageCount);
-    setPage(pageCount);
-  };
-
-  const onPreviousPage = () => {
-    previousPage();
-    setPage(storePage - 1);
-  };
-
-  const onNextPage = () => {
-    nextPage();
-    setPage(storePage + 1);
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.scroll}>
@@ -122,13 +92,7 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
             const rowProps = headerGroup.getHeaderGroupProps();
 
             return (
-              <div
-                className={styles.head}
-                {...rowProps}
-                style={{
-                  gridTemplateColumns: templatesForColumns,
-                }}
-                key={rowProps.key}>
+              <div className={styles.head} {...rowProps} style={gridStyle} key={rowProps.key}>
                 {headerGroup.headers.map((column) => {
                   const cellProps = column.getHeaderProps();
 
@@ -165,9 +129,8 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                   {...rowProps}
                   onClick={toggleRowExpanded.bind(null, row.id, !row.isExpanded)}
                   key={rowProps.key}
-                  style={{
-                    gridTemplateColumns: templatesForColumns,
-                  }}>
+                  style={gridStyle}
+                >
                   {row.cells.map((cell) => {
                     const cellProps = cell.getCellProps();
 
@@ -176,7 +139,8 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
                         className={styles.cell}
                         {...cellProps}
                         key={cellProps.key}
-                        to={onRoute(String(row.original.id))}>
+                        to={onRoute(String(row.original.id))}
+                      >
                         {cell.render('Cell')}
                       </Link>
                     ) : (
@@ -192,15 +156,12 @@ const Table = <TEntity extends Record<string, any>>(props: ITable<TEntity>): JSX
           </div>
         </div>
       </div>
+
       <Pagination
         page={storePage}
         size={pageSize}
-        count={pageCount}
-        handlePagination={onPaginationChange}
-        onStartPage={onStartPage}
-        onPreviousPage={onPreviousPage}
-        onNextPage={onNextPage}
-        onLastPage={onLastPage}
+        count={count}
+        setPage={setPage}
         onChangePageSize={onChangePageSize}
       />
     </div>
