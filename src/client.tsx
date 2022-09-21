@@ -6,6 +6,7 @@ import React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import CommonLayout from '@components/layouts/common/index.wrapper';
+import Spinner from '@components/loaders/spinner';
 import { IS_PROD, IS_PWA, IS_SPA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import ApiClient from '@services/api-client';
@@ -34,7 +35,7 @@ apiClient.setStoreManager(storeManager);
  */
 const App: FC<{ data: ServerAppState }> = ({ data }) => (
   <BrowserRouter>
-    <StoreManagerProvider storeManager={storeManager} shouldInit>
+    <StoreManagerProvider storeManager={storeManager} fallback={<Spinner />} shouldInit>
       <AppProvider>
         <CommonLayout initialI18nStore={initialI18nStore} initialLanguage={initialLanguage}>
           <After
