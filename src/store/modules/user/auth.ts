@@ -113,6 +113,8 @@ class Auth {
               hasCookies: navigator.cookieEnabled,
               language: navigator.language,
               userAgentData: navigator?.['userAgentData'],
+              // Cookie lifetime
+              maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
               // only for development
               ...(!IS_PROD ? { authType: 'directly' } : {}),
             }),
@@ -153,11 +155,16 @@ class Auth {
       return;
     }
 
-    const { result } = await this.api.users.user.signOut({ userId: this.userStore.user?.id });
+    const { result } = await this.api.users.user.signOut(
+      { userId: this.userStore.user?.id },
+      {
+        shouldShowErrors: false,
+      },
+    );
 
     // something went wrong
     if (!result?.loggedOut) {
-      await this.api.authentication.cookies.remove();
+      await this.api.authentication.cookies.remove(undefined, { shouldShowErrors: false });
     }
 
     this.api.apiClient.setAccessToken(null);

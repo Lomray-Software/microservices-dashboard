@@ -10,6 +10,7 @@ import type { IBaseException, IMicroserviceResponse } from '@interfaces/microser
 import i18n from '@services/localization';
 import type Endpoints from '@store/endpoints';
 import { TokenCreateReturnType } from '@store/endpoints/interfaces/authentication/methods/token/renew';
+import UserStore from '@store/modules/user';
 import AuthStore from '@store/modules/user/auth';
 
 // exclude from client.js
@@ -231,6 +232,19 @@ class ApiClient {
    * @private
    */
   private async updateAuthTokens(error: IBaseException): Promise<boolean> {
+    // Method not allowed
+    if (error.status === 405 && error.code === -33501) {
+      const payloadUserId = error.payload?.userId;
+      const currentUserId = this.storeManager.getStore(UserStore)?.user?.id;
+
+      if (payloadUserId !== currentUserId) {
+        // Maybe access token not exist in cookies, need logout
+        await this.disableRenewAuthTokens(() => this.storeManager.getStore(AuthStore)!.signOut());
+      }
+
+      return false;
+    }
+
     if (error.status !== 401) {
       return false;
     }
