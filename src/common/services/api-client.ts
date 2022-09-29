@@ -36,6 +36,10 @@ interface IApiClientParams {
   headers?: Record<string, any>;
 }
 
+type TReqData<TRequest> =
+  | { method: string; params?: TRequest }
+  | { method: string; params?: TRequest }[];
+
 /**
  * API client service
  */
@@ -304,41 +308,31 @@ class ApiClient {
   }
 
   /**
-   * Send request to API
+   * Handle backend response
+   * @private
    */
-  public async sendRequest<TResponse, TRequest>(
-    method: string,
-    params?: TRequest,
-    options: IApiClientReqOptions = {},
-  ): Promise<IMicroserviceResponse<TResponse>> {
-    const { request = {}, isSkipRenew = false, shouldShowErrors = true } = options;
+  private async handleResponse<TResponse>(
+    res: TResponse,
+    { shouldShowErrors, isSkipRenew }: IApiClientReqOptions,
+  ): Promise<TResponse | 401> {
+    const responses = Array.isArray(res) ? res : [res];
 
-    try {
-      const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
-        baseURL: API_DOMAIN,
-        method: 'POST',
-        withCredentials: IS_CLIENT, // pass cookies
-        headers: this.getHeaders(),
-        ...request,
-        data: {
-          method,
-          params,
-        },
-      });
-
+    for (const response of responses) {
       // Common error handlers
-      if (data?.error) {
-        ApiClient.makeBeautifulError(data.error);
+      if (response?.error) {
+        const { error } = response as { error: IBaseException };
 
-        if (!isSkipRenew && (await this.updateAuthTokens(data.error))) {
+        ApiClient.makeBeautifulError(error);
+
+        if (!isSkipRenew && (await this.updateAuthTokens(error))) {
           // repeat previous request
-          return this.sendRequest(method, params, options);
+          return 401;
         }
 
         if (shouldShowErrors && IS_CLIENT) {
           (await Notification).Store.addNotification({
             title: i18n.t('translation:errorTitle'),
-            message: data.error.message,
+            message: error.message,
             type: 'danger',
             insert: 'top',
             container: 'top-right',
@@ -356,8 +350,38 @@ class ApiClient {
           });
         }
       }
+    }
 
-      return data;
+    return res;
+  }
+
+  /**
+   * Send request to API
+   */
+  public async sendRequest<TResponse, TRequest>(
+    reqData: TReqData<TRequest>,
+    options: IApiClientReqOptions = {},
+  ): Promise<IMicroserviceResponse<TResponse>> {
+    const { request = {}, isSkipRenew = false, shouldShowErrors = true } = options;
+
+    try {
+      const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
+        baseURL: API_DOMAIN,
+        method: 'POST',
+        withCredentials: IS_CLIENT, // pass cookies
+        headers: this.getHeaders(),
+        ...request,
+        data: reqData,
+      });
+
+      const res = await this.handleResponse(data, { isSkipRenew, shouldShowErrors });
+
+      // repeat request after update auth tokens
+      if (res === 401) {
+        return this.sendRequest(reqData, options);
+      }
+
+      return res;
     } catch (e) {
       return {
         error: ApiClient.handleInternalError(e as AxiosError),

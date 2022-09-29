@@ -31,6 +31,8 @@ interface IEndpointsCreateHandlerConfig
 interface IEndpointsCreateHandlerOptions
   extends Omit<IApiClientReqOptions, 'isCached' | 'isSkipRenew'> {}
 
+type TBatchReturn<T> = { -readonly [P in keyof T]: Awaited<T[P]> };
+
 /**
  * Backend API endpoints
  */
@@ -39,6 +41,12 @@ class Endpoints {
    * API client
    */
   public readonly apiClient: ApiClient;
+
+  /**
+   * Endpoints instance for batching
+   * @private
+   */
+  private batchingInstance: Endpoints;
 
   /**
    * @constructor
@@ -50,6 +58,23 @@ class Endpoints {
   }
 
   /**
+   * Send request to API client
+   */
+  private sendRequest = <TInput, TOutput>(
+    method: string,
+    params?: TInput,
+    options?: IApiClientReqOptions,
+  ) => this.apiClient.sendRequest<TOutput, TInput>({ method, params }, options);
+
+  /**
+   * Return request data for batch request
+   */
+  private sendBatchRequest = <TInput>(method: string, params?: TInput) => ({
+    method,
+    params,
+  });
+
+  /**
    * Create endpoint handler
    */
   private createHandler =
@@ -58,11 +83,50 @@ class Endpoints {
       { isCached, isSkipRenew }: IEndpointsCreateHandlerConfig = {},
     ) =>
     (params?: TInput, options?: IEndpointsCreateHandlerOptions) =>
-      this.apiClient.sendRequest<TOutput, TInput>(method, params, {
+      this.sendRequest<TInput, TOutput>(method, params, {
         isCached,
         isSkipRenew,
         ...options,
       });
+
+  /**
+   * Send batch request
+   */
+  public async batch<T extends readonly unknown[] | []>(
+    callback: (api: Endpoints) => T,
+  ): Promise<TBatchReturn<T>> {
+    if (!this.batchingInstance) {
+      this.batchingInstance = Object.assign(new Endpoints(this.apiClient), {
+        sendRequest: this.sendBatchRequest,
+      });
+    }
+
+    // data can contain also other values (not only request)
+    const data = callback(this.batchingInstance) as Record<string, any>[];
+    const { requests, mapping } = data.reduce(
+      (res, obj: Record<string, any>, i) => {
+        if (typeof obj === 'object' && obj.method) {
+          res.requests.push(obj);
+        }
+
+        res.mapping[i] = res.requests.length - 1;
+
+        return res;
+      },
+      { requests: [], mapping: {} },
+    ) as { requests: Record<string, any>[]; mapping: Record<number, number> };
+
+    const result = await this.apiClient.sendRequest(requests as never);
+
+    // combine backend response and other values in the same order
+    return data.map((obj, i) => {
+      if (typeof obj === 'object' && obj.method) {
+        return result[mapping[i]] as Record<string, any>;
+      }
+
+      return obj;
+    }) as never;
+  }
 
   /**
    * Authentication microservice

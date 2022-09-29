@@ -30,6 +30,7 @@ module.exports = {
   rules: {
     'unicorn/import-index': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+    'no-await-in-loop': 'off',
     'prettier/prettier': [
       'error',
       {
