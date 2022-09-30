@@ -1,8 +1,8 @@
+import ucfirst from '@lomray/client-helpers/helpers/ucfirst';
 import type { IBaseException } from '@lomray/microservices-types';
 import type { FormikHelpers } from 'formik/dist/types';
 import i18n from 'i18next';
 import { Store } from '@components/notifications';
-import ucfirst from '@helpers/ucfirst';
 import translation from '@services/localization';
 
 export interface IValidationErrors<TFormValue> {

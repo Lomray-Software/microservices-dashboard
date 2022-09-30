@@ -39,7 +39,8 @@ const SideMenu: FC<ISideMenu & StoreProps> = ({
         styles.navigation,
         hasSidebar ? styles.close : '',
         isMobile ? styles.mobile : '',
-      )}>
+      )}
+    >
       <Link to={ROUTE.HOME.URL} className={styles.title}>
         {!hasSidebar ? APP_SHORT_NAME : APP_SHORT_NAME[0]}
       </Link>
@@ -58,7 +59,8 @@ const SideMenu: FC<ISideMenu & StoreProps> = ({
                 className={combineCss(
                   styles.link,
                   activeMenuItem.titleKey === titleKey ? styles.active : '',
-                )}>
+                )}
+              >
                 <span className={styles.round}>
                   <Icon path={src} size={1} color={color} />
                 </span>

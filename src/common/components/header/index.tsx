@@ -48,7 +48,8 @@ const Header: FC<StoreProps> = ({
         className={combineCss(
           styles.wrapperNavigation,
           hasSidebar ? styles.wrapperNavigationOpen : '',
-        )}>
+        )}
+      >
         <SideMenu isMobile />
       </div>
     </header>

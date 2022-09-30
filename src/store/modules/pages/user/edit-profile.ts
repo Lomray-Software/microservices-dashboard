@@ -1,12 +1,12 @@
+import shallowDiff from '@lomray/client-helpers/helpers/shallow-diff';
+import Role from '@lomray/microservices-client-api/constants/role';
 import type { IBaseException } from '@lomray/microservices-types';
 import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
-import shallowDiff from '@helpers/shallow-diff';
 import { profileFields as profileValue, userFields as userValue } from '@pages/user/data';
-import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import UserPageStore from './index';

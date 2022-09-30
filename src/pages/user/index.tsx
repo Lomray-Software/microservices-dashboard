@@ -1,3 +1,4 @@
+import Role from '@lomray/microservices-client-api/constants/role';
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +9,6 @@ import ROUTE from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
 import i18n from '@services/localization';
-import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 import UserEntity from '@store/entities/user';
 import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';

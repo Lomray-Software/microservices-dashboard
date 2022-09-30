@@ -1,3 +1,4 @@
+import ApiClient from '@lomray/microservices-client-api/api-client';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Footer from '@components/footer';
@@ -6,7 +7,6 @@ import SideMenu from '@components/side-menu/index.wrapper';
 import { IS_CLIENT, IS_PROD, IS_SERVER } from '@constants/index';
 import InitialProps from '@helpers/initial-props';
 import type { SSRComponent } from '@interfaces/ssr-component';
-import ApiClient from '@services/api-client';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
 import styles from './styles.module.scss';

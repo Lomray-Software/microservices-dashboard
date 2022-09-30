@@ -1,6 +1,6 @@
 import { StaticContext } from '@lomray/after';
+import type { FCC } from '@lomray/client-helpers/interfaces/fc-with-children';
 import React, { useContext } from 'react';
-import type { FCC } from '@interfaces/fc-with-children';
 
 interface IStatusGate {
   code: number;

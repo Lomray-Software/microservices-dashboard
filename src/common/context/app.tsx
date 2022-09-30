@@ -1,8 +1,8 @@
+import canUseWebp from '@lomray/client-helpers/helpers/can-use-webp';
+import type { FCC } from '@lomray/client-helpers/interfaces/fc-with-children';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { IS_CLIENT } from '@constants/index';
-import canUseWebP from '@helpers/can-use-webp';
-import type { FCC } from '@interfaces/fc-with-children';
 
 interface IAppContext {
   setState: (state: Partial<Omit<IAppContext, 'setState'>>) => void;
@@ -16,7 +16,7 @@ const initState = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setState: (_: Parameters<IAppContext['setState']>[0]): void => undefined,
   cookies: new Cookies(),
-  isWebpSupport: IS_CLIENT ? canUseWebP() : false,
+  isWebpSupport: IS_CLIENT ? canUseWebp() : false,
   domain: IS_CLIENT
     ? `${window.location.protocol}//${window.location.hostname}${
         window.location.port ? `:${window.location.port}` : ''

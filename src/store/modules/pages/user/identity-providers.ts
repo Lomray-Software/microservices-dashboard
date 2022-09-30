@@ -1,6 +1,6 @@
+import type { IIdentityProvider } from '@lomray/microservices-client-api/interfaces/users/entities/identity-provider';
 import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import type Endpoints from '@store/endpoints';
-import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
 import type { IRequestReturn } from '@store/services/table';
 import TableStore from '@store/services/table';
 import UserPageStore from './index';

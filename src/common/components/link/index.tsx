@@ -24,7 +24,8 @@ const Link: FC<LinkProps & { isLocalized?: boolean }> = (props) => {
     return (
       <DefaultLink
         to={`/${lng}${to.startsWith('/') ? to : `/${to}`}`.replace(/\/+$/, '')}
-        {...other}>
+        {...other}
+      >
         {children}
       </DefaultLink>
     );

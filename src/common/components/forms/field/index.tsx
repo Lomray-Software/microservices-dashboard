@@ -22,7 +22,8 @@ type TProps = InputHTMLAttributes<HTMLInputElement> & IField;
 const Field: FC<TProps> = ({ name, title, isInline = false, ...props }) => (
   <Label
     htmlFor={name}
-    className={combineCss(styles.container, isInline ? styles.containerLine : '')}>
+    className={combineCss(styles.container, isInline ? styles.containerLine : '')}
+  >
     {title && <span className={styles.description}>{title}</span>}
     <DefaultField name={name}>
       {({

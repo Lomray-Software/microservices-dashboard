@@ -7,8 +7,7 @@ import { SITE_DOMAIN } from '@constants/index';
 import ROUTE from '@constants/routes';
 import { getRenderProps } from '@server/config';
 import { applySSGTranslation } from '@server/translation';
-import ApiClient from '@services/api-client';
-import Endpoints from '@store/endpoints';
+import initApi from '@services/api-client';
 
 type TRender = (req: Request, res: Response) => Promise<void>;
 
@@ -39,9 +38,11 @@ export const render: TRender = async (req, res) => {
   cookiesMiddleware()(req, res, () => null);
   await applySSGTranslation(req, res);
 
-  const apiClient = new ApiClient({ headers: req.headers });
-  const endpoints = new Endpoints(apiClient);
+  const { endpoints } = initApi({ headers: req.headers });
   const storeManager = new Manager({ storesParams: { endpoints } });
+
+  await storeManager.init();
+  endpoints.apiClient.setStoreManager(storeManager);
 
   const { html, data } = await renderStatic({
     req,

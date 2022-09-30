@@ -1,6 +1,6 @@
+import type { FCC } from '@lomray/client-helpers/interfaces/fc-with-children';
 import React from 'react';
 import type { IField } from '@components/forms/fields';
-import type { FCC } from '@interfaces/fc-with-children';
 import i18n from '@services/localization';
 import EntityFields from './entity-fields';
 import styles from './styles.module.scss';

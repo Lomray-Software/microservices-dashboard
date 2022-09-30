@@ -1,18 +1,8 @@
-import type { IEntity } from '@lomray/microservices-types';
+import type IProfileDefault from '@lomray/microservices-client-api/interfaces/users/entities/profile';
 
 /**
  * User profile
  */
-interface IProfile extends IEntity {
-  userId: string;
-  gender: string;
-  photo: string;
-  birthDay: string;
-  params: {
-    isEmailValid?: boolean;
-    isPhoneVerified?: boolean;
-  };
-  updatedAt: string;
-}
+interface IProfile extends IProfileDefault {}
 
 export default IProfile;

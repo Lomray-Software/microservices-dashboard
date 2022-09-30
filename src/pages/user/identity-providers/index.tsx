@@ -1,3 +1,4 @@
+import type { IIdentityProvider } from '@lomray/microservices-client-api/interfaces/users/entities/identity-provider';
 import { JQFieldType } from '@lomray/microservices-types';
 import { mdiDelete } from '@mdi/js';
 import Icon from '@mdi/react';
@@ -8,7 +9,6 @@ import type { Column, Row } from 'react-table';
 import ButtonPrimary from '@components/button-primary';
 import Overview from '@components/overview';
 import Table from '@components/table';
-import type { IIdentityProvider } from '@store/endpoints/interfaces/users/entities/identity-provider';
 import { fieldsIdentity, fieldsIdentityParams } from './fields';
 import type { StoreProps } from './index.stores';
 import styles from './styles.module.scss';
@@ -62,7 +62,8 @@ const IdentityProviders: FC<StoreProps> = ({
         Cell: ({ row }: { row: Row<IIdentityProvider> }) => (
           <ButtonPrimary
             kind="secondary"
-            onClick={removeIdentity.bind(null, row.original.provider, row.original.identifier)}>
+            onClick={removeIdentity.bind(null, row.original.provider, row.original.identifier)}
+          >
             <Icon path={mdiDelete} size={1.2} color="#8f5fe8" />
           </ButtonPrimary>
         ),

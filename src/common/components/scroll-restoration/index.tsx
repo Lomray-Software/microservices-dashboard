@@ -1,7 +1,7 @@
+import ScrollRestorationService from '@lomray/client-helpers/services/scroll-restoration';
 import type { FC } from 'react';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import ScrollRestorationService from '@services/scroll-restoration';
 
 const ScrollRestoration: FC = () => {
   const { pathname } = useLocation();

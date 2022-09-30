@@ -1,6 +1,6 @@
+import useToggle from '@lomray/client-helpers/hooks/use-toggle';
 import type { FC } from 'react';
 import React from 'react';
-import useToggle from '@hooks/use-toggle';
 import UserEntity from '@store/entities/user';
 import type { StoreProps } from './index.stores';
 import Popup from './popup';

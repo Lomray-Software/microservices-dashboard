@@ -27,7 +27,8 @@ const Popup: FC<IPopup> = ({ isOpen, signOut, userId }) => {
           </div>
           <Link
             to={makeURL('USER', { id: String(userId) })}
-            className={combineCss(styles.item, styles.link)}>
+            className={combineCss(styles.item, styles.link)}
+          >
             {t('settings')}
           </Link>
           <span className={styles.bottomElement} />
@@ -39,7 +40,8 @@ const Popup: FC<IPopup> = ({ isOpen, signOut, userId }) => {
           <ButtonPrimary
             type="button"
             className={combineCss(styles.item, styles.logout)}
-            onClick={signOut}>
+            onClick={signOut}
+          >
             {t('logOut')}
           </ButtonPrimary>
         </li>

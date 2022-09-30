@@ -7,8 +7,7 @@ import { IS_PROD } from '@constants/index';
 import { getRenderProps } from '@server/config';
 import resolveAppPath from '@server/tools/resolve-app-path';
 import { initServerTranslation } from '@server/translation';
-import ApiClient from '@services/api-client';
-import Endpoints from '@store/endpoints';
+import initApi from '@services/api-client';
 
 const publicPath =
   // true - 'razzle start' only (for development /public) in other cases we need /build/public
@@ -34,15 +33,14 @@ void (async () => {
     .get('/*', (req, res) => {
       void (async () => {
         try {
-          const apiClient = new ApiClient({ headers: req.headers });
-          const endpoints = new Endpoints(apiClient);
+          const { endpoints } = initApi({ headers: req.headers });
           const storeManager = new Manager({
             options: { shouldDisablePersist: true, isSSR: true },
             storesParams: { endpoints },
           });
 
           await storeManager.init();
-          apiClient.setStoreManager(storeManager);
+          endpoints.apiClient.setStoreManager(storeManager);
 
           const html = await render({
             req,

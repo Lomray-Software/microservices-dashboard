@@ -1,9 +1,9 @@
+import { withFetching } from '@lomray/client-helpers/helpers/with-fetching';
+import ApiClient from '@lomray/microservices-client-api/api-client';
 import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 import { ACCESS_USER_ROLES, IS_CLIENT, IS_PROD } from '@constants/index';
-import { withFetching } from '@helpers/with-fetching';
-import ApiClient from '@services/api-client';
 import i18n from '@services/localization';
 import type Endpoints from '@store/endpoints';
 import UserStore from '@store/modules/user';

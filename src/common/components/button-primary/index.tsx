@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
+import type { ReplaceReturnType } from '@lomray/client-helpers/interfaces/replace-return-type';
 import type { FC } from 'react';
 import React from 'react';
-import type { ReplaceReturnType } from '@interfaces/helpers';
 import styles from './styles.module.scss';
 
 export interface IButtonPrimary extends React.HTMLProps<HTMLButtonElement> {

@@ -1,6 +1,6 @@
+import Role from '@lomray/microservices-client-api/constants/role';
 import type { IField } from '@components/forms/fields';
 import type { ISelectOptions } from '@components/forms/select-field';
-import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
 
 const genderOptions: ISelectOptions[] = [
   { value: 'male', label: 'users-page:male' },

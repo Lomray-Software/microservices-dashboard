@@ -1,4 +1,4 @@
-import { Role } from '@store/endpoints/interfaces/authorization/entities/role';
+import Role from '@lomray/microservices-client-api/constants/role';
 
 export const WINDOW_OBJ = (typeof window !== 'undefined' ? window : {}) as any;
 

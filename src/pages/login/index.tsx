@@ -55,7 +55,8 @@ const Login: SSRComponent<Props> = ({ authStore: { error, signIn } }) => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={onSubmit}>
+            onSubmit={onSubmit}
+          >
             <Form className={styles.form}>
               <Field name="login" type="text" placeholder={t('login-page:fieldLogin')} />
               <Field name="password" type="password" placeholder={t('login-page:fieldPassword')} />

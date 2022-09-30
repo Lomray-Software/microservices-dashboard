@@ -29,7 +29,8 @@ interface ISelectField {
 const SelectField: FC<ISelectField> = ({ name, options, title, isInline = false }) => (
   <Label
     htmlFor={name}
-    className={combineCss(styles.container, isInline ? styles.containerLine : '')}>
+    className={combineCss(styles.container, isInline ? styles.containerLine : '')}
+  >
     {title && <span className={styles.description}>{title}</span>}
     <DefaultField name={name}>
       {({ field: { value }, form: { setFieldValue }, meta: { initialValue } }: FieldProps) => {

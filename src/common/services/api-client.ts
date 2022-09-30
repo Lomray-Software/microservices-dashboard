@@ -1,393 +1,68 @@
-import type { Manager } from '@lomray/react-mobx-manager';
-import type { AxiosError, AxiosRequestConfig } from 'axios';
-import axios from 'axios';
-import type { JwtPayload } from 'jwt-decode';
-import JwtDecode from 'jwt-decode';
-import Cookies from 'universal-cookie';
-import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_PROD, IS_SERVER } from '@constants/index';
-import waitFor from '@helpers/wait-for';
-import type { IBaseException, IMicroserviceResponse } from '@interfaces/microservice';
+import ApiClient from '@lomray/microservices-client-api/api-client';
+import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_PROD, WINDOW_OBJ } from '@constants/index';
 import i18n from '@services/localization';
-import type Endpoints from '@store/endpoints';
-import { TokenCreateReturnType } from '@store/endpoints/interfaces/authentication/methods/token/renew';
+import Endpoints from '@store//endpoints';
 import UserStore from '@store/modules/user';
-import AuthStore from '@store/modules/user/auth';
+import Auth from '@store/modules/user/auth';
 
 // exclude from client.js
 const Notification = import('@components/notifications');
 
-export const ACCESS_TOKEN_KEY = 'jwt-access';
-
-export const REFRESH_TOKEN_KEY = 'refresh-token';
-
-export interface IApiClientReqOptions {
-  isCached?: boolean;
-  isSkipRenew?: boolean;
-  shouldShowErrors?: boolean;
-  request?: AxiosRequestConfig;
-}
-
-interface IJwtPayload extends JwtPayload {
-  userId?: string;
-  roles?: string[];
-}
-
-interface IApiClientParams {
+interface IInitApiParams {
   headers?: Record<string, any>;
 }
 
-type TReqData<TRequest> =
-  | { method: string; params?: TRequest }
-  | { method: string; params?: TRequest }[];
-
-/**
- * API client service
- */
-
-class ApiClient {
-  /**
-   * API Endpoints
-   * @private
-   */
-  private endpoints: Endpoints;
-
-  /**
-   * Mobx store manager
-   * @private
-   */
-  private storeManager: Manager;
-
-  /**
-   * Client language
-   * @private
-   */
-  private lang: string = DEFAULT_APP_LANGUAGE;
-
-  /**
-   * Request headers
-   * @private
-   */
-  private readonly headers?: Record<string, any>;
-
-  /**
-   * Currently going request for refresh auth tokens
-   * @private
-   */
-  private hasAuthRefresh = false;
-
-  /**
-   * @constructor
-   */
-  constructor({ headers }: IApiClientParams = {}) {
-    this.headers = headers;
-
-    i18n.on('languageChanged', (lng) => {
-      this.lang = lng;
-    });
-  }
-
-  /**
-   * @private
-   */
-  private getHeaders(): Record<string, any> | undefined {
-    // do not pass this to axios
-    if (this.headers?.host) {
-      delete this.headers.host;
-    }
-
-    // add authentication token only for development (if cookie not pass with request)
-    if (!IS_PROD && IS_CLIENT) {
-      const token: string | undefined = new Cookies().get(ACCESS_TOKEN_KEY);
-
-      return {
-        ...(this.headers || {}),
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      };
-    }
-
-    return this.headers;
-  }
-
-  /**
-   * Set API endpoints
-   */
-  public setEndpoints(endpoints: Endpoints): void {
-    this.endpoints = endpoints;
-  }
-
-  /**
-   * Set store manager
-   */
-  public setStoreManager(manager: Manager): void {
-    this.storeManager = manager;
-  }
-
-  /**
-   * Set user access token
-   * NOTE: only for development mode
-   */
-  public setAccessToken(token: string | null | undefined): void {
-    if (IS_PROD || token === undefined) {
-      return;
-    }
-
-    const cookies = new Cookies();
-
-    if (token === null) {
-      cookies.remove(ACCESS_TOKEN_KEY);
-
-      return;
-    }
-
-    cookies.set(ACCESS_TOKEN_KEY, token, { path: '/' });
-  }
-
-  /**
-   * Set user refresh token
-   */
-  public setRefreshToken(token: string | null): void {
-    if (token === null) {
-      localStorage.removeItem(REFRESH_TOKEN_KEY);
-
-      return;
-    }
-
-    localStorage.setItem(REFRESH_TOKEN_KEY, token);
-  }
-
-  /**
-   * Get refresh token
-   * @private
-   */
-  private static getRefreshToken(): string | null {
-    return localStorage.getItem(REFRESH_TOKEN_KEY);
-  }
-
-  /**
-   * Get refresh token payload
-   */
-  public static getRefreshTokenPayload(newToken?: string): IJwtPayload {
-    const token = newToken ?? ApiClient.getRefreshToken();
-
-    if (token) {
-      return JwtDecode<IJwtPayload>(token);
-    }
-
-    return {};
-  }
-
-  /**
-   * Make beautiful error message
-   * @private
-   */
-  private static makeBeautifulError(error: IBaseException): void {
-    const { message } = error;
-    const parts = /Endpoint\sexception\s.+\):(.+)/.exec(message);
-
-    error.message = parts?.[1] ?? parts?.[0] ?? message;
-    error.rawMessage = message;
-  }
-
-  /**
-   * Run request with blocking refresh auth tokens
-   * @private
-   */
-  private async disableRenewAuthTokens<TCallback>(
-    callback: () => Promise<TCallback> | TCallback,
-  ): Promise<TCallback> {
-    this.hasAuthRefresh = true;
-    const result = await callback();
-
-    this.hasAuthRefresh = false;
-
-    return result;
-  }
-
-  /**
-   * Renew auth tokens
-   */
-  public renewAuthTokens(): Promise<boolean> {
-    return this.disableRenewAuthTokens(async () => {
-      const refresh = ApiClient.getRefreshToken();
-
-      if (refresh) {
-        const { result } = await this.endpoints.authentication.token.renew(
-          {
-            refresh,
-            returnType: IS_PROD ? TokenCreateReturnType.cookies : TokenCreateReturnType.directly,
-          },
-          { shouldShowErrors: false },
-        );
-
-        if (result?.refresh) {
-          this.setAccessToken(result.access);
-          this.setRefreshToken(result.refresh);
-
-          return true;
-        }
+const initApi = ({ headers }: IInitApiParams = {}) => {
+  const apiClient = new ApiClient({
+    isClient: IS_CLIENT,
+    apiDomain: API_DOMAIN,
+    isProd: IS_PROD,
+    lang: DEFAULT_APP_LANGUAGE,
+    userStore: UserStore,
+    authStore: Auth,
+    headers,
+    onSignOut: (code) => {
+      if (code !== 405) {
+        return;
       }
 
-      return false;
-    });
-  }
-
-  /**
-   * Detect auth token expiration and try to renew
-   * @private
-   */
-  private async updateAuthTokens(error: IBaseException): Promise<boolean> {
-    // Method not allowed
-    if (error.status === 405 && error.code === -33501) {
-      const payloadUserId = error.payload?.userId;
-      const currentUserId = this.storeManager.getStore(UserStore)?.user?.id;
-
-      if (payloadUserId !== currentUserId) {
-        // Maybe access token not exist in cookies, need logout
-        await this.disableRenewAuthTokens(() => this.storeManager.getStore(AuthStore)!.signOut());
+      // sometimes auth gateway not re-render and user still in the same page
+      if (IS_CLIENT) {
+        WINDOW_OBJ.location.reload();
       }
-
-      return false;
-    }
-
-    if (error.status !== 401) {
-      return false;
-    }
-
-    if (IS_SERVER) {
-      const authStore = this.storeManager.getStore(AuthStore)!;
-
-      // Pass flag to client side for update auth tokens & user
-      authStore.setShouldRefresh(true);
-      authStore.setFetching(true);
-
-      return false;
-    }
-
-    // hold this request (this is parallel request) and wait until previous request refresh auth tokens
-    if (this.hasAuthRefresh) {
-      return waitFor(
-        () => !this.hasAuthRefresh,
-        () => true,
-      );
-    }
-
-    // Access token expired and we need renew it
-    if (await this.renewAuthTokens()) {
-      return true;
-    }
-
-    // Failed to renew tokens - clear user store
-    await this.disableRenewAuthTokens(() => this.storeManager.getStore(AuthStore)!.signOut());
-
-    return false;
-  }
-
-  /**
-   * Handle network and other internal errors
-   * @private
-   */
-  private static handleInternalError(e: AxiosError): IBaseException {
-    const { message, response, code } = e || {};
-    let errMessage = message;
-
-    // api timeout
-    if (code === 'ECONNABORTED' && message.includes('timeout')) {
-      errMessage = i18n.t('translation:timeoutError');
-    } else if (!response && message === 'Network Error') {
-      errMessage = i18n.t('translation:noInternetError');
-    }
-
-    console.info(e);
-
-    return {
-      status: response?.status ?? 0,
-      code: 0,
-      service: 'unknown',
-      message: errMessage,
-    };
-  }
-
-  /**
-   * Handle backend response
-   * @private
-   */
-  private async handleResponse<TResponse>(
-    res: TResponse,
-    { shouldShowErrors, isSkipRenew }: IApiClientReqOptions,
-  ): Promise<TResponse | 401> {
-    const responses = Array.isArray(res) ? res : [res];
-
-    for (const response of responses) {
-      // Common error handlers
-      if (response?.error) {
-        const { error } = response as { error: IBaseException };
-
-        ApiClient.makeBeautifulError(error);
-
-        if (!isSkipRenew && (await this.updateAuthTokens(error))) {
-          // repeat previous request
-          return 401;
-        }
-
-        if (shouldShowErrors && IS_CLIENT) {
-          (await Notification).Store.addNotification({
-            title: i18n.t('translation:errorTitle'),
-            message: error.message,
-            type: 'danger',
-            insert: 'top',
-            container: 'top-right',
-            animationIn: ['animate__animated', 'animate__fadeIn'],
-            animationOut: ['animate__animated', 'animate__fadeOut'],
-            dismiss: {
-              duration: 4000,
-              onScreen: true,
-            },
-            slidingExit: {
-              duration: 200,
-              timingFunction: 'ease-out',
-              delay: 0,
-            },
-          });
-        }
-      }
-    }
-
-    return res;
-  }
-
-  /**
-   * Send request to API
-   */
-  public async sendRequest<TResponse, TRequest>(
-    reqData: TReqData<TRequest>,
-    options: IApiClientReqOptions = {},
-  ): Promise<IMicroserviceResponse<TResponse>> {
-    const { request = {}, isSkipRenew = false, shouldShowErrors = true } = options;
-
-    try {
-      const { data } = await axios.request<IMicroserviceResponse<TResponse>>({
-        baseURL: API_DOMAIN,
-        method: 'POST',
-        withCredentials: IS_CLIENT, // pass cookies
-        headers: this.getHeaders(),
-        ...request,
-        data: reqData,
+    },
+    onShowError: async ({ message }) => {
+      (await Notification).Store.addNotification({
+        title: i18n.t('translation:errorTitle'),
+        message,
+        type: 'danger',
+        insert: 'top',
+        container: 'top-right',
+        animationIn: ['animate__animated', 'animate__fadeIn'],
+        animationOut: ['animate__animated', 'animate__fadeOut'],
+        dismiss: {
+          duration: 4000,
+          onScreen: true,
+        },
+        slidingExit: {
+          duration: 200,
+          timingFunction: 'ease-out',
+          delay: 0,
+        },
       });
+    },
+    params: {
+      errorConnectionMsg: i18n.t('translation:timeoutError'),
+      errorInternetMsg: i18n.t('translation:noInternetError'),
+    },
+  });
+  const endpoints = new Endpoints(apiClient);
 
-      const res = await this.handleResponse(data, { isSkipRenew, shouldShowErrors });
+  i18n.on('languageChanged', (lng) => {
+    apiClient.setLanguage(lng);
+  });
 
-      // repeat request after update auth tokens
-      if (res === 401) {
-        return this.sendRequest(reqData, options);
-      }
+  return { apiClient, endpoints };
+};
 
-      return res;
-    } catch (e) {
-      return {
-        error: ApiClient.handleInternalError(e as AxiosError),
-      };
-    }
-  }
-}
-
-export default ApiClient;
+export default initApi;

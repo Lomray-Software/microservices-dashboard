@@ -47,7 +47,8 @@ const Tabs: FC<ITabs> = ({ tabs }) => {
             data-id={i > 0 ? tab : ''}
             className={combineCss(styles.tab, active === tab ? styles.selected : '')}
             type="button"
-            onClick={onSetActiveTab}>
+            onClick={onSetActiveTab}
+          >
             {tabs[tab].title}
           </button>
         ))}
