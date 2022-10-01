@@ -16,7 +16,7 @@ const User: FC<StoreProps> = ({ userStore: { user }, authStore: { signOut } }) =
       )}
       <div role="presentation" onClick={setIsOpenPopup} className={styles.wrapperUser}>
         <div className={styles.wrapperImage}>
-          <img className={styles.img} src={UserEntity.getAvatar(user?.profile)} alt="user-avatar" />
+          <img className={styles.img} src={UserEntity.getAvatar(user)} alt="user-avatar" />
         </div>
         <p className={styles.name}>
           {user?.firstName}

@@ -1,17 +1,18 @@
 import { withFetching } from '@lomray/client-helpers/helpers/with-fetching';
-import ApiClient from '@lomray/microservices-client-api/api-client';
+import type { IAuthStore } from '@lomray/microservices-client-api/api-client';
 import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
 import { ACCESS_USER_ROLES, IS_CLIENT, IS_PROD } from '@constants/index';
 import i18n from '@services/localization';
 import type Endpoints from '@store/endpoints';
+import User from '@store/entities/user';
 import UserStore from '@store/modules/user';
 
 /**
  * Auth user store
  */
-class Auth {
+class Auth implements IAuthStore {
   static isSingleton = true;
 
   /**
@@ -95,6 +96,21 @@ class Auth {
   }
 
   /**
+   * Renew user tokens
+   */
+  public renewTokens: IAuthStore['renewTokens'] = async (params) => {
+    const { result, error } = await this.api.authentication.token.renew(params, {
+      shouldShowErrors: false,
+    });
+
+    if (error) {
+      return;
+    }
+
+    return result;
+  };
+
+  /**
    * Authenticate user
    */
   public signIn = async (login: string, password: string): Promise<void> => {
@@ -132,7 +148,7 @@ class Auth {
     const { user, tokens } = result || {};
 
     // Get user roles
-    const roles = ApiClient.getRefreshTokenPayload(tokens.refresh)?.roles;
+    const roles = (await this.api.apiClient.getTokenPayload({ newToken: tokens.refresh }))?.roles;
 
     if (!roles || _.intersection(ACCESS_USER_ROLES, roles).length === 0) {
       this.setError(i18n.t('accessDenied'));
@@ -140,9 +156,32 @@ class Auth {
       return;
     }
 
+    const { result: resultAvatar } = await this.api.attachments.attachment.list({
+      query: {
+        attributes: ['id', 'formats', 'attachmentEntities.order'],
+        relations: ['attachmentEntities'],
+        where: {
+          // try to get only first image
+          and: [
+            {
+              'attachmentEntities.entityId': user.id,
+            },
+            {
+              'attachmentEntities.order': 1,
+            },
+          ],
+        },
+      },
+    });
+
+    if (resultAvatar) {
+      User.assignAvatar(user, resultAvatar.list);
+    }
+
     // Success user auth
-    this.api.apiClient.setAccessToken(tokens.access);
-    this.api.apiClient.setRefreshToken(tokens.refresh);
+    void this.api.apiClient.setAccessToken(tokens.access);
+    void this.api.apiClient.setRefreshToken(tokens.refresh);
+    this.userStore.setIsUserRefreshed(true);
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);
   };
@@ -155,20 +194,24 @@ class Auth {
       return;
     }
 
-    const { result } = await this.api.users.user.signOut(
-      { userId: this.userStore.user?.id },
-      {
-        shouldShowErrors: false,
-      },
-    );
+    try {
+      const { result } = await this.api.users.user.signOut(
+        { userId: this.userStore.user?.id },
+        {
+          shouldShowErrors: false,
+        },
+      );
 
-    // something went wrong
-    if (!result?.loggedOut) {
-      await this.api.authentication.cookies.remove(undefined, { shouldShowErrors: false });
+      // something went wrong
+      if (!result?.loggedOut) {
+        await this.api.authentication.cookies.remove(undefined, { shouldShowErrors: false });
+      }
+    } catch (e) {
+      console.info('Error logout:', e);
     }
 
-    this.api.apiClient.setAccessToken(null);
-    this.api.apiClient.setRefreshToken(null);
+    void this.api.apiClient.setAccessToken(null);
+    void this.api.apiClient.setRefreshToken(null);
     this.userStore.setUser(null);
     this.userStore.setIsAuth(false);
   };

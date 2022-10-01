@@ -38,11 +38,11 @@ export const render: TRender = async (req, res) => {
   cookiesMiddleware()(req, res, () => null);
   await applySSGTranslation(req, res);
 
-  const { endpoints } = initApi({ headers: req.headers });
+  const { endpoints, apiClient } = initApi({ headers: req.headers });
   const storeManager = new Manager({ storesParams: { endpoints } });
 
+  apiClient.setStoreManager(storeManager);
   await storeManager.init();
-  endpoints.apiClient.setStoreManager(storeManager);
 
   const { html, data } = await renderStatic({
     req,

@@ -1,29 +1,31 @@
+import Role from '@lomray/microservices-client-api/constants/role';
 import type { FC } from 'react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import User from '@store/entities/user';
 import styles from './styles.module.scss';
 
 interface ICardUser {
-  profile?: IUser['profile'];
-  firstName?: IUser['firstName'];
-  lastName?: IUser['lastName'];
-  email?: IUser['email'];
-  userRole?: string;
+  user: IUser | null;
 }
 
-const CardUser: FC<ICardUser> = ({ profile, firstName, lastName, email, userRole }) => (
-  <div className={styles.user}>
-    <div className={styles.wrapperImage}>
-      <img className={styles.img} src={User.getAvatar(profile)} alt="user-avatar" />
+const CardUser: FC<ICardUser> = ({ user }) => {
+  const { t } = useTranslation(['user-page']);
+
+  return (
+    <div className={styles.user}>
+      <div className={styles.wrapperImage}>
+        <img className={styles.img} src={User.getAvatar(user)} alt="user-avatar" />
+      </div>
+      <p className={styles.name}>
+        <span>{user?.firstName}</span>
+        <span>{user?.lastName}</span>
+      </p>
+      <span className={styles.email}>{user?.email}</span>
+      <span className={styles.role}>{t(`user-page:${user?.role || Role.user}`)}</span>
     </div>
-    <p className={styles.name}>
-      <span>{firstName}</span>
-      <span>{lastName}</span>
-    </p>
-    <span className={styles.email}>{email}</span>
-    <span className={styles.role}>{userRole}</span>
-  </div>
-);
+  );
+};
 
 export default CardUser;

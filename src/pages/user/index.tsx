@@ -1,4 +1,3 @@
-import Role from '@lomray/microservices-client-api/constants/role';
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -49,13 +48,7 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
                   { fields: profileFields, entity: user?.profile, key: 'profileFields' },
                 ]}
               >
-                <CardUser
-                  profile={user?.profile}
-                  firstName={user?.firstName}
-                  lastName={user?.lastName}
-                  email={user?.email}
-                  userRole={t(`user-page:${user?.role || Role.user}`)}
-                />
+                <CardUser user={user} />
               </Overview>
             ),
           },

@@ -1,4 +1,3 @@
-import ApiClient from '@lomray/microservices-client-api/api-client';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Footer from '@components/footer';
@@ -24,21 +23,19 @@ const User: SSRComponent<Props> = () => (
   </div>
 );
 
-let hasUserRefreshed = false;
-
 User.getInitialProps = InitialProps(async ({ userStore }, ctx) => {
   if (
     // SSR
     (IS_SERVER && ctx.req?.universalCookies?.get('jwt-access')) ||
     // SPA
-    (IS_CLIENT && IS_PROD && ApiClient.getRefreshTokenPayload()?.userId)
+    (IS_CLIENT && IS_PROD && (await userStore.hasRefreshToken()))
   ) {
-    if (hasUserRefreshed) {
+    if (userStore.hasUserRefreshed) {
       return;
     }
 
     await userStore.refresh();
-    hasUserRefreshed = true;
+    userStore.setIsUserRefreshed(true);
   }
 }, stores) as never;
 

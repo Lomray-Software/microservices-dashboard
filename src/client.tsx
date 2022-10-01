@@ -18,7 +18,7 @@ const initialI18nStore = getSerializedData('initialI18nStore');
 const initialLanguage = getSerializedData('initialLanguage', false);
 const initState = getSerializedData('preloadedState', IS_PROD);
 
-const { endpoints } = initApi();
+const { endpoints, apiClient } = initApi();
 
 const storeManager = new Manager({
   initState,
@@ -27,7 +27,7 @@ const storeManager = new Manager({
   options: { isSSR: true },
 });
 
-endpoints.apiClient.setStoreManager(storeManager);
+apiClient.setStoreManager(storeManager);
 
 /**
  * Application

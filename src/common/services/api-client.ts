@@ -1,4 +1,7 @@
 import ApiClient from '@lomray/microservices-client-api/api-client';
+import { TokenCreateReturnType } from '@lomray/microservices-client-api/interfaces/authentication/methods/token/renew';
+import CookieCombined from '@lomray/microservices-client-api/storages/cookie-combined';
+import Cookies from 'universal-cookie';
 import { API_DOMAIN, DEFAULT_APP_LANGUAGE, IS_CLIENT, IS_PROD, WINDOW_OBJ } from '@constants/index';
 import i18n from '@services/localization';
 import Endpoints from '@store//endpoints';
@@ -16,10 +19,11 @@ const initApi = ({ headers }: IInitApiParams = {}) => {
   const apiClient = new ApiClient({
     isClient: IS_CLIENT,
     apiDomain: API_DOMAIN,
-    isProd: IS_PROD,
     lang: DEFAULT_APP_LANGUAGE,
     userStore: UserStore,
     authStore: Auth,
+    storage: new CookieCombined({ cookie: new Cookies() }),
+    accessTokenType: IS_PROD ? TokenCreateReturnType.cookies : TokenCreateReturnType.directly,
     headers,
     onSignOut: (code) => {
       if (code !== 405) {
@@ -28,7 +32,9 @@ const initApi = ({ headers }: IInitApiParams = {}) => {
 
       // sometimes auth gateway not re-render and user still in the same page
       if (IS_CLIENT) {
-        WINDOW_OBJ.location.reload();
+        setTimeout(() => {
+          WINDOW_OBJ.location.reload();
+        }, 100);
       }
     },
     onShowError: async ({ message }) => {
