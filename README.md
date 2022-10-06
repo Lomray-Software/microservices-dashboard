@@ -2,13 +2,15 @@
 
 It's admin dashboard for this [microservices](https://github.com/Lomray-Software/microservices)
 
-[![Quality Gate Status](https://sonarqube-proxy.lomray.com/status/microservice-dashboard?token=78c4ed3db7ba9fdb116c3a3f41549d32)](https://sonarqube.lomray.com/dashboard?id=microservice-dashboard)
-[![Reliability Rating](https://sonarqube-proxy.lomray.com/reliability/microservice-dashboard?token=78c4ed3db7ba9fdb116c3a3f41549d32)](https://sonarqube.lomray.com/dashboard?id=microservice-dashboard)
-[![Security Rating](https://sonarqube-proxy.lomray.com/security/microservice-dashboard?token=78c4ed3db7ba9fdb116c3a3f41549d32)](https://sonarqube.lomray.com/dashboard?id=microservice-dashboard)
-[![Technical Debt](https://sonarqube-proxy.lomray.com/techdept/microservice-dashboard?token=78c4ed3db7ba9fdb116c3a3f41549d32)](https://sonarqube.lomray.com/dashboard?id=microservice-dashboard)
-[![Vulnerabilities](https://sonarqube-proxy.lomray.com/vulnerabilities/microservice-dashboard?token=78c4ed3db7ba9fdb116c3a3f41549d32)](https://sonarqube.lomray.com/dashboard?id=microservice-dashboard)
-[![Lines of code](https://sonarqube-proxy.lomray.com/lines/microservice-dashboard?token=78c4ed3db7ba9fdb116c3a3f41549d32)](https://sonarqube.lomray.com/dashboard?id=microservice-dashboard)
-[![Code smells](https://sonarqube-proxy.lomray.com/codesmells/microservice-dashboard?token=78c4ed3db7ba9fdb116c3a3f41549d32)](https://sonarqube.lomray.com/dashboard?id=microservice-dashboard)
+![npm](https://img.shields.io/npm/v/@lomray/microservices-dashboard)
+![GitHub](https://img.shields.io/github/license/Lomray-Software/microservices-dashboard)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=microservices-dashboard&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=microservices-dashboard)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=microservices-dashboard&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=microservices-dashboard)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=microservices-dashboard&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=microservices-dashboard)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=microservices-dashboard&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=microservices-dashboard)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=microservices-dashboard&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=microservices-dashboard)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=microservices-dashboard&metric=coverage)](https://sonarcloud.io/summary/new_code?id=microservices-dashboard)
 
 Install it and run (development):
 

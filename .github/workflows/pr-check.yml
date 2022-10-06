@@ -38,7 +38,7 @@ jobs:
 
       - uses: naveenk1223/action-pr-title@master
         with:
-          regex: '^(feat|fix|perf|refactor|revert|test|test|build|chore)([(a-z-)]*):\s[a-z0-9\s,()]+$' # Regex the title should match.
+          regex: '^(feat|fix|perf|refactor|revert|test|test|build|chore|release)([(a-z-)]*):\s[a-z0-9\s,()]+$' # Regex the title should match.
           prefix_case_sensitive: true
           min_length: 10
           max_length: 80
