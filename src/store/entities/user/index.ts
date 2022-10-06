@@ -58,11 +58,11 @@ class User {
   ): Promise<IUser | undefined> => {
     // Get user and his avatar
     const [{ result, error }, { result: resultAvatar }] = await api.batch((batchApi) => [
-      batchApi.users.user.view<IQuery<IUser>>({
+      batchApi.users.user[userId ? 'view' : 'me']<IQuery<IUser>>({
         query: {
           attributes: ['id', 'firstName', 'lastName', 'username', 'profile.photo', ...extraAttr],
           relations: ['profile'],
-          where: { id: userId },
+          ...(userId ? { where: { id: userId } } : {}),
         },
       }),
       batchApi.attachments.attachment.list({

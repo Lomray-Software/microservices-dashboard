@@ -72,7 +72,7 @@ class UserStore {
    */
   public async refresh(): Promise<void> {
     const user = await User.requestUser(this.api, {
-      userId: this.user!.id,
+      userId: this.user?.id,
     });
 
     if (!user) {

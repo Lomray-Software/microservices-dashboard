@@ -70,10 +70,16 @@ const Users: SSRComponent<Props> = ({
       {
         Header: t('users-page:createdAt'),
         accessor: 'createdAt',
+        filterParams: {
+          castType: JQFieldType.text,
+        },
       },
       {
         Header: t('users-page:updatedAt'),
         accessor: 'updatedAt',
+        filterParams: {
+          castType: JQFieldType.text,
+        },
       },
     ],
     [t],
