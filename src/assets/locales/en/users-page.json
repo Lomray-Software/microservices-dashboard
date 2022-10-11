@@ -7,6 +7,7 @@
   "phone": "Phone",
   "gender": "Gender",
   "birthDay": "Birthday",
+  "location": "Location",
   "createdAt": "Created At",
   "updatedAt": "Updated At",
   "deletedAt": "Deleted At",

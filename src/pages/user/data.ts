@@ -23,6 +23,7 @@ const profileFields: IField[] = [
     type: 'select',
     title: 'users-page:gender',
   },
+  { name: 'location', title: 'users-page:location' },
 ];
 
 const userFields: IField[] = [

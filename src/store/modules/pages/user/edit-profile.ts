@@ -20,6 +20,7 @@ export interface IEditProfile {
   phone: string | null;
   birthDay: string | null;
   gender: string | null;
+  location: string | null;
 }
 
 /**
@@ -100,7 +101,7 @@ class EditUserStore {
   public setInitValues(): void {
     const { firstName, lastName, middleName, phone, profile, username, role } =
       this.userPageStore.user || {};
-    const { birthDay, gender } = profile || {};
+    const { birthDay, gender, location } = profile || {};
 
     this.initialValues = {
       ...this.initialValues,
@@ -112,6 +113,7 @@ class EditUserStore {
       phone: phone || null,
       birthDay: birthDay || null,
       gender: gender || null,
+      location: location || null,
     };
   }
 }
