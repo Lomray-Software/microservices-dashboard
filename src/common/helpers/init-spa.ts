@@ -6,8 +6,8 @@ import { IS_PWA, IS_SPA } from '@constants/index';
 import routes from '../../routes';
 
 /**
- *  - Init SPA app
- *  - Run getInitialProps for cache api (PWA or SSR)
+ * Init SPA app
+ * Run getInitialProps for cache api (PWA or SSR)
  */
 const initSPA = (() => {
   let hasSPAInit = false;

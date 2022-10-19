@@ -12,6 +12,7 @@ import UserEntity from '@store/entities/user';
 import CardUser from './card-user';
 import ChangePassword from './change-password/index.wrapper';
 import { profileFields, userFields } from './data';
+import EditAvatar from './edit-avatar/index.wrapper';
 import EditProfile from './edit-profile/index.wrapper';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
@@ -60,6 +61,10 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
             title: i18n.t('user-page:changePassword'),
             Component: <ChangePassword />,
           },
+          editAvatar: {
+            title: i18n.t('user-page:userAvatar'),
+            Component: <EditAvatar />,
+          },
           identityProviders: {
             title: i18n.t('user-page:identityProviders'),
             Component: (
@@ -74,16 +79,20 @@ const User: SSRComponent<Props> = ({ userPage: { user } }) => {
   );
 };
 
-User.getInitialProps = InitialProps(async ({ userPage: { getUser } }, { match }) => {
-  const {
-    params: { id },
-  } = match;
+InitialProps(
+  async ({ userPage: { getUser } }, { match }) => {
+    const {
+      params: { id },
+    } = match;
 
-  if (!id) {
-    return;
-  }
+    if (!id) {
+      return;
+    }
 
-  await getUser(id);
-}, stores);
+    await getUser(id);
+  },
+  User,
+  stores,
+);
 
 export default User;

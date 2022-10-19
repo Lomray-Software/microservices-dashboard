@@ -1,11 +1,5 @@
-import { addMethod, string } from 'yup';
+import ExtendYup from '@lomray/client-helpers/helpers/extend-yup';
 
-/**
- * Convert empty string to null
- * @constructor
- */
-addMethod(string, 'stripEmptyString', function () {
-  return this.transform((value: string) => (value === '' ? null : value));
-});
+ExtendYup();
 
 export * from 'yup';

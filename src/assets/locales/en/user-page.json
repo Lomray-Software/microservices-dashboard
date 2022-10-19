@@ -21,5 +21,8 @@
   "role": "Role",
   "admin": "Admin",
   "guest": "Guest",
-  "user": "User"
+  "user": "User",
+  "userAvatar": "Avatar",
+  "removeProfile": "Are you sure you want to remove user profile picture?",
+  "noAvatar": "The user does not have an avatar"
 }

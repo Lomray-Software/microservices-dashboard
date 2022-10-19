@@ -23,7 +23,7 @@ const CardUser: FC<ICardUser> = ({ user }) => {
         <span>{user?.lastName}</span>
       </p>
       <span className={styles.email}>{user?.email}</span>
-      <span className={styles.role}>{t(`user-page:${user?.role || Role.user}`)}</span>
+      <span className={styles.role}>{t(`user-page:${(user?.role as Role) || Role.user}`)}</span>
     </div>
   );
 };

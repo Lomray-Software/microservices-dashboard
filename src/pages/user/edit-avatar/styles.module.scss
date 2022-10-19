@@ -1,0 +1,78 @@
+@import 'src/assets/styles/util/vars';
+@import 'src/assets/styles/util/mixins';
+@import 'src/assets/styles/util/media-query';
+
+.wrapper {
+  position: relative;
+}
+
+.container {
+  .buttonBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 0.2s ease-in;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > button,
+    svg {
+      max-width: 100px;
+      max-height: 100px;
+      transition: 0.2s ease-in;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &:hover {
+    .buttonBar {
+      opacity: 1;
+    }
+  }
+}
+
+.wrapperButton {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease-in;
+  height: 150px;
+
+  @include media-breakpoint-down(xs) {
+    height: 100px;
+  }
+
+  & > svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  & > input {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.noAvatar {
+  font-size: 20px;
+  color: $white;
+  margin-left: 20px;
+}

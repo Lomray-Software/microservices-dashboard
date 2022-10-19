@@ -1,7 +1,7 @@
-import ScrollRestorationService from '@lomray/client-helpers/services/scroll-restoration';
+import PageLoading from '@lomray/client-helpers-react/services/page-loading';
+import ScrollRestorationService from '@lomray/client-helpers-react/services/scroll-restoration';
 import EventManager from '@lomray/event-manager';
 import { action, makeObservable, observable } from 'mobx';
-import PageLoading from '@services/page-loading';
 
 interface ILoadingChanged {
   isLoading: boolean;

@@ -19,5 +19,8 @@
   "messageNotification": "Изменения сохранены",
   "allRights": "Все права защищены",
   "developed": "Разработано",
-  "columnActions": "Действия"
+  "columnActions": "Действия",
+  "saveChanges": "Сохранить изменения",
+  "yes": "Да",
+  "no": "Нет"
 }

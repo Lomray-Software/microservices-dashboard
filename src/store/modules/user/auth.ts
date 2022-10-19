@@ -45,9 +45,9 @@ class Auth implements IAuthStore {
   /**
    * @constructor
    */
-  constructor({ storeManager, endpoints }: IConstructorParams) {
+  constructor({ getStore, endpoints }: IConstructorParams) {
     this.api = endpoints;
-    this.userStore = storeManager.getStore(UserStore)!;
+    this.userStore = getStore(UserStore)!;
 
     this.signIn = withFetching(this.signIn, this);
     this.signOut = withFetching(this.signOut, this);
@@ -156,6 +156,10 @@ class Auth implements IAuthStore {
       return;
     }
 
+    // save tokens
+    void this.api.apiClient.setAccessToken(tokens.access);
+    void this.api.apiClient.setRefreshToken(tokens.refresh);
+
     const { result: resultAvatar } = await this.api.attachments.attachment.list({
       query: {
         attributes: ['id', 'formats', 'attachmentEntities.order'],
@@ -179,8 +183,6 @@ class Auth implements IAuthStore {
     }
 
     // Success user auth
-    void this.api.apiClient.setAccessToken(tokens.access);
-    void this.api.apiClient.setRefreshToken(tokens.refresh);
     this.userStore.setIsUserRefreshed(true);
     this.userStore.setUser(user);
     this.userStore.setIsAuth(true);

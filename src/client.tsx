@@ -6,7 +6,6 @@ import React from 'react';
 import { hydrateRoot, createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import CommonLayout from '@components/layouts/common/index.wrapper';
-import Spinner from '@components/loaders/spinner';
 import { IS_PROD, IS_PWA, IS_SPA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import initApi from '@services/api-client';
@@ -35,7 +34,7 @@ apiClient.setStoreManager(storeManager);
  */
 const App: FC<{ data: ServerAppState }> = ({ data }) => (
   <BrowserRouter>
-    <StoreManagerProvider storeManager={storeManager} fallback={<Spinner />} shouldInit>
+    <StoreManagerProvider storeManager={storeManager}>
       <AppProvider>
         <CommonLayout initialI18nStore={initialI18nStore} initialLanguage={initialLanguage}>
           <After
@@ -51,7 +50,8 @@ const App: FC<{ data: ServerAppState }> = ({ data }) => (
 );
 
 // Start application
-void ensureReady(routes).then((data) => {
+void ensureReady(routes).then(async (data) => {
+  await storeManager.init();
   const container = document.getElementById('root') as HTMLElement;
 
   if (IS_SPA) {

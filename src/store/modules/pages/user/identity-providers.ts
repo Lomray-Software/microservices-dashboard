@@ -1,6 +1,5 @@
 import type { IIdentityProvider } from '@lomray/microservices-client-api/interfaces/users/entities/identity-provider';
 import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
-import type Endpoints from '@store/endpoints';
 import type { IRequestReturn } from '@store/services/table';
 import TableStore from '@store/services/table';
 import UserPageStore from './index';
@@ -18,17 +17,17 @@ class IdentityProviderStore extends TableStore<IIdentityProvider> {
   /**
    * @private
    */
-  private api: Endpoints;
+  private readonly api: IConstructorParams['endpoints'];
 
   /**
    * @constructor
    */
-  constructor({ endpoints, storeManager }: IConstructorParams) {
+  constructor({ endpoints, getStore }: IConstructorParams) {
     super();
 
     this.getIdentityProviders = this.wrapRequest(this.getIdentityProviders);
     this.api = endpoints;
-    this.userPageStore = storeManager.getStore(UserPageStore)!;
+    this.userPageStore = getStore(UserPageStore)!;
   }
 
   /**

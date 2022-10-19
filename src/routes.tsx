@@ -3,7 +3,7 @@ import { asyncComponent } from '@lomray/after';
 import React from 'react';
 import Loader from '@components/loaders/main-loader';
 import ROUTE from '@constants/routes';
-import buildRoutes from '@helpers/build-routes';
+import Route from '@services/route';
 
 const asyncRouteProps = {
   Placeholder: () => <Loader />,
@@ -13,7 +13,7 @@ const asyncRouteProps = {
  * For add public links:
  * @see TMenuLinks
  */
-const routes = buildRoutes([
+const routes = Route.buildRoutes([
   {
     // layout for logged users
     path: '/',
@@ -25,6 +25,7 @@ const routes = buildRoutes([
       // dashboard routes
       {
         path: ROUTE.HOME.URL,
+        isPrivate: true,
         element: asyncComponent({
           loader: () => import('@pages/home/index.wrapper'),
           ...asyncRouteProps,
@@ -32,6 +33,7 @@ const routes = buildRoutes([
       },
       {
         path: ROUTE.USERS.URL,
+        isPrivate: true,
         element: asyncComponent({
           loader: () => import('@pages/users/index.wrapper'),
           ...asyncRouteProps,
@@ -39,6 +41,7 @@ const routes = buildRoutes([
       },
       {
         path: ROUTE.USER.URL,
+        isPrivate: true,
         element: asyncComponent({
           loader: () => import('@pages/user/index.wrapper'),
           ...asyncRouteProps,
@@ -56,7 +59,6 @@ const routes = buildRoutes([
   },
   {
     path: ROUTE.NOT_FOUND.URL,
-    isPublic: true,
     element: asyncComponent({
       loader: () => import('@pages/not-found'),
       ...asyncRouteProps,

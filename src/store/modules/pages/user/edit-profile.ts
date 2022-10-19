@@ -46,8 +46,8 @@ class EditUserStore {
   /**
    * @constructor
    */
-  constructor({ storeManager }: IConstructorParams) {
-    this.userPageStore = storeManager.getStore(UserPageStore)!;
+  constructor({ getStore }: IConstructorParams) {
+    this.userPageStore = getStore(UserPageStore)!;
 
     this.setInitValues();
 

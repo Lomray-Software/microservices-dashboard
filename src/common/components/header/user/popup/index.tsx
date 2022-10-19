@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ButtonPrimary from '@components/button-primary';
 import Link from '@components/link';
 import combineCss from '@helpers/combine-css';
-import makeURL from '@helpers/make-url';
+import Route from '@services/route';
 import styles from './styles.module.scss';
 
 interface IPopup {
@@ -26,7 +26,7 @@ const Popup: FC<IPopup> = ({ isOpen, signOut, userId }) => {
             <Icon path={mdiCogSync} size={1} color="yellow" />
           </div>
           <Link
-            to={makeURL('USER', { id: String(userId) })}
+            to={Route.makeURL('USER', { id: String(userId) })}
             className={combineCss(styles.item, styles.link)}
           >
             {t('settings')}

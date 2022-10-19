@@ -1,4 +1,4 @@
-import canUseWebp from '@lomray/client-helpers/helpers/can-use-webp';
+import canUseWebp from '@lomray/client-helpers-react/helpers/can-use-webp';
 import type { FCC } from '@lomray/client-helpers/interfaces/fc-with-children';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import Cookies from 'universal-cookie';

@@ -23,20 +23,24 @@ const User: SSRComponent<Props> = () => (
   </div>
 );
 
-User.getInitialProps = InitialProps(async ({ userStore }, ctx) => {
-  if (
-    // SSR
-    (IS_SERVER && ctx.req?.universalCookies?.get('jwt-access')) ||
-    // SPA
-    (IS_CLIENT && IS_PROD && (await userStore.hasRefreshToken()))
-  ) {
-    if (userStore.hasUserRefreshed) {
-      return;
-    }
+InitialProps(
+  async ({ userStore }, ctx) => {
+    if (
+      // SSR
+      (IS_SERVER && ctx.req?.universalCookies?.get('jwt-access')) ||
+      // SPA
+      (IS_CLIENT && IS_PROD && (await userStore.hasRefreshToken()))
+    ) {
+      if (userStore.hasUserRefreshed) {
+        return;
+      }
 
-    await userStore.refresh();
-    userStore.setIsUserRefreshed(true);
-  }
-}, stores) as never;
+      await userStore.refresh();
+      userStore.setIsUserRefreshed(true);
+    }
+  },
+  User,
+  stores,
+);
 
 export default User;

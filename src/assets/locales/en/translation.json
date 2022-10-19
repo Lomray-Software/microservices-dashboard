@@ -19,5 +19,8 @@
   "messageNotification": "Changes saved",
   "allRights": "All rights reserved",
   "developed": "Developed by",
-  "columnActions": "Actions"
+  "columnActions": "Actions",
+  "saveChanges": "Save Changes",
+  "yes": "Yes",
+  "no": "No"
 }

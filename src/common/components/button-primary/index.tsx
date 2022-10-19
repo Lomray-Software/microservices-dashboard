@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 
 export interface IButtonPrimary extends React.HTMLProps<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset';
-  kind?: 'primary' | 'secondary';
+  kind?: 'primary' | 'secondary' | 'transparent';
   onClick?: ReplaceReturnType<
     Exclude<React.HTMLProps<HTMLButtonElement>['onClick'], undefined>,
     void | Promise<void>

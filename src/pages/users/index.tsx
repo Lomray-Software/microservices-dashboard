@@ -7,8 +7,8 @@ import Breadcrumbs from '@components/breadcrumbs';
 import Table from '@components/table';
 import ROUTE from '@constants/routes';
 import InitialProps from '@helpers/initial-props';
-import makeURL from '@helpers/make-url';
 import type { SSRComponent } from '@interfaces/ssr-component';
+import Route from '@services/route';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
@@ -103,14 +103,18 @@ const Users: SSRComponent<Props> = ({
         onSortBy={setOrderBy}
         page={page}
         count={totalCount}
-        onRoute={(id) => makeURL('USER', { id })}
+        onRoute={(id) => Route.makeURL('USER', { id })}
       />
     </div>
   );
 };
 
-Users.getInitialProps = InitialProps(async ({ pageStore: { getUsers } }) => {
-  await getUsers();
-}, stores);
+InitialProps(
+  async ({ pageStore: { getUsers } }) => {
+    await getUsers();
+  },
+  Users,
+  stores,
+);
 
 export default Users;

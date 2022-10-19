@@ -1,6 +1,9 @@
+import ApiClient from '@lomray/microservices-client-api/api-client';
 import { Manager } from '@lomray/react-mobx-manager';
 import type { IConstructorParams } from '@lomray/react-mobx-manager';
 import { action, makeObservable, observable } from 'mobx';
+import Cookies from 'universal-cookie';
+import { IS_SERVER } from '@constants/index';
 import type Endpoints from '@store/endpoints';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import User from '@store/entities/user';
@@ -71,8 +74,19 @@ class UserStore {
    * Get current user (based on cookies)
    */
   public async refresh(): Promise<void> {
+    let userId = this.user?.id;
+
+    if (IS_SERVER && !userId) {
+      const cookies: string | undefined = (await this.api.apiClient.getHeaders())?.cookie;
+      const token = new Cookies(cookies).get(ApiClient.ACCESS_TOKEN_KEY);
+
+      if (token) {
+        userId = (await this.api.apiClient.getTokenPayload({ newToken: token }))?.userId;
+      }
+    }
+
     const user = await User.requestUser(this.api, {
-      userId: this.user?.id,
+      userId,
     });
 
     if (!user) {

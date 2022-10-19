@@ -1,9 +1,8 @@
 import ucfirst from '@lomray/client-helpers/helpers/ucfirst';
 import type { IBaseException } from '@lomray/microservices-types';
 import type { FormikHelpers } from 'formik/dist/types';
-import i18n from 'i18next';
-import { Store } from '@components/notifications';
-import translation from '@services/localization';
+import addNotification from '@helpers/add-notification';
+import i18n from '@services/localization';
 
 export interface IValidationErrors<TFormValue> {
   fields?: Partial<TFormValue>;
@@ -59,24 +58,11 @@ const handleStateForm = <TFormValue>(
   const { resetForm, setErrors, setError } = helpers;
 
   if (typeof result === 'boolean') {
-    Store.addNotification({
-      title: translation.t('translation:titleNotification'),
-      message: translation.t('translation:messageNotification'),
-      type: 'success',
-      insert: 'top',
-      container: 'top-right',
-      animationIn: ['animate__animated', 'animate__fadeIn'],
-      animationOut: ['animate__animated', 'animate__fadeOut'],
-      dismiss: {
-        duration: 4000,
-        onScreen: true,
-      },
-      slidingExit: {
-        duration: 200,
-        timingFunction: 'ease-out',
-        delay: 0,
-      },
-    });
+    addNotification(
+      'success',
+      i18n.t('translation:titleNotification'),
+      i18n.t('translation:messageNotification'),
+    );
 
     resetForm({ values });
 

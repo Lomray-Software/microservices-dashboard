@@ -3,7 +3,6 @@ import { action, makeObservable, observable } from 'mobx';
 import type { IValidationErrors } from '@helpers/handle-state-form';
 import { formatValidationError } from '@helpers/handle-state-form';
 import i18n from '@services/localization';
-import type Endpoints from '@store/endpoints';
 import UserPageStore from './index';
 
 export interface IChangePassword {
@@ -34,14 +33,14 @@ class ChangePasswordStore {
   /**
    * @private
    */
-  private api: Endpoints;
+  private api: IConstructorParams['endpoints'];
 
   /**
    * @constructor
    */
-  constructor({ storeManager, endpoints }: IConstructorParams) {
+  constructor({ getStore, endpoints }: IConstructorParams) {
     this.api = endpoints;
-    this.userPageStore = storeManager.getStore(UserPageStore)!;
+    this.userPageStore = getStore(UserPageStore)!;
 
     this.initialValues = {
       newPassword: '',
