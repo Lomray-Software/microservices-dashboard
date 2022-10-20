@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorMessage from '@components/error-message';
 import Fields from '@components/forms/fields';
 import SubmitButton from '@components/forms/submit-button';
-import { handleStateForm } from '@helpers/handle-state-form';
+import handleStateForm from '@helpers/handle-state-form';
 import type { IEditProfile } from '@store/modules/pages/user/edit-profile';
 import { userFields, profileFields } from '../data';
 import type { StoreProps } from './index.stores';

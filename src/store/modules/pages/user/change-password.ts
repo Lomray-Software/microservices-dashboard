@@ -1,7 +1,6 @@
+import type { IValidationErrors } from '@lomray/microservices-client-api/endpoints';
 import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import { action, makeObservable, observable } from 'mobx';
-import type { IValidationErrors } from '@helpers/handle-state-form';
-import { formatValidationError } from '@helpers/handle-state-form';
 import i18n from '@services/localization';
 import UserPageStore from './index';
 
@@ -84,7 +83,7 @@ class ChangePasswordStore {
 
     // handle errors
     if (error) {
-      return formatValidationError<IChangePassword, IChangePassword>(error);
+      return this.api.formatValidationError<IChangePassword, IChangePassword>(error);
     }
 
     return true;
