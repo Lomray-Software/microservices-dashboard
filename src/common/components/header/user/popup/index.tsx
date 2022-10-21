@@ -1,10 +1,10 @@
+import Link from '@lomray/afterjs-helpers/components/link';
 import { mdiCogSync, mdiExitRun } from '@mdi/js';
 import Icon from '@mdi/react';
 import type { FC } from 'react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ButtonPrimary from '@components/button-primary';
-import Link from '@components/link';
 import combineCss from '@helpers/combine-css';
 import Route from '@services/route';
 import styles from './styles.module.scss';

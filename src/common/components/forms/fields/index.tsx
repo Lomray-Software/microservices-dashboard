@@ -1,7 +1,7 @@
+import type { TranslationDictionary } from '@lomray/afterjs-helpers/services/localization';
 import type { FC } from 'react';
 import React from 'react';
 import i18n from '@services/localization';
-import type { TranslationDictionary } from '@services/localization';
 import Field from '../field';
 import type { ISelectOptions } from '../select-field';
 import SelectField from '../select-field';

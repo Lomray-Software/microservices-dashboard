@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorMessage from '@components/error-message';
 import Fields from '@components/forms/fields';
 import SubmitButton from '@components/forms/submit-button';
-import { handleStateForm } from '@helpers/handle-state-form';
+import handleStateForm from '@helpers/handle-state-form';
 import type { IChangePassword } from '@store/modules/pages/user/change-password';
 import fields from './fields';
 import type { StoreProps } from './index.stores';

@@ -1,3 +1,4 @@
+import type { TranslationDictionary } from '@lomray/afterjs-helpers/services/localization';
 import type { FieldProps } from 'formik';
 import { Field as DefaultField } from 'formik';
 import type { FC } from 'react';
@@ -5,7 +6,6 @@ import React from 'react';
 import Select from 'react-select';
 import combineCss from '@helpers/combine-css';
 import i18n from '@services/localization';
-import type { TranslationDictionary } from '@services/localization';
 import ErrorMessage from '../error-message';
 import Label from '../label';
 import colourStyles from './styles';

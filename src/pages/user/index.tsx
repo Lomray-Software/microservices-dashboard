@@ -1,3 +1,5 @@
+import InitialProps from '@lomray/afterjs-helpers/helpers/initial-props';
+import type { SSRComponent } from '@lomray/afterjs-helpers/interfaces/ssr-component';
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -5,8 +7,6 @@ import Breadcrumbs from '@components/breadcrumbs';
 import Overview from '@components/overview';
 import Tabs from '@components/tabs';
 import ROUTE from '@constants/routes';
-import InitialProps from '@helpers/initial-props';
-import type { SSRComponent } from '@interfaces/ssr-component';
 import i18n from '@services/localization';
 import UserEntity from '@store/entities/user';
 import CardUser from './card-user';

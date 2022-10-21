@@ -1,3 +1,5 @@
+import InitialProps from '@lomray/afterjs-helpers/helpers/initial-props';
+import type { SSRComponent } from '@lomray/afterjs-helpers/interfaces/ssr-component';
 import { JQFieldType } from '@lomray/microservices-types';
 import React, { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
@@ -6,8 +8,6 @@ import type { Column } from 'react-table';
 import Breadcrumbs from '@components/breadcrumbs';
 import Table from '@components/table';
 import ROUTE from '@constants/routes';
-import InitialProps from '@helpers/initial-props';
-import type { SSRComponent } from '@interfaces/ssr-component';
 import Route from '@services/route';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
 import type { StoreProps } from './index.stores';

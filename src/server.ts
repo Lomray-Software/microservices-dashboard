@@ -1,32 +1,26 @@
 import { render } from '@lomray/after';
+import { getPublicPath } from '@lomray/afterjs-helpers/server/tools/paths';
+import { initServerTranslation } from '@lomray/afterjs-helpers/server/translation';
 import { Manager } from '@lomray/react-mobx-manager';
 import express from 'express';
 import { enableStaticRendering } from 'mobx-react-lite';
 import cookiesMiddleware from 'universal-cookie-express';
 import { IS_PROD } from '@constants/index';
-import { getRenderProps } from '@server/config';
-import resolveAppPath from '@server/tools/resolve-app-path';
-import { initServerTranslation } from '@server/translation';
+import { getRenderProps, translationConfig } from '@server/config';
 import initApi from '@services/api-client';
-
-const publicPath =
-  // true - 'razzle start' only (for development /public) in other cases we need /build/public
-  process.env.WEBPACK_DEV_SERVER === 'true'
-    ? process.env.RAZZLE_PUBLIC_DIR || ''
-    : resolveAppPath('build/public');
 
 const server = express();
 
 void (async () => {
   // initialize and load translation
-  const lngDetector = await initServerTranslation(server);
+  const lngDetector = await initServerTranslation(server, translationConfig);
 
   enableStaticRendering(true);
 
   server
     .disable('x-powered-by')
     // add endpoint for static files (css, js, etc.)
-    .use(express.static(publicPath))
+    .use(express.static(getPublicPath(process.env.RAZZLE_PUBLIC_DIR)))
     // detect request language
     .use(lngDetector)
     .use(cookiesMiddleware())

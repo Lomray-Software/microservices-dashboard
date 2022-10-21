@@ -1,9 +1,9 @@
+import Link from '@lomray/afterjs-helpers/components/link';
 import Icon from '@mdi/react';
 import type { FC } from 'react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import Link from '@components/link';
 import { APP_SHORT_NAME } from '@constants/index';
 import MENU from '@constants/menu';
 import ROUTE from '@constants/routes';

@@ -1,6 +1,6 @@
+import Link from '@lomray/afterjs-helpers/components/link';
 import type { FC } from 'react';
 import React from 'react';
-import Link from '@components/link';
 import styles from './styles.module.scss';
 
 export interface IBreadcrumbItem {

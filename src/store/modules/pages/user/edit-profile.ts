@@ -1,11 +1,10 @@
 import shallowDiff from '@lomray/client-helpers/helpers/shallow-diff';
 import Role from '@lomray/microservices-client-api/constants/role';
+import type { IValidationErrors } from '@lomray/microservices-client-api/endpoints';
 import type { IBaseException } from '@lomray/microservices-types';
 import type { IConstructorParams, ClassReturnType } from '@lomray/react-mobx-manager';
 import _ from 'lodash';
 import { action, makeObservable, observable } from 'mobx';
-import type { IValidationErrors } from '@helpers/handle-state-form';
-import { formatValidationError } from '@helpers/handle-state-form';
 import { profileFields as profileValue, userFields as userValue } from '@pages/user/data';
 import type IProfile from '@store/endpoints/interfaces/users/entities/profile';
 import type IUser from '@store/endpoints/interfaces/users/entities/user';
@@ -44,9 +43,15 @@ class EditUserStore {
   private userPageStore: ClassReturnType<typeof UserPageStore>;
 
   /**
+   * @private
+   */
+  private api: IConstructorParams['endpoints'];
+
+  /**
    * @constructor
    */
-  constructor({ getStore }: IConstructorParams) {
+  constructor({ getStore, endpoints }: IConstructorParams) {
+    this.api = endpoints;
     this.userPageStore = getStore(UserPageStore)!;
 
     this.setInitValues();
@@ -85,7 +90,7 @@ class EditUserStore {
 
     // handle errors
     if (userError || profileError || updateUserRoleError) {
-      return formatValidationError<IEditProfile, IUser & IProfile>([
+      return this.api.formatValidationError<IEditProfile, IUser & IProfile>([
         userError as IBaseException,
         profileError as IBaseException,
         updateUserRoleError as IBaseException,

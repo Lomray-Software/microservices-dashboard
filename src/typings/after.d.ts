@@ -3,6 +3,7 @@
 
 import type { CtxBase } from '@lomray/after';
 import type { Manager } from '@lomray/react-mobx-manager';
+import '@lomray/afterjs-helpers/typings/after';
 
 declare module '@lomray/after' {
   export interface AfterpartyProps {
@@ -18,13 +19,7 @@ declare module '@lomray/after' {
   }
 
   // @ts-ignore
-  export interface Ctx<P> extends CtxBase {
+  export interface Ctx extends CtxBase {
     storeManager: Manager;
-  }
-
-  export interface RenderPageResult {
-    initialI18nStore: any;
-    initialLanguage: string;
-    isOnlyShell?: boolean;
   }
 }

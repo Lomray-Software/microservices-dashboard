@@ -1,3 +1,4 @@
+import type { SSRComponent } from '@lomray/afterjs-helpers/interfaces/ssr-component';
 import { Form, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -7,7 +8,6 @@ import Field from '@components/forms/field';
 import SubmitButton from '@components/forms/submit-button';
 import { APP_SHORT_NAME } from '@constants/index';
 import combineCss from '@helpers/combine-css';
-import type { SSRComponent } from '@interfaces/ssr-component';
 import type { StoreProps } from './index.stores';
 import validationSchema from './validation-schema';
 import styles from './styles.module.scss';

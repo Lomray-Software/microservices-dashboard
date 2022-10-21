@@ -29,8 +29,6 @@ export const ACCESS_USER_ROLES = [Role.admin];
 
 export const APP_LANGUAGES = IS_TRANSLATE ? ['en', 'ru'] : [DEFAULT_APP_LANGUAGE];
 
-export const APP_OTHER_LANGUAGES = APP_LANGUAGES.filter((lng) => DEFAULT_APP_LANGUAGE !== lng);
-
 export const API_DOMAIN = process.env.RAZZLE_API_DOMAIN || '';
 
 export const SITE_DOMAIN = process.env.RAZZLE_SITE_DOMAIN || '';

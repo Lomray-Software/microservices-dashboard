@@ -1,3 +1,4 @@
+import Link from '@lomray/afterjs-helpers/components/link';
 import { mdiBackburger } from '@mdi/js';
 import Icon from '@mdi/react';
 import type { FC } from 'react';
@@ -5,7 +6,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Notification } from '@assets/images/icons/notification-white.svg';
 import type { StoreProps } from '@components/header/index.stores';
-import Link from '@components/link';
 import SideMenu from '@components/side-menu/index.wrapper';
 import { APP_SHORT_NAME } from '@constants/index';
 import ROUTE from '@constants/routes';

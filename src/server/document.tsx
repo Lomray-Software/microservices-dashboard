@@ -5,14 +5,10 @@ import type {
   DocumentProps,
   RenderPageResult,
 } from '@lomray/after';
-import {
-  AfterData,
-  AfterRoot,
-  AfterScripts,
-  AfterStyles,
-  SerializeData,
-  __AfterContext,
-} from '@lomray/after';
+import { AfterData, AfterRoot, AfterScripts, AfterStyles } from '@lomray/after';
+import ServerMobx from '@lomray/afterjs-helpers/components/server-mobx';
+import ServerTranslation from '@lomray/afterjs-helpers/components/server-translation';
+import ObtainTranslation from '@lomray/afterjs-helpers/server/tools/obtain-translation';
 import { StoreManagerProvider } from '@lomray/react-mobx-manager';
 import type { ReactElement } from 'react';
 import React, { Component } from 'react';
@@ -21,27 +17,6 @@ import CommonLayout from '@components/layouts/common/index.wrapper';
 import { APP_NAME, BACKGROUND_COLOR, IS_PWA } from '@constants/index';
 import { AppProvider } from '@context/app';
 import { iosIcons, manifestPath } from '@server/config';
-
-/**
- * @see Manager.toJSON
- * @constructor
- */
-function StoreData() {
-  const { storeManager } = React.useContext(__AfterContext);
-
-  return <SerializeData name="preloadedState" data={storeManager.toJSON()} />;
-}
-
-function TranslationData() {
-  const { initialI18nStore, initialLanguage } = React.useContext(__AfterContext);
-
-  return (
-    <>
-      <SerializeData name="initialI18nStore" data={initialI18nStore} />
-      <SerializeData name="initialLanguage" data={initialLanguage} />
-    </>
-  );
-}
 
 class Document extends Component<DocumentProps> {
   /**
@@ -91,28 +66,10 @@ class Document extends Component<DocumentProps> {
       </I18nextProvider>
     ));
 
-    const initialI18nStore = {};
-    const usedNamespaces = req.i18n?.reportNamespaces?.getUsedNamespaces() ?? [];
-
-    // Get used translation for pass down to client
-    for (const language of req?.i18n?.languages ?? []) {
-      initialI18nStore[language] = {};
-
-      usedNamespaces.forEach((namespace) => {
-        initialI18nStore[language][namespace] =
-          req.i18n.services.resourceStore.data[language][namespace];
-      });
-
-      // Pass to client side only one language (current)
-      if (initialLanguage.includes(language) && initialI18nStore[language]) {
-        break;
-      }
-    }
-
     return {
       ...page,
-      initialI18nStore,
       initialLanguage,
+      initialI18nStore: ObtainTranslation(req, initialLanguage),
     };
   }
 
@@ -149,8 +106,8 @@ class Document extends Component<DocumentProps> {
         <body {...bodyAttrs}>
           <AfterRoot />
           <AfterData />
-          {!isOnlyShell && <StoreData />}
-          {!isOnlyShell && <TranslationData />}
+          {!isOnlyShell && <ServerMobx />}
+          {!isOnlyShell && <ServerTranslation />}
           <AfterScripts />
         </body>
       </html>

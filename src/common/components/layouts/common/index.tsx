@@ -1,11 +1,13 @@
+import LoadingBar from '@lomray/afterjs-helpers/components/loading-bar';
+import ScrollRestoration from '@lomray/afterjs-helpers/components/scroll-restoration';
+import initSPA from '@lomray/afterjs-helpers/helpers/init-spa';
+import type { SSRLayoutComponent } from '@lomray/afterjs-helpers/interfaces/ssr-component';
 import type { Resource } from 'i18next';
 import React, { useEffect, Suspense } from 'react';
 import { useSSR } from 'react-i18next';
-import LoadingBar from '@components/loading-bar';
-import ScrollRestoration from '@components/scroll-restoration';
+import { IS_PWA, IS_SPA } from '@constants/index';
 import { useAppContext } from '@context/app';
-import initSPA from '@helpers/init-spa';
-import type { SSRLayoutComponent } from '@interfaces/ssr-component';
+import routes from '../../../../routes';
 import type { StoreProps } from './index.stores';
 import '@services/localization';
 
@@ -36,7 +38,12 @@ const Common: SSRLayoutComponent<Props> = ({
    * Initialize spa app
    */
   useEffect(() => {
-    initSPA();
+    initSPA({
+      layout: Common,
+      routes,
+      isSpa: IS_SPA,
+      isPwa: IS_PWA,
+    });
   }, []);
 
   /**

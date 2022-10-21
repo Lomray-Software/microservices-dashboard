@@ -1,11 +1,11 @@
+import InitialProps from '@lomray/afterjs-helpers/helpers/initial-props';
+import type { SSRComponent } from '@lomray/afterjs-helpers/interfaces/ssr-component';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Footer from '@components/footer';
 import Header from '@components/header/index.wrapper';
 import SideMenu from '@components/side-menu/index.wrapper';
 import { IS_CLIENT, IS_PROD, IS_SERVER } from '@constants/index';
-import InitialProps from '@helpers/initial-props';
-import type { SSRComponent } from '@interfaces/ssr-component';
 import type { StoreProps } from './index.stores';
 import stores from './index.stores';
 import styles from './styles.module.scss';

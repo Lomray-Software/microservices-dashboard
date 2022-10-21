@@ -1,81 +1,21 @@
-import ucfirst from '@lomray/client-helpers/helpers/ucfirst';
-import type { IBaseException } from '@lomray/microservices-types';
-import type { FormikHelpers } from 'formik/dist/types';
+import type { THandleStateForm } from '@lomray/microservices-client-api/helpers/handle-state-form';
+import handleStateFormDefault from '@lomray/microservices-client-api/helpers/handle-state-form';
 import addNotification from '@helpers/add-notification';
 import i18n from '@services/localization';
-
-export interface IValidationErrors<TFormValue> {
-  fields?: Partial<TFormValue>;
-  message?: string;
-}
-
-/**
- * Convert API validation error response to key value object
- * Use in formik (setErrors)
- */
-const formatValidationError = <TFormValue, TResValues>(
-  error: IBaseException | IBaseException[],
-  map: Partial<Record<keyof TResValues, keyof TFormValue>> = {},
-): IValidationErrors<TFormValue> => {
-  const groupErrors = !Array.isArray(error) ? [error] : error;
-  const fields = groupErrors.reduce((errRes: Partial<TFormValue>, err) => {
-    if (err?.status !== 422 || !Array.isArray(err?.payload)) {
-      return errRes;
-    }
-
-    return {
-      ...(errRes ?? {}),
-      ...err.payload.reduce(
-        (res, { property, constraints }) => ({
-          ...res,
-          [map?.[property] ?? property]: ucfirst(
-            Object.values(constraints)?.[0]
-              // remove field name from begin
-              .replace(new RegExp(`^${property} `), ''),
-            i18n.language,
-          ),
-        }),
-        {},
-      ),
-    };
-  }, undefined);
-
-  return { fields, message: fields === undefined ? groupErrors?.[0]?.message : undefined };
-};
 
 /**
  * Set errors for fields and main error also adding notification for success
  */
-const handleStateForm = <TFormValue>(
-  result: IValidationErrors<TFormValue> | boolean,
-  values: TFormValue,
-  helpers: {
-    setError: (message?: string | null) => void;
-    setErrors: (errors: Partial<TFormValue>) => void;
-    resetForm: FormikHelpers<TFormValue>['resetForm'];
-  },
-): void => {
-  const { resetForm, setErrors, setError } = helpers;
-
+const handleStateForm: THandleStateForm = (result, values, helpers): void => {
   if (typeof result === 'boolean') {
     addNotification(
       'success',
       i18n.t('translation:titleNotification'),
       i18n.t('translation:messageNotification'),
     );
-
-    resetForm({ values });
-
-    return;
   }
 
-  const { fields, message } = result;
-
-  if (fields) {
-    setErrors(fields);
-  } else {
-    setError(message);
-  }
+  return handleStateFormDefault(result, values, helpers);
 };
 
-export { handleStateForm, formatValidationError };
+export default handleStateForm;
