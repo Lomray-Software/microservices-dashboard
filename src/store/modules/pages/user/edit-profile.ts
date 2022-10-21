@@ -37,6 +37,11 @@ class EditUserStore {
   public initialValues: IEditProfile;
 
   /**
+   * @private
+   */
+  private api: IConstructorParams['endpoints'];
+
+  /**
    * User store
    * @private
    */
