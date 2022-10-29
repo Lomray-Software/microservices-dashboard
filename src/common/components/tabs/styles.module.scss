@@ -16,7 +16,7 @@
   .tabs {
     display: flex;
     margin-bottom: 20px;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     .tab {
       background-color: transparent;
