@@ -28,13 +28,13 @@
     }
   }
 
-  &[data-kind="transparent"] {
-    cursor: pointer;
-    border: none;
-    display: flex;
-    justify-content: center;
+  &[data-kind='transparent'] {
     align-items: center;
     background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
     padding: 3px;
   }
 }
