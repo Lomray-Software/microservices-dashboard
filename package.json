@@ -46,9 +46,9 @@
   },
   "dependencies": {
     "@lomray/after": "^4.0.1",
-    "@lomray/afterjs-helpers": "^1.0.6",
+    "@lomray/afterjs-helpers": "^1.1.2",
     "@lomray/client-helpers": "^1.1.2",
-    "@lomray/client-helpers-react": "^1.1.2",
+    "@lomray/client-helpers-react": "^1.2.1",
     "@lomray/event-manager": "^1.0.0",
     "@lomray/microservices-client-api": "^1.5.2",
     "@lomray/microservices-types": "^1.7.0",

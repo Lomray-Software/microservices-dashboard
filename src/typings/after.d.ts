@@ -18,7 +18,6 @@ declare module '@lomray/after' {
     storeManager: Manager;
   }
 
-  // @ts-ignore
   export interface Ctx extends CtxBase {
     storeManager: Manager;
   }
