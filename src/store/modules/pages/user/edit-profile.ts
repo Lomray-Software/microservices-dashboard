@@ -48,11 +48,6 @@ class EditUserStore {
   private userPageStore: ClassReturnType<typeof UserPageStore>;
 
   /**
-   * @private
-   */
-  private api: IConstructorParams['endpoints'];
-
-  /**
    * @constructor
    */
   constructor({ getStore, endpoints }: IConstructorParams) {
